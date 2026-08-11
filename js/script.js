@@ -122,17 +122,45 @@
     heroIO.observe(hero);
   }
 
+  /* ---------- Confetti burst ---------- */
+  const confettiColors = ['#f3c135', '#ffdd6b', '#f7f3e9', '#c9932a'];
+  const burstConfetti = (x, y) => {
+    if (reduceMotion) return;
+    const count = 26;
+    for (let i = 0; i < count; i++) {
+      const piece = document.createElement('span');
+      piece.className = 'confetti-piece';
+      piece.style.background = confettiColors[i % confettiColors.length];
+      piece.style.left = x + 'px';
+      piece.style.top = y + 'px';
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 80 + Math.random() * 150;
+      const dx = Math.cos(angle) * dist;
+      const dy = Math.sin(angle) * dist - 50;
+      const rot = Math.random() * 720 - 360;
+      piece.style.setProperty('--dx', dx + 'px');
+      piece.style.setProperty('--dy', dy + 'px');
+      piece.style.setProperty('--rot', rot + 'deg');
+      document.body.appendChild(piece);
+      piece.addEventListener('animationend', () => piece.remove());
+    }
+  };
+
   /* ---------- Modal ---------- */
   const modal = document.getElementById('appModal');
   let lastFocused = null;
 
-  const openModal = () => {
+  const openModal = (e) => {
     lastFocused = document.activeElement;
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
     const closeBtn = modal.querySelector('.modal__close');
     if (closeBtn) closeBtn.focus();
+
+    const originX = e && typeof e.clientX === 'number' && e.clientX !== 0 ? e.clientX : window.innerWidth / 2;
+    const originY = e && typeof e.clientY === 'number' && e.clientY !== 0 ? e.clientY : window.innerHeight / 2;
+    burstConfetti(originX, originY);
   };
 
   const closeModal = () => {
@@ -161,5 +189,67 @@
         sessionStorage.setItem(AUTO_OPEN_KEY, '1');
       }
     }, 14000);
+  }
+
+  /* ---------- 3D tilt on cards & gallery items ---------- */
+  if (!reduceMotion) {
+    document.querySelectorAll('.card, .gallery-item').forEach((el) => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        el.style.transition = 'transform 0.08s linear';
+        el.style.transform = `perspective(800px) rotateX(${(-py * 9).toFixed(2)}deg) rotateY(${(px * 9).toFixed(2)}deg) translateY(-6px) scale(1.015)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transition = 'transform 0.6s var(--ease-bounce)';
+        el.style.transform = '';
+      });
+    });
+  }
+
+  /* ---------- Magnetic buttons ---------- */
+  if (!reduceMotion) {
+    document.querySelectorAll('.btn--gold, .btn--ghost, .btn--outline, .fab').forEach((el) => {
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        el.style.transition = 'transform 0.12s linear';
+        el.style.transform = `translate(${(x * 0.22).toFixed(1)}px, ${(y * 0.35).toFixed(1)}px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transition = 'transform 0.5s var(--ease-bounce)';
+        el.style.transform = '';
+      });
+    });
+  }
+
+  /* ---------- Count-up numbers ---------- */
+  const countEls = document.querySelectorAll('[data-count-to]');
+  if (countEls.length) {
+    const runCount = (el) => {
+      const target = parseInt(el.dataset.countTo, 10);
+      const prefix = el.dataset.countPrefix || '';
+      if (reduceMotion) { el.textContent = prefix + target; return; }
+      const duration = 1200;
+      const start = performance.now();
+      const step = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = prefix + Math.round(eased * target);
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const countIO = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          runCount(entry.target);
+          countIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    countEls.forEach((el) => countIO.observe(el));
   }
 })();
