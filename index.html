@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Barbearia Carvalho — Estilo, Tradição e Atitude</title>
+<meta name="description" content="Barbearia Carvalho: cortes, barba e experiência premium. Agende seu horário pelo app Barber e viva o melhor da barbearia moderna.">
+<meta name="theme-color" content="#0b0a08">
+
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ===== PRELOADER ===== -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader__mark">
+    <span class="preloader__letter">B</span><span class="preloader__letter">C</span>
+  </div>
+  <div class="preloader__bar"><span></span></div>
+</div>
+
+<!-- ===== NAV ===== -->
+<header class="nav" id="nav">
+  <div class="nav__inner container">
+    <a href="#top" class="nav__brand" aria-label="Barbearia Carvalho — início">
+      <img src="assets/img/logo-512.png" alt="" class="nav__logo" width="44" height="44">
+      <span class="nav__brand-text">Barbearia<em>Carvalho</em></span>
+    </a>
+
+    <nav class="nav__links" id="navLinks">
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#ambiente">Ambiente</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#localizacao">Localização</a>
+    </nav>
+
+    <button class="btn btn--gold nav__cta" data-open-modal>Agendar</button>
+
+    <button class="nav__burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="hero__bg">
+      <div class="hero__slide hero__slide--a" style="background-image:url('assets/img/interior-wide.jpg')"></div>
+      <div class="hero__slide hero__slide--b" style="background-image:url('assets/img/ferramentas.jpg')"></div>
+      <div class="hero__scrim"></div>
+      <div class="hero__grain"></div>
+    </div>
+
+    <div class="hero__content container">
+      <p class="hero__kicker reveal-up">BARBEARIA PREMIUM</p>
+      <h1 class="hero__title">
+        <span class="reveal-up" style="--d:1">Estilo é</span>
+        <span class="reveal-up hero__title--gold" style="--d:2">atitude.</span>
+      </h1>
+      <p class="hero__subtitle reveal-up" style="--d:3">
+        Cortes de precisão, barba na navalha e um ambiente que respeita sua história.
+        Bem-vindo à <strong>Barbearia Carvalho</strong>.
+      </p>
+      <div class="hero__actions reveal-up" style="--d:4">
+        <button class="btn btn--gold btn--lg" data-open-modal>
+          <span>Agendar horário</span>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <a href="#ambiente" class="btn btn--ghost btn--lg">Conheça o espaço</a>
+      </div>
+    </div>
+
+    <a href="#marquee" class="hero__scroll" aria-label="Rolar para baixo">
+      <span></span>
+    </a>
+  </section>
+
+  <!-- ===== MARQUEE ===== -->
+  <div class="marquee" id="marquee">
+    <div class="marquee__track">
+      <span>CORTE&nbsp;·&nbsp;BARBA&nbsp;·&nbsp;ESTILO&nbsp;·&nbsp;NAVALHA&nbsp;·&nbsp;ATITUDE&nbsp;·&nbsp;BARBEARIA&nbsp;CARVALHO&nbsp;·&nbsp;</span>
+      <span>CORTE&nbsp;·&nbsp;BARBA&nbsp;·&nbsp;ESTILO&nbsp;·&nbsp;NAVALHA&nbsp;·&nbsp;ATITUDE&nbsp;·&nbsp;BARBEARIA&nbsp;CARVALHO&nbsp;·&nbsp;</span>
+    </div>
+  </div>
+
+  <!-- ===== SOBRE ===== -->
+  <section class="sobre" id="sobre">
+    <div class="container sobre__grid">
+      <div class="sobre__media" data-reveal>
+        <div class="sobre__frame">
+          <img src="assets/img/ambiente.jpg" alt="Cadeiras de barbeiro no ambiente da Barbearia Carvalho" loading="lazy">
+        </div>
+        <div class="sobre__badge">
+          <strong>+5</strong>
+          <span>anos de tradição no corte</span>
+        </div>
+      </div>
+
+      <div class="sobre__text" data-reveal>
+        <p class="section-kicker">Sobre a casa</p>
+        <h2 class="section-title">Tradição de barbeiro, <span class="text-gold">alma de barbearia moderna.</span></h2>
+        <p>
+          Na Barbearia Carvalho, cada corte é um ritual. Unimos a técnica clássica da navalha
+          com um espaço pensado para você relaxar, tomar uma cerveja gelada e sair de cabeça
+          erguida — literalmente.
+        </p>
+        <ul class="sobre__list">
+          <li><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 12l5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Profissionais experientes e certificados</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 12l5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Ambiente climatizado e descontraído</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 12l5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Cerveja gelada por conta da casa</li>
+        </ul>
+        <button class="btn btn--outline" data-open-modal>Marcar meu horário</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVIÇOS ===== -->
+  <section class="servicos" id="servicos">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="section-kicker">O que fazemos</p>
+        <h2 class="section-title">Serviços feitos <span class="text-gold">sob medida.</span></h2>
+      </div>
+
+      <div class="cards-grid">
+        <article class="card" data-reveal style="--d:0">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M6 6a3 3 0 100 6 3 3 0 000-6zM6 15a3 3 0 100 6 3 3 0 000-6zM20 4L8.5 15.5M14.5 14.5L20 20M8.5 8.5L12 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Corte Masculino</h3>
+          <p>Do clássico ao degradê moderno, com acabamento na régua e na navalha.</p>
+        </article>
+
+        <article class="card" data-reveal style="--d:1">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M4 20c3-2 4-6 4-9 0-4 3-7 7-7 3.5 0 6 2 6 5 0 2-1 3-3 4 1 1 1 3-1 4-1.5 1.1-1 3-3 3-2 0-2-2-4-2-2 0-3.5 1.5-6 2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Barba na Navalha</h3>
+          <p>Toalha quente, óleo e navalha afiada para um desenho impecável.</p>
+        </article>
+
+        <article class="card" data-reveal style="--d:2">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Combo Corte + Barba</h3>
+          <p>O pacote completo pra quem não abre mão de estar sempre no ponto.</p>
+        </article>
+
+        <article class="card" data-reveal style="--d:3">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"/><path d="M9 12h6M12 9v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Pigmentação</h3>
+          <p>Disfarce de falhas e realce da barba com técnica e naturalidade.</p>
+        </article>
+
+        <article class="card" data-reveal style="--d:4">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M3 15c1-4 3-7 6-7M21 15c-1-4-3-7-6-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Design de Sobrancelha</h3>
+          <p>Acabamento fino que valoriza o olhar sem perder a naturalidade.</p>
+        </article>
+
+        <article class="card" data-reveal style="--d:5">
+          <div class="card__icon">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M12 21s-7-4.5-9.5-9C1 8 3 4.5 6.5 4.5 9 4.5 11 6 12 8c1-2 3-3.5 5.5-3.5C21 4.5 23 8 21.5 12c-2.5 4.5-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>Day Use VIP</h3>
+          <p>Corte + barba + bebida gelada. A experiência completa Carvalho.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AMBIENTE / PARALLAX BANNER ===== -->
+  <section class="ambiente" id="ambiente">
+    <div class="ambiente__bg" style="background-image:url('assets/img/cervejas.jpg')"></div>
+    <div class="ambiente__scrim"></div>
+    <div class="container ambiente__content">
+      <p class="section-kicker section-kicker--light" data-reveal>Muito mais que um corte</p>
+      <h2 class="section-title section-title--light" data-reveal>Relaxe. A casa é <span class="text-gold">sua.</span></h2>
+
+      <div class="amenities" data-reveal>
+        <div class="amenity">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none"><path d="M6 3h9v9a4.5 4.5 0 01-9 0V3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M15 6h2a3 3 0 010 6h-2M6 21h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          <span>Cerveja gelada</span>
+        </div>
+        <div class="amenity">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none"><path d="M2 8.5a15 15 0 0120 0M5 12a10.5 10.5 0 0114 0M8.5 15.5a6 6 0 017 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="19" r="1.2" fill="currentColor"/></svg>
+          <span>Wi-Fi grátis</span>
+        </div>
+        <div class="amenity">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/></svg>
+          <span>Ambiente climatizado</span>
+        </div>
+        <div class="amenity">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none"><path d="M4 20c1-6 4-9 8-9s7 3 8 9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.7"/></svg>
+          <span>Profissionais experientes</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALERIA ===== -->
+  <section class="galeria" id="galeria">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <p class="section-kicker">Registros da casa</p>
+        <h2 class="section-title">Fotos e vídeos <span class="text-gold">direto da barbearia.</span></h2>
+      </div>
+
+      <div class="gallery-grid">
+        <figure class="gallery-item gallery-item--wide" data-reveal>
+          <img src="assets/img/interior-wide.jpg" alt="Interior da Barbearia Carvalho" loading="lazy">
+        </figure>
+
+        <figure class="gallery-item gallery-item--video" data-reveal>
+          <video id="tourVideo" playsinline muted loop preload="none" poster="assets/img/ferramentas.jpg">
+            <source data-src="assets/video/tour.mp4" type="video/mp4">
+          </video>
+          <button class="gallery-item__play" id="tourPlayBtn" aria-label="Reproduzir vídeo da barbearia" disabled>
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <span class="gallery-item__tag" id="tourTag">Vídeo em breve</span>
+        </figure>
+
+        <figure class="gallery-item" data-reveal>
+          <img src="assets/img/ambiente.jpg" alt="Cadeiras da Barbearia Carvalho" loading="lazy">
+        </figure>
+
+        <figure class="gallery-item" data-reveal>
+          <img src="assets/img/cervejas.jpg" alt="Cervejas geladas da Barbearia Carvalho" loading="lazy">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LOCALIZAÇÃO ===== -->
+  <section class="localizacao" id="localizacao">
+    <div class="container localizacao__grid">
+      <div data-reveal>
+        <p class="section-kicker">Venha nos visitar</p>
+        <h2 class="section-title">Onde a <span class="text-gold">Carvalho</span> te espera.</h2>
+        <ul class="contact-list">
+          <li>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="1.7"/></svg>
+            <span>Rua Exemplo, 123 — Centro, Sua Cidade <em>(edite este endereço)</em></span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M4 5c0 8 7 15 15 15l3-4-6-3-2 2c-2-1-4-3-5-5l2-2-3-6z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            <span>(00) 00000-0000</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 8h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            <span>Ter–Sáb · 9h às 20h</span>
+          </li>
+        </ul>
+        <button class="btn btn--gold" data-open-modal>Agendar agora</button>
+      </div>
+
+      <div class="localizacao__map" data-reveal>
+        <div class="map-placeholder">
+          <svg viewBox="0 0 24 24" width="40" height="40" fill="none"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="1.5"/></svg>
+          <p>Insira aqui o mapa/endereço real da barbearia</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA FINAL ===== -->
+  <section class="cta-final">
+    <div class="cta-final__bg"></div>
+    <div class="container cta-final__content" data-reveal>
+      <h2>Pronto pra elevar<br><span class="text-gold">seu estilo?</span></h2>
+      <p>Agende em segundos direto pelo app Barber e garanta seu horário.</p>
+      <button class="btn btn--gold btn--lg" data-open-modal>
+        <span>Agendar pelo App</span>
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <img src="assets/img/logo-512.png" alt="" width="40" height="40">
+      <span>Barbearia<em>Carvalho</em></span>
+    </div>
+
+    <nav class="footer__links">
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#ambiente">Ambiente</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#localizacao">Localização</a>
+    </nav>
+
+    <div class="footer__social">
+      <a href="#" aria-label="Instagram da Barbearia Carvalho">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>
+      </a>
+      <a href="#" aria-label="WhatsApp da Barbearia Carvalho">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M4 20l1.4-4.2A8 8 0 1112 20a8 8 0 01-4.6-1.4L4 20z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="container footer__bottom">
+    <p>© <span id="year"></span> Barbearia Carvalho. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<!-- ===== FLOATING CTA ===== -->
+<button class="fab" id="fabBtn" data-open-modal aria-label="Agendar horário">
+  <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M8 14l2 2 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <span>Agendar</span>
+</button>
+
+<!-- ===== APP BOOKING MODAL ===== -->
+<div class="modal" id="appModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+  <div class="modal__backdrop" data-close-modal></div>
+  <div class="modal__card">
+    <button class="modal__close" data-close-modal aria-label="Fechar">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+
+    <div class="modal__glow"></div>
+
+    <img src="assets/img/logo-512.png" alt="" class="modal__logo" width="64" height="64">
+    <p class="modal__kicker">Agendamento oficial</p>
+    <h3 id="modalTitle">Agende pelo <span class="text-gold">app Barber</span></h3>
+    <p class="modal__text">
+      Baixe o aplicativo, escolha o profissional, o serviço e o horário —
+      tudo em poucos toques.
+    </p>
+
+    <div class="modal__stores">
+      <a class="store-btn" href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M3 3.5v17a1 1 0 001.6.8L16 12 4.6 2.7A1 1 0 003 3.5z"/><path d="M16 12l4.3-2.5a1 1 0 000-1.7L16 12z" opacity=".6"/></svg>
+        <span>
+          <small>Disponível no</small>
+          Google Play
+        </span>
+      </a>
+      <a class="store-btn" href="https://apps.apple.com/br/app/appbarber-cliente/id6450795073" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M16.7 12.4c0-2 1.6-3 1.7-3.1-.9-1.4-2.4-1.5-2.9-1.6-1.2-.1-2.4.7-3 .7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2.1-1.5 2.5-.4 6.4 1 8.5.7 1 1.5 2.1 2.6 2 1-.1 1.4-.7 2.6-.7s1.6.7 2.7.7c1.1 0 1.9-1 2.6-2 .5-.7.9-1.5 1.2-2.3-1.4-.6-2.4-1.9-2.4-3.6z"/><path d="M14.4 5.8c.5-.6.9-1.5.8-2.4-.8.1-1.7.5-2.3 1.2-.5.6-.9 1.5-.8 2.3.9 0 1.8-.5 2.3-1.1z"/></svg>
+        <span>
+          <small>Baixe na</small>
+          App Store
+        </span>
+      </a>
+    </div>
+
+    <p class="modal__foot">Novo por aqui? O app também permite criar sua conta em segundos.</p>
+  </div>
+</div>
+
+<script src="js/script.js" defer></script>
+</body>
+</html>
