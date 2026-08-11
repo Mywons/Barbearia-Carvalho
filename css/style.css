@@ -691,36 +691,53 @@ section { position: relative; padding: 110px 0; }
    Fun extras — barber pole, floaters, snip divider, confetti
    ============================================================ */
 
-/* Barber pole */
+/* Barber pole — a glass cylinder with spiral stripes and brass caps */
 .barberpole {
   position: absolute; top: 16%; right: 7%;
   pointer-events: none;
-  width: 30px; height: 140px; border-radius: 999px;
-  /* Stripe stops sum to 30px, and background-size is locked to that exact
-     30x30 tile — shifting background-position by exactly one tile (30px)
-     lands pixel-for-pixel back on the start frame, so the loop has no seam. */
-  background-image: repeating-linear-gradient(
-    45deg,
-    var(--gold) 0 12px,
-    #1a1305 12px 24px,
-    var(--cream) 24px 30px
-  );
-  background-size: 30px 30px;
-  box-shadow: 0 24px 50px -20px rgba(0,0,0,0.75), inset 0 0 0 3px rgba(255,255,255,0.1);
-  animation: poleSpin 1.1s linear infinite;
+  width: 26px; height: 132px;
+  border-radius: 13px;
+  overflow: hidden;
+  box-shadow: 0 20px 46px -18px rgba(0,0,0,0.75);
   z-index: 0;
   display: none;
 }
-.barberpole::before, .barberpole::after {
-  content: ''; position: absolute; left: -6px; right: -6px; height: 10px; border-radius: 6px;
-  background: linear-gradient(160deg, var(--black-3), var(--black-2));
-  border: 1px solid rgba(243,193,53,0.3);
+.barberpole__shaft {
+  position: absolute; inset: 0;
+  /* Stops sum to 28px and background-size matches it exactly, so shifting
+     by one full tile (28px) loops with no seam. */
+  background-image: repeating-linear-gradient(
+    38deg,
+    var(--gold) 0 12px,
+    var(--cream) 12px 14px,
+    #241708 14px 26px,
+    var(--cream) 26px 28px
+  );
+  background-size: 28px 28px;
+  animation: poleSpin 1.3s linear infinite;
 }
-.barberpole::before { top: -8px; }
-.barberpole::after { bottom: -8px; }
+.barberpole__shine {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(100deg,
+    rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.1) 18%,
+    transparent 42%, transparent 60%,
+    rgba(0,0,0,0.45) 100%);
+  mix-blend-mode: overlay;
+}
+@keyframes poleSpin {
+  from { background-position: 0 0; }
+  to   { background-position: 0 -28px; }
+}
+.barberpole__cap {
+  position: absolute; left: -3px; right: -3px; height: 12px; border-radius: 7px;
+  background: linear-gradient(100deg, var(--gold-2), var(--gold-deep) 60%, #7a5a17);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  z-index: 1;
+}
+.barberpole__cap--top { top: -4px; }
+.barberpole__cap--bottom { bottom: -4px; }
 @media (min-width: 981px) { .barberpole { display: block; } }
-@keyframes poleSpin { from { background-position: 0 0; } to { background-position: 0 -30px; } }
-@media (prefers-reduced-motion: reduce) { .barberpole { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .barberpole__shaft { animation: none; } }
 
 /* Hero ambient floating icons */
 .hero__floaters { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
