@@ -13,13 +13,20 @@
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------- Nav scroll state ---------- */
+  /* ---------- Nav scroll state + scroll progress bar ---------- */
   const nav = document.getElementById('nav');
+  const scrollProgress = document.getElementById('scrollProgress');
   const onScroll = () => {
     nav.classList.toggle('is-scrolled', window.scrollY > 40);
+    if (scrollProgress) {
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
+      scrollProgress.style.width = pct + '%';
+    }
   };
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
 
   /* ---------- Mobile nav toggle ---------- */
   const burger = document.getElementById('navBurger');
@@ -225,31 +232,46 @@
     });
   }
 
-  /* ---------- Count-up numbers ---------- */
-  const countEls = document.querySelectorAll('[data-count-to]');
-  if (countEls.length) {
-    const runCount = (el) => {
-      const target = parseInt(el.dataset.countTo, 10);
-      const prefix = el.dataset.countPrefix || '';
-      if (reduceMotion) { el.textContent = prefix + target; return; }
-      const duration = 1200;
-      const start = performance.now();
-      const step = (now) => {
-        const progress = Math.min((now - start) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        el.textContent = prefix + Math.round(eased * target);
-        if (progress < 1) requestAnimationFrame(step);
-      };
-      requestAnimationFrame(step);
+  /* ---------- Cursor glow (desktop, fine-pointer only) ---------- */
+  const cursorGlow = document.getElementById('cursorGlow');
+  if (cursorGlow && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+    let cgX = window.innerWidth / 2;
+    let cgY = window.innerHeight / 2;
+    let targetX = cgX;
+    let targetY = cgY;
+    let cgActive = false;
+
+    document.addEventListener('mousemove', (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      if (!cgActive) { cgActive = true; cursorGlow.classList.add('is-active'); }
+    });
+    document.addEventListener('mouseleave', () => {
+      cgActive = false;
+      cursorGlow.classList.remove('is-active');
+    });
+
+    const tick = () => {
+      cgX += (targetX - cgX) * 0.12;
+      cgY += (targetY - cgY) * 0.12;
+      cursorGlow.style.transform = `translate(${cgX}px, ${cgY}px) translate(-50%, -50%)`;
+      requestAnimationFrame(tick);
     };
-    const countIO = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          runCount(entry.target);
-          countIO.unobserve(entry.target);
-        }
+    requestAnimationFrame(tick);
+  }
+
+  /* ---------- Button ripple ---------- */
+  if (!reduceMotion) {
+    document.querySelectorAll('.btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        ripple.className = 'btn__ripple';
+        ripple.style.left = (e.clientX - rect.left) + 'px';
+        ripple.style.top = (e.clientY - rect.top) + 'px';
+        btn.appendChild(ripple);
+        ripple.addEventListener('animationend', () => ripple.remove());
       });
-    }, { threshold: 0.6 });
-    countEls.forEach((el) => countIO.observe(el));
+    });
   }
 })();
