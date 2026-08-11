@@ -200,7 +200,7 @@
 
   /* ---------- 3D tilt on cards & gallery items ---------- */
   if (!reduceMotion) {
-    document.querySelectorAll('.card, .gallery-item').forEach((el) => {
+    document.querySelectorAll('.card, .gallery-item, .team-card').forEach((el) => {
       el.addEventListener('mousemove', (e) => {
         const rect = el.getBoundingClientRect();
         const px = (e.clientX - rect.left) / rect.width - 0.5;
