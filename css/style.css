@@ -364,6 +364,44 @@ a { color: inherit; text-decoration: none; }
   .marquee__track { animation-duration: 60s; }
 }
 
+/* ---------- Scroll-reveal manifesto (letters fly in as you scroll) ---------- */
+.scrollreveal {
+  position: relative;
+  min-height: 190vh;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--black);
+  overflow: hidden;
+  padding: 0 24px;
+}
+.scrollreveal__inner { position: relative; text-align: center; max-width: 900px; }
+.scrollreveal__eyebrow {
+  color: var(--text-dimmer); text-transform: uppercase; letter-spacing: 0.25em;
+  font-size: 0.75rem; font-weight: 600; margin: 0 0 28px;
+}
+.scrollreveal__text {
+  --p: 0;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 7vw, 5.5rem);
+  line-height: 1.08;
+  color: var(--gold);
+  letter-spacing: 0.01em;
+  perspective: 700px;
+  margin: 0;
+}
+.sr-word { display: inline-block; white-space: nowrap; }
+.sr-char {
+  display: inline-block;
+  transform:
+    translateX(calc(var(--dist, 0) * 24px * (1 - var(--p, 0))))
+    translateY(calc(var(--absdist, 0) * 10px * (1 - var(--p, 0))))
+    rotateX(calc(var(--dist, 0) * 25deg * (1 - var(--p, 0))))
+    scale(calc(0.7 + var(--p, 0) * 0.3));
+  opacity: calc(0.25 + var(--p, 0) * 0.75);
+}
+@media (prefers-reduced-motion: reduce) {
+  .sr-char { transform: none; opacity: 1; }
+}
+
 /* ---------- Section shared ---------- */
 section { position: relative; padding: 110px 0; }
 .section-kicker {
