@@ -13,58 +13,6 @@
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------- Scroll-reveal manifesto: letters fly in as you scroll ---------- */
-  const revealSection = document.getElementById('manifesto');
-  const revealText = document.querySelector('[data-scroll-text]');
-  if (revealSection && revealText) {
-    const text = revealText.getAttribute('data-scroll-text') || '';
-    revealText.setAttribute('aria-label', text);
-    revealText.textContent = '';
-
-    const words = text.split(' ');
-    const totalChars = text.replace(/ /g, '').length;
-    const centerIndex = totalChars / 2;
-    let charIndex = 0;
-
-    words.forEach((word, wi) => {
-      const wordEl = document.createElement('span');
-      wordEl.className = 'sr-word';
-      Array.from(word).forEach((ch) => {
-        const charEl = document.createElement('span');
-        charEl.className = 'sr-char';
-        charEl.textContent = ch;
-        const dist = charIndex - centerIndex;
-        charEl.style.setProperty('--dist', dist.toFixed(2));
-        charEl.style.setProperty('--absdist', Math.abs(dist).toFixed(2));
-        wordEl.appendChild(charEl);
-        charIndex++;
-      });
-      revealText.appendChild(wordEl);
-      if (wi < words.length - 1) revealText.appendChild(document.createTextNode(' '));
-    });
-
-    if (reduceMotion) {
-      revealText.style.setProperty('--p', '1');
-    } else {
-      let revealTicking = false;
-      const updateReveal = () => {
-        const rect = revealSection.getBoundingClientRect();
-        const vh = window.innerHeight;
-        const total = rect.height + vh;
-        const scrolled = vh - rect.top;
-        const raw = Math.min(1, Math.max(0, scrolled / total));
-        const p = Math.min(raw * 2, 1);
-        revealText.style.setProperty('--p', p.toFixed(4));
-        revealTicking = false;
-      };
-      window.addEventListener('scroll', () => {
-        if (!revealTicking) { requestAnimationFrame(updateReveal); revealTicking = true; }
-      }, { passive: true });
-      window.addEventListener('resize', updateReveal);
-      updateReveal();
-    }
-  }
-
   /* ---------- Nav scroll state + scroll progress bar ---------- */
   const nav = document.getElementById('nav');
   const scrollProgress = document.getElementById('scrollProgress');
