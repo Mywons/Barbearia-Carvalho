@@ -82,6 +82,26 @@
     updateParallax();
   }
 
+  /* ---------- Hero mouse parallax (desktop, fine-pointer only) ---------- */
+  const heroSection = document.getElementById('hero');
+  const heroContent = document.querySelector('.hero__content');
+  if (heroSection && heroContent && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+    let hpX = 0, hpY = 0, hpTargetX = 0, hpTargetY = 0;
+    heroSection.addEventListener('mousemove', (e) => {
+      const rect = heroSection.getBoundingClientRect();
+      hpTargetX = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      hpTargetY = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+    });
+    heroSection.addEventListener('mouseleave', () => { hpTargetX = 0; hpTargetY = 0; });
+    const tickHeroParallax = () => {
+      hpX += (hpTargetX - hpX) * 0.06;
+      hpY += (hpTargetY - hpY) * 0.06;
+      heroContent.style.transform = `translate(${(-hpX * 14).toFixed(2)}px, ${(-hpY * 10).toFixed(2)}px)`;
+      requestAnimationFrame(tickHeroParallax);
+    };
+    requestAnimationFrame(tickHeroParallax);
+  }
+
   /* ---------- Video slot: auto-detect if a real video file was added ---------- */
   const tourVideo = document.getElementById('tourVideo');
   const tourPlayBtn = document.getElementById('tourPlayBtn');

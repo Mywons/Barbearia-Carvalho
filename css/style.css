@@ -116,6 +116,19 @@ a { color: inherit; text-decoration: none; }
   box-shadow: 0 12px 32px -6px rgba(243, 193, 53, 0.75);
   transform: translateY(-2px) scale(var(--btn-scale));
 }
+.btn--gold::after {
+  content: '';
+  position: absolute; top: 0; left: -60%; width: 35%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,0.6), transparent);
+  transform: skewX(-20deg);
+  animation: btnShimmer 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes btnShimmer {
+  0% { left: -60%; }
+  14%, 100% { left: 140%; }
+}
+@media (prefers-reduced-motion: reduce) { .btn--gold::after { animation: none; display: none; } }
 
 .btn--ghost {
   background: rgba(255,255,255,0.06);
@@ -199,7 +212,8 @@ a { color: inherit; text-decoration: none; }
   font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 0.03em;
   min-width: 0; flex-shrink: 1;
 }
-.nav__logo { border-radius: 50%; flex-shrink: 0; }
+.nav__logo { border-radius: 50%; flex-shrink: 0; transition: transform 0.5s var(--ease-bounce); }
+.nav__brand:hover .nav__logo { transform: rotate(-12deg) scale(1.08); }
 .nav__brand-text {
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
 }
@@ -642,7 +656,20 @@ section { position: relative; padding: 110px 0; }
     radial-gradient(circle at 50% 30%, rgba(243,193,53,0.16), transparent 60%),
     var(--black);
 }
-.cta-final__content { position: relative; }
+.cta-final__glow {
+  position: absolute; top: 50%; left: 50%; z-index: 0;
+  width: 480px; height: 480px; margin: -240px 0 0 -240px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(243,193,53,0.22), transparent 70%);
+  animation: ctaGlowPulse 5s ease-in-out infinite;
+}
+@keyframes ctaGlowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .cta-final__glow { animation: none; } }
+.cta-final__floaters { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.cta-final__content { position: relative; z-index: 1; }
 .cta-final h2 {
   font-size: clamp(2.4rem, 6vw, 4.2rem); line-height: 1;
   margin-bottom: 20px;
@@ -659,7 +686,8 @@ section { position: relative; padding: 110px 0; }
   display: flex; align-items: center; gap: 10px;
   font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem;
 }
-.footer__brand img { border-radius: 50%; }
+.footer__brand img { border-radius: 50%; transition: transform 0.5s var(--ease-bounce); }
+.footer__brand:hover img { transform: rotate(-12deg) scale(1.08); }
 .footer__brand em { color: var(--gold); font-style: normal; }
 .footer__links { display: flex; gap: 24px; flex-wrap: wrap; font-size: 0.9rem; color: var(--text-dim); }
 .footer__links a:hover { color: var(--gold); }
