@@ -218,7 +218,11 @@
     }, 14000);
   }
 
-  /* ---------- 3D tilt on cards & gallery items ---------- */
+  /* ---------- 3D tilt on cards & gallery items ----------
+     Escreve em custom properties em vez de `transform`: o CSS compõe o tilt
+     do mouse com a inclinação-base do grid quebrado (--tilt/--shift). Se
+     escrevesse `transform` direto, o hover apagaria a inclinação-base e o
+     card endireitaria de repente. */
   if (!reduceMotion) {
     document.querySelectorAll('.card, .gallery-item, .team-card').forEach((el) => {
       el.addEventListener('mousemove', (e) => {
@@ -226,11 +230,17 @@
         const px = (e.clientX - rect.left) / rect.width - 0.5;
         const py = (e.clientY - rect.top) / rect.height - 0.5;
         el.style.transition = 'transform 0.08s linear';
-        el.style.transform = `perspective(800px) rotateX(${(-py * 9).toFixed(2)}deg) rotateY(${(px * 9).toFixed(2)}deg) translateY(-6px) scale(1.015)`;
+        el.style.setProperty('--tx', (-py * 9).toFixed(2) + 'deg');
+        el.style.setProperty('--ty', (px * 9).toFixed(2) + 'deg');
+        el.style.setProperty('--lift', '-6px');
+        el.style.setProperty('--pop', '1.015');
       });
       el.addEventListener('mouseleave', () => {
         el.style.transition = 'transform 0.6s var(--ease-bounce)';
-        el.style.transform = '';
+        el.style.setProperty('--tx', '0deg');
+        el.style.setProperty('--ty', '0deg');
+        el.style.setProperty('--lift', '0px');
+        el.style.setProperty('--pop', '1');
       });
     });
   }

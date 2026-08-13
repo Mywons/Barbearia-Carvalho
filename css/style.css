@@ -288,6 +288,57 @@ a { color: inherit; text-decoration: none; }
   .snip-divider__blade, .snip-divider__blade--b { animation: none; }
 }
 
+/* ============================================================
+   Adesivos geométricos — pontinhos, X, cruz, anel, losango, riscos
+   Sempre dentro de uma <section> (ou .hero), nunca soltos no <main>:
+   `section { overflow-x: clip }` é o que impede que os que sangram na
+   borda tragam de volta a rolagem horizontal.
+   ============================================================ */
+.stickers { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.sticker {
+  position: absolute;
+  color: var(--ink);
+  opacity: 0.5;
+  transform: rotate(var(--deg, 0deg));
+  animation: stickerDrift 13s var(--ease-in-out) infinite;
+}
+.sticker svg { display: block; width: 100%; height: 100%; }
+
+/* Grade de pontinhos em CSS puro — sem SVG, sem custo */
+.sticker--dots {
+  background-image: radial-gradient(var(--ink) 1.6px, transparent 1.7px);
+  background-size: 13px 13px;
+  opacity: 0.34;
+}
+.sticker--ring {
+  border: 2.5px solid var(--ink);
+  border-radius: 50%;
+  opacity: 0.4;
+}
+.sticker--diamond {
+  background: var(--ink);
+  --deg: 45deg;
+  opacity: 0.42;
+}
+/* Riscos diagonais paralelos, igual ao detalhe da referência */
+.sticker--bars {
+  background-image: repeating-linear-gradient(
+    -52deg,
+    var(--ink) 0 3px,
+    transparent 3px 11px
+  );
+  opacity: 0.4;
+}
+
+@keyframes stickerDrift {
+  0%, 100% { transform: rotate(var(--deg, 0deg)) translate(0, 0); }
+  33%      { transform: rotate(calc(var(--deg, 0deg) + 7deg)) translate(5px, -9px); }
+  66%      { transform: rotate(calc(var(--deg, 0deg) - 5deg)) translate(-6px, 6px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticker { animation: none; }
+}
+
 /* 3. Molduras líquidas para as fotos */
 .liquid-frame {
   position: relative;
@@ -495,12 +546,13 @@ a { color: inherit; text-decoration: none; }
 .hero__actions { display: flex; gap: 14px; flex-wrap: wrap; }
 
 /* Visual: fotos em crossfade dentro do blob líquido */
-.hero__visual { position: relative; }
+/* A largura máxima fica no .hero__visual (não no frame) para o poste de
+   barbeiro, posicionado em relação a ele, encostar na borda da foto em vez
+   de flutuar solto no amarelo */
+.hero__visual { position: relative; max-width: 440px; margin-left: auto; }
 .hero__frame {
   position: relative;
   aspect-ratio: 4 / 5;
-  max-width: 440px;
-  margin-left: auto;
 }
 .hero__slide {
   position: absolute; inset: 0;
@@ -555,7 +607,9 @@ a { color: inherit; text-decoration: none; }
 
 /* Poste de barbeiro — listras preto/amarelo, loop sem emenda */
 .barberpole {
-  position: absolute; top: 8%; left: -10px;
+  /* top ~28%: onde o blob da moldura é mais largo, então o poste encosta
+     na foto em vez de sobrar no vazio */
+  position: absolute; top: 28%; left: -13px;
   pointer-events: none;
   width: 26px; height: 128px;
   border-radius: 13px;
@@ -612,20 +666,27 @@ a { color: inherit; text-decoration: none; }
 @keyframes revealUp { to { opacity: 1; transform: translateY(0); } }
 
 /* O estado escondido só vale quando o JS está ativo (classe .js no <html>),
-   senão o conteúdo ficaria invisível para sempre sem ninguém para revelá-lo. */
+   senão o conteúdo ficaria invisível para sempre sem ninguém para revelá-lo.
+
+   Estas regras mexem só em --reveal-y, nunca em `transform` — o transform
+   fica na regra de baixo, com especificidade baixa (0,1,0) de propósito,
+   para o grid quebrado (.card/.gallery-item) poder sobrepor e compor
+   reveal + inclinação num transform só. Se aqui setasse `transform`,
+   a especificidade maior apagaria a inclinação-base dos cards. */
 .js [data-reveal] {
   opacity: 0;
-  transform: translateY(36px);
+  --reveal-y: 36px;
   transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
   transition-delay: calc(var(--d, 0) * 0.09s);
 }
-.js [data-reveal].in-view { opacity: 1; transform: translateY(0); }
+.js [data-reveal].in-view { opacity: 1; --reveal-y: 0px; }
+[data-reveal] { transform: translateY(var(--reveal-y, 0px)); }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal-up { animation: none; opacity: 1; transform: none; }
-  /* Precisa casar a especificidade de `.js [data-reveal]` para vencer o
-     estado escondido sem depender do JS marcar .in-view */
-  .js [data-reveal], [data-reveal] { opacity: 1; transform: none; transition: none; }
+  /* Zera pelo --reveal-y em vez de `transform: none`, senão mataria também
+     a inclinação-base do grid quebrado (que é estática, não movimento) */
+  .js [data-reveal], [data-reveal] { opacity: 1; --reveal-y: 0px; transition: none; }
 }
 
 /* ============================================================
@@ -675,13 +736,39 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 .section-head .section-title { margin-bottom: 0; }
 
 /* ============================================================
+   Grid quebrado — transform composto
+   --tilt/--shift: inclinação-base do desalinho (definida no CSS)
+   --tx/--ty/--lift/--pop: tilt 3D do mouse (escrito pelo JS)
+   Compor os dois num único transform é obrigatório: se o JS escrevesse
+   `transform` direto, apagaria a inclinação-base no hover.
+   ============================================================ */
+.card, .gallery-item, .team-card {
+  --tilt: 0deg;
+  --shift: 0px;
+  --tx: 0deg;
+  --ty: 0deg;
+  --lift: 0px;
+  --pop: 1;
+  /* --reveal-y entra aqui somado ao --shift: assim a entrada ao rolar e o
+     desalinho do grid convivem no mesmo transform. Esta regra vem DEPOIS
+     de `[data-reveal] { transform: … }` e com a mesma especificidade, por
+     isso ganha. */
+  transform:
+    translateY(calc(var(--shift) + var(--reveal-y, 0px))) rotate(var(--tilt))
+    perspective(800px) rotateX(var(--tx)) rotateY(var(--ty))
+    translateY(var(--lift)) scale(var(--pop));
+}
+
+/* ============================================================
    Sobre
    ============================================================ */
 .sobre__grid {
   display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 70px; align-items: center;
   position: relative; z-index: 1;
 }
-.sobre__media { position: relative; }
+/* Assimetria de coluna: a foto desce, o texto sobe */
+.sobre__media { position: relative; transform: translateY(26px) rotate(-1.2deg); }
+.sobre__text { transform: translateY(-18px); }
 .sobre__frame { position: relative; }
 .sobre__frame img {
   width: 100%; aspect-ratio: 4/5; object-fit: cover;
@@ -746,7 +833,18 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   background: var(--glass-strong);
   box-shadow: 0 30px 55px -28px rgba(20, 16, 11, 0.55);
   border-radius: 42% 58% 54% 46% / 12% 12% 14% 14%;
+  /* Endireita ao passar o mouse — o card "se ajeita" quando você chega nele */
+  --tilt: 0deg;
+  --shift: 0px;
 }
+/* Desalinho proposital: ângulos pequenos, sinal alternado. Passando de ~2°
+   o texto começa a parecer torto em vez de estiloso. */
+.cards-grid .card:nth-child(1) { --tilt: -1.5deg; --shift: 10px; }
+.cards-grid .card:nth-child(2) { --tilt: 1.2deg;  --shift: -6px; }
+.cards-grid .card:nth-child(3) { --tilt: -0.8deg; --shift: 14px; }
+.cards-grid .card:nth-child(4) { --tilt: 1.6deg;  --shift: -4px; }
+.cards-grid .card:nth-child(5) { --tilt: -1.1deg; --shift: 8px; }
+.cards-grid .card:nth-child(6) { --tilt: 0.9deg;  --shift: -10px; }
 .card__icon {
   width: 56px; height: 56px; border-radius: 16px;
   display: flex; align-items: center; justify-content: center;
@@ -805,7 +903,15 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 }
 @media (prefers-reduced-motion: reduce) { .team-carousel__track { animation-duration: 90s; } }
 
-.team-card { position: relative; flex-shrink: 0; width: 250px; }
+.team-card {
+  position: relative; flex-shrink: 0; width: 250px;
+  transition: transform 0.55s var(--ease-bounce);
+}
+/* Cartas tortas alternadas, como fotos jogadas na mesa */
+.team-carousel__track .team-card:nth-child(3n+1) { --tilt: -1.8deg; --shift: 8px; }
+.team-carousel__track .team-card:nth-child(3n+2) { --tilt: 1.4deg;  --shift: -6px; }
+.team-carousel__track .team-card:nth-child(3n+3) { --tilt: -0.9deg; --shift: 12px; }
+.team-card:hover { --tilt: 0deg; --shift: 0px; }
 .team-card__media {
   position: relative;
   aspect-ratio: 3 / 4;
@@ -914,6 +1020,9 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 .amenity:hover svg { transform: rotate(-10deg) scale(1.12); }
 .amenity svg { color: var(--ink); transition: transform 0.5s var(--ease-bounce); }
 .amenity span { font-size: 0.85rem; font-weight: 700; text-align: center; color: var(--ink); }
+/* Fichas em zigue-zague em vez de linha reta */
+.amenities .amenity:nth-child(odd) { margin-top: 16px; }
+.amenities .amenity:nth-child(even) { margin-bottom: 16px; }
 @media (prefers-reduced-motion: reduce) {
   .amenity:hover { border-radius: var(--radius-md); }
 }
@@ -937,6 +1046,12 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 }
 .gallery-item:nth-child(2n) { border-radius: 24% 16% 22% 18% / 18% 26% 20% 24%; }
 .gallery-item:nth-child(3n) { border-radius: 20% 22% 16% 24% / 26% 20% 24% 18%; }
+/* Desalinho bem discreto: são itens de grid, ângulo maior faz vizinho sobrepor */
+.gallery-grid .gallery-item:nth-child(1) { --tilt: -0.7deg; --shift: 6px; }
+.gallery-grid .gallery-item:nth-child(2) { --tilt: 0.8deg;  --shift: -5px; }
+.gallery-grid .gallery-item:nth-child(3) { --tilt: 0.6deg;  --shift: 7px; }
+.gallery-grid .gallery-item:nth-child(4) { --tilt: -0.8deg; --shift: -4px; }
+.gallery-item:hover { --tilt: 0deg; --shift: 0px; }
 .gallery-item--wide { grid-column: span 2; grid-row: span 2; }
 .gallery-item--video { grid-column: span 2; }
 .gallery-item img, .gallery-item video {
@@ -978,6 +1093,8 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
   position: relative; z-index: 1;
 }
+/* Mapa desalinhado de propósito em relação à coluna de texto */
+.localizacao__map { transform: translateY(22px) rotate(1deg); }
 .contact-list { list-style: none; padding: 0; margin: 28px 0 34px; display: grid; gap: 16px; }
 .contact-list li {
   display: flex; align-items: flex-start; gap: 12px;
@@ -1254,7 +1371,7 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 @media (max-width: 980px) {
   .hero { min-height: auto; padding: 130px 0 70px; }
   .hero__inner { grid-template-columns: 1fr; gap: 48px; }
-  .hero__frame { max-width: 360px; margin: 0 auto; }
+  .hero__visual { max-width: 360px; margin: 0 auto; }
   .hero__title { align-items: flex-start; }
 
   .sobre__grid { grid-template-columns: 1fr; gap: 60px; }
@@ -1265,6 +1382,9 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   .gallery-item--video { grid-column: span 2; }
   .localizacao__grid { grid-template-columns: 1fr; gap: 40px; }
   .liquid-divider { height: 110px; }
+
+  /* Sem espaço para assimetria de coluna quando as colunas empilham */
+  .sobre__media, .sobre__text, .localizacao__map { transform: none; }
 }
 
 @media (max-width: 760px) {
@@ -1296,6 +1416,14 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   .sobre__badge { right: 4px; bottom: 4px; padding: 13px 16px; max-width: 180px; }
   .team-card { width: 210px; }
   .marquee { margin: 12px 0; }
+
+  /* Em tela estreita sobra pouco espaço: mantém só os 2 primeiros adesivos
+     de cada seção, senão vira poluição visual */
+  .sticker:nth-child(n+3) { display: none; }
+  /* Deslocamento vertical em coluna única só abre buracos no meio do conteúdo */
+  .cards-grid .card, .gallery-grid .gallery-item { --shift: 0px; }
+  .amenities .amenity:nth-child(odd),
+  .amenities .amenity:nth-child(even) { margin-top: 0; margin-bottom: 0; }
   .liquid-divider { height: 84px; margin: -16px 0; }
 }
 
