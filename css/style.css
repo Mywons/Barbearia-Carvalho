@@ -10,16 +10,29 @@
   --yellow-3: #fff0b8;
   --yellow-deep: #e0a800;
   --ink: #14100b;
-  --ink-2: #2a1d14;
+  --ink-2: #1e1811;
   --ink-3: #42271c;
   --ink-dim: rgba(20, 16, 11, 0.72);
   --ink-dimmer: rgba(20, 16, 11, 0.48);
   --ink-line: rgba(20, 16, 11, 0.14);
 
-  --glass: rgba(255, 255, 255, 0.24);
-  --glass-strong: rgba(255, 255, 255, 0.42);
-  --glass-border: rgba(255, 255, 255, 0.58);
-  --glass-smoke: rgba(20, 16, 11, 0.07);
+  /* ---- Tokens de tema ----
+     Tudo que muda entre seção amarela e seção preta passa por aqui. A seção
+     preta (.section--ink) só reescreve estes valores, em vez de duplicar as
+     regras de cada componente. */
+  --bg: var(--yellow);
+  --fg: var(--ink);
+  --fg-dim: var(--ink-dim);
+  --fg-dimmer: var(--ink-dimmer);
+  --line: rgba(20, 16, 11, 0.16);
+  --accent: var(--ink);
+  --accent-fg: var(--yellow);
+  /* Superfícies sólidas: sem vidro, o volume vem de sombra e borda */
+  --surface: #fffaea;
+  --surface-fg: var(--ink);
+  --surface-line: rgba(20, 16, 11, 0.12);
+  --surface-shadow: 0 20px 44px -26px rgba(20, 16, 11, 0.55);
+  --surface-shadow-hi: 0 34px 64px -24px rgba(20, 16, 11, 0.68);
 
   --radius-sm: 12px;
   --radius-md: 20px;
@@ -48,7 +61,7 @@ html {
 
 body {
   margin: 0;
-  color: var(--ink);
+  color: var(--fg);
   background-color: var(--yellow);
   /* Variação sutil para o amarelo não ficar chapado em telas grandes */
   background-image:
@@ -82,13 +95,17 @@ h1, h2, h3 {
 /* Texto de destaque: contorno vazado — leve e divertido sobre o amarelo.
    Fallback em marrom sólido caso o navegador não suporte text-stroke,
    senão o texto ficaria invisível. */
-.text-ink { color: var(--ink-3); }
+.text-ink { color: var(--fg-dim); }
 @supports ((-webkit-text-stroke: 2px #000)) {
   .text-ink {
     color: transparent;
-    -webkit-text-stroke: 2px var(--ink);
+    /* --fg garante que o contorno acompanha o tema: preto na seção amarela,
+       creme na seção preta */
+    -webkit-text-stroke: 2px var(--fg);
   }
 }
+/* Na seção preta o contorno fica amarelo, que é o acento ali */
+.section--ink .text-ink { -webkit-text-stroke-color: var(--yellow); }
 
 a { color: inherit; text-decoration: none; }
 
@@ -96,20 +113,26 @@ a { color: inherit; text-decoration: none; }
 .svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 
 /* ============================================================
-   Glassmorphism
+   Seções pretas — troca de tema por tokens
+   O líquido preto do fundo continua; só as superfícies deixam de ser
+   vidro e passam a ser sólidas.
    ============================================================ */
-.glass {
-  background: var(--glass);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border: 1px solid var(--glass-border);
-  /* Borda superior mais clara = luz batendo na quina do vidro */
-  border-top-color: rgba(255, 255, 255, 0.75);
-  box-shadow: 0 18px 40px -24px rgba(20, 16, 11, 0.45);
+.section--ink {
+  --bg: var(--ink);
+  --fg: var(--yellow-3);
+  --fg-dim: rgba(255, 240, 184, 0.7);
+  --fg-dimmer: rgba(255, 240, 184, 0.45);
+  --line: rgba(255, 240, 184, 0.18);
+  --accent: var(--yellow);
+  --accent-fg: var(--ink);
+  --surface: #221b13;
+  --surface-fg: var(--yellow-3);
+  --surface-line: rgba(255, 240, 184, 0.16);
+  --surface-shadow: 0 20px 44px -24px rgba(0, 0, 0, 0.85);
+  --surface-shadow-hi: 0 34px 64px -22px rgba(0, 0, 0, 0.95);
+  background: var(--bg);
+  color: var(--fg);
 }
-
-/* O bloco de prefers-reduced-transparency fica no fim do arquivo, depois de
-   todos os componentes — senão as regras de .card/.amenity o sobrescreveriam. */
 
 /* ============================================================
    Botões — pretos com efeito gel
@@ -156,8 +179,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 .btn--ink {
-  background: var(--ink);
-  color: var(--yellow);
+  background: var(--accent);
+  color: var(--accent-fg);
   box-shadow: 0 10px 26px -10px rgba(20, 16, 11, 0.7);
 }
 .btn--ink:hover { box-shadow: 0 16px 34px -10px rgba(20, 16, 11, 0.8); }
@@ -171,23 +194,27 @@ a { color: inherit; text-decoration: none; }
   transition: transform 0.55s var(--ease-out);
 }
 .btn--ink:hover::before { transform: scale(1.6); }
-
-.btn--ghost {
-  background: var(--glass);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  color: var(--ink);
-  border: 1px solid var(--glass-border);
+/* Em seção preta o botão é amarelo: o gel escurece de leve em vez de clarear */
+.section--ink .btn--ink::before {
+  background: linear-gradient(120deg, var(--yellow-2), var(--yellow-deep) 70%);
 }
-.btn--ghost:hover { background: var(--glass-strong); }
+
+/* Sem vidro: superfície sólida com borda definida */
+.btn--ghost {
+  background: var(--surface);
+  color: var(--surface-fg);
+  border: 1.5px solid var(--surface-line);
+  box-shadow: var(--surface-shadow);
+}
+.btn--ghost:hover { box-shadow: var(--surface-shadow-hi); }
 
 .btn--outline {
   background: transparent;
-  color: var(--ink);
-  border: 2px solid var(--ink);
+  color: var(--fg);
+  border: 2px solid var(--fg);
   padding: 13px 26px;
 }
-.btn--outline:hover { background: var(--ink); color: var(--yellow); }
+.btn--outline:hover { background: var(--fg); color: var(--bg); }
 
 .btn--lg { padding: 18px 34px; font-size: 1.02rem; }
 
@@ -219,12 +246,15 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   pointer-events: none;
   z-index: 0;
-  background: var(--ink);
+  /* Segue o tema: mancha escura no amarelo, clara no preto */
+  background: var(--fg);
   opacity: 0.07;
   filter: blur(18px);
   animation: blobMorph 16s var(--ease-in-out) infinite;
 }
 .blob--brown { background: var(--ink-3); opacity: 0.1; }
+.section--ink .blob { opacity: 0.05; }
+.section--ink .blob--brown { background: var(--yellow); opacity: 0.06; }
 .blob--sharp { filter: none; opacity: 0.055; }
 
 @keyframes blobMorph {
@@ -237,7 +267,13 @@ a { color: inherit; text-decoration: none; }
   .blob { animation: none; border-radius: 55% 45% 50% 50% / 52% 48% 52% 48%; }
 }
 
-/* 2. Faixas de líquido preto entre as seções */
+/* 2. Faixas de líquido preto entre as seções.
+   Três papéis:
+   - padrão: faixa flutuando entre duas seções amarelas
+   - --pour: o preto escorre para baixo e encosta na seção preta seguinte
+   - --rise: o mesmo, espelhado, saindo de uma seção preta acima
+   Assim o líquido deixa de ser enfeite e passa a ser a própria transição
+   entre o amarelo e o preto. */
 .liquid-divider {
   position: relative;
   height: 150px;
@@ -245,7 +281,11 @@ a { color: inherit; text-decoration: none; }
   overflow: hidden;
   pointer-events: none;
   z-index: 2;
+  background: var(--yellow);
 }
+.liquid-divider--pour { margin-bottom: 0; }
+.liquid-divider--rise { margin-top: 0; }
+.liquid-divider--rise .liquid-divider__svg { transform: scaleY(-1); }
 .liquid-divider__svg {
   position: absolute;
   top: 0; left: 0;
@@ -297,7 +337,8 @@ a { color: inherit; text-decoration: none; }
 .stickers { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 .sticker {
   position: absolute;
-  color: var(--ink);
+  /* --fg segue o tema: preto na seção amarela, creme na preta */
+  color: var(--fg);
   opacity: 0.5;
   transform: rotate(var(--deg, 0deg));
   animation: stickerDrift 13s var(--ease-in-out) infinite;
@@ -306,17 +347,17 @@ a { color: inherit; text-decoration: none; }
 
 /* Grade de pontinhos em CSS puro — sem SVG, sem custo */
 .sticker--dots {
-  background-image: radial-gradient(var(--ink) 1.6px, transparent 1.7px);
+  background-image: radial-gradient(currentColor 1.6px, transparent 1.7px);
   background-size: 13px 13px;
   opacity: 0.34;
 }
 .sticker--ring {
-  border: 2.5px solid var(--ink);
+  border: 2.5px solid currentColor;
   border-radius: 50%;
   opacity: 0.4;
 }
 .sticker--diamond {
-  background: var(--ink);
+  background: currentColor;
   --deg: 45deg;
   opacity: 0.42;
 }
@@ -324,7 +365,7 @@ a { color: inherit; text-decoration: none; }
 .sticker--bars {
   background-image: repeating-linear-gradient(
     -52deg,
-    var(--ink) 0 3px,
+    currentColor 0 3px,
     transparent 3px 11px
   );
   opacity: 0.4;
@@ -339,28 +380,37 @@ a { color: inherit; text-decoration: none; }
   .sticker { animation: none; }
 }
 
-/* 3. Molduras líquidas para as fotos */
-.liquid-frame {
+/* 3. Molduras das fotos — limpas e premium, sem deformação líquida.
+   O volume vem de moldura sólida deslocada + sombra profunda. */
+.photo-frame {
   position: relative;
   overflow: hidden;
-  border-radius: 60% 40% 48% 52% / 54% 46% 54% 46%;
-  animation: blobMorph 18s var(--ease-in-out) infinite;
-  box-shadow: 0 30px 60px -30px rgba(20, 16, 11, 0.6);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 34px 70px -34px rgba(20, 16, 11, 0.72);
 }
-/* Anel de líquido preto ao redor, com tempo diferente = orgânico */
-.liquid-frame::after {
-  content: '';
+/* Moldura preta deslocada atrás da foto: dá profundidade sem vidro */
+.photo-frame__mat {
   position: absolute; inset: 0;
-  border: 3px solid var(--ink);
-  border-radius: inherit;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-lg);
   pointer-events: none;
+  z-index: 2;
 }
-.liquid-frame--soft {
-  border-radius: 52% 48% 46% 54% / 48% 52% 48% 52%;
-  animation-duration: 22s;
+/* A placa sólida atrás, deslocada — detalhe gráfico, não líquido */
+.photo-stack { position: relative; }
+.photo-stack::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+  background: var(--ink);
+  transform: translate(18px, 18px);
+  z-index: 0;
+  transition: transform 0.7s var(--ease-out);
 }
+.photo-stack:hover::before { transform: translate(24px, 24px); }
 @media (prefers-reduced-motion: reduce) {
-  .liquid-frame { animation: none; border-radius: var(--radius-lg); }
+  .photo-stack::before, .photo-stack:hover::before { transform: translate(14px, 14px); }
 }
 
 /* 4. Cursor líquido: gota + rastro que se fundem pelo filtro goo */
@@ -378,9 +428,13 @@ a { color: inherit; text-decoration: none; }
 .liquid-cursor span {
   position: absolute;
   border-radius: 50%;
-  background: var(--ink);
+  /* Amarelo + mix-blend-mode: difference se resolve sozinho contra
+     qualquer fundo — o cursor é fixo e passa por seções amarelas e pretas,
+     então uma cor fixa desapareceria em uma das duas. */
+  background: var(--yellow);
   will-change: transform;
 }
+.liquid-cursor { mix-blend-mode: difference; }
 .liquid-cursor__dot { width: 16px; height: 16px; margin: -8px 0 0 -8px; }
 .liquid-cursor__trail { width: 30px; height: 30px; margin: -15px 0 0 -15px; opacity: 0.55; }
 @media (prefers-reduced-motion: reduce), (pointer: coarse) {
@@ -434,7 +488,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ============================================================
-   Nav — pílula de vidro flutuante
+   Nav — pílula sólida flutuante (sem vidro)
    ============================================================ */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
@@ -445,18 +499,26 @@ a { color: inherit; text-decoration: none; }
   display: flex; align-items: center; justify-content: space-between; gap: 20px;
   border-radius: 999px;
   padding: 8px 8px 8px 16px;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   transition: background 0.4s var(--ease-out), border-color 0.4s var(--ease-out),
-              box-shadow 0.4s var(--ease-out), backdrop-filter 0.4s var(--ease-out);
+              box-shadow 0.4s var(--ease-out), color 0.4s var(--ease-out);
 }
 .nav.is-scrolled { padding: 10px 0; }
 .nav.is-scrolled .nav__inner {
-  background: var(--glass);
-  backdrop-filter: blur(18px) saturate(150%);
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
-  border-color: var(--glass-border);
-  border-top-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 14px 34px -20px rgba(20, 16, 11, 0.5);
+  background: var(--ink);
+  color: var(--yellow-3);
+  border-color: rgba(255, 240, 184, 0.16);
+  box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.75);
+}
+/* Dentro da pílula preta os links e o nome invertem */
+.nav.is-scrolled .nav__links a { color: rgba(255, 240, 184, 0.72); }
+.nav.is-scrolled .nav__links a:hover { color: var(--yellow); }
+.nav.is-scrolled .nav__links a::after { background: var(--yellow); }
+.nav.is-scrolled .nav__brand-text em { color: var(--yellow); }
+.nav.is-scrolled .nav__burger span { background: var(--yellow-3); }
+.nav.is-scrolled .nav__cta { background: var(--yellow); color: var(--ink); }
+.nav.is-scrolled .nav__cta::before {
+  background: linear-gradient(120deg, var(--yellow-2), var(--yellow-deep) 70%);
 }
 .nav__brand {
   display: flex; align-items: center; gap: 10px;
@@ -547,13 +609,22 @@ a { color: inherit; text-decoration: none; }
 
 /* Visual: fotos em crossfade dentro do blob líquido */
 /* A largura máxima fica no .hero__visual (não no frame) para o poste de
-   barbeiro, posicionado em relação a ele, encostar na borda da foto em vez
-   de flutuar solto no amarelo */
-.hero__visual { position: relative; max-width: 440px; margin-left: auto; }
+   barbeiro, posicionado em relação a ele, encostar na borda da foto.
+   `width: 100%` é obrigatório: item de grid com margin auto não estica, e
+   sem base definida o conteúdo (só filhos absolutos) colapsa para 0. */
+.hero__visual {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  margin-left: auto;
+}
 .hero__frame {
   position: relative;
   aspect-ratio: 4 / 5;
 }
+/* Os slides do hero são absolutos, então a moldura precisa preencher o
+   frame — em fluxo normal ela ficaria com altura zero */
+.hero__frame .photo-frame { position: absolute; inset: 0; }
 .hero__slide {
   position: absolute; inset: 0;
   background-size: cover; background-position: center;
@@ -596,7 +667,7 @@ a { color: inherit; text-decoration: none; }
 /* Ícones ambientes flutuando */
 .hero__floaters { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
 .hero__floater {
-  position: absolute; color: var(--ink); opacity: 0.14;
+  position: absolute; color: var(--fg); opacity: 0.16;
   animation: floatDrift ease-in-out infinite;
 }
 @keyframes floatDrift {
@@ -607,9 +678,9 @@ a { color: inherit; text-decoration: none; }
 
 /* Poste de barbeiro — listras preto/amarelo, loop sem emenda */
 .barberpole {
-  /* top ~28%: onde o blob da moldura é mais largo, então o poste encosta
-     na foto em vez de sobrar no vazio */
-  position: absolute; top: 28%; left: -13px;
+  /* Fica inteiro do lado de fora da moldura (que agora é retangular),
+     encostado nela — meio escondido atrás da foto ficava estranho */
+  position: absolute; top: 22%; left: -42px;
   pointer-events: none;
   width: 26px; height: 128px;
   border-radius: 13px;
@@ -723,14 +794,18 @@ a { color: inherit; text-decoration: none; }
    sem virar contexto de scroll */
 section { position: relative; padding: 100px 0; overflow-x: clip; }
 .section-kicker {
-  color: var(--ink-3); font-weight: 700; letter-spacing: 0.2em; font-size: 0.76rem;
+  color: var(--fg-dim); font-weight: 700; letter-spacing: 0.2em; font-size: 0.76rem;
   text-transform: uppercase; margin: 0 0 12px;
 }
+.section--ink .section-kicker { color: var(--yellow); }
 .section-title {
   font-size: clamp(2rem, 4.4vw, 3.2rem);
-  line-height: 1.02;
+  /* Leading apertado no display, tracking negativo: quanto maior o texto,
+     mais as letras parecem soltas, então fecha um pouco */
+  line-height: 1.0;
+  letter-spacing: -0.015em;
   margin: 0 0 20px;
-  color: var(--ink);
+  color: var(--fg);
 }
 .section-head { max-width: 660px; margin: 0 auto 56px; text-align: center; position: relative; z-index: 1; }
 .section-head .section-title { margin-bottom: 0; }
@@ -769,10 +844,10 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 /* Assimetria de coluna: a foto desce, o texto sobe */
 .sobre__media { position: relative; transform: translateY(26px) rotate(-1.2deg); }
 .sobre__text { transform: translateY(-18px); }
-.sobre__frame { position: relative; }
+.sobre__frame { position: relative; z-index: 1; }
 .sobre__frame img {
   width: 100%; aspect-ratio: 4/5; object-fit: cover;
-  transition: transform 0.8s var(--ease-out);
+  transition: transform 0.9s var(--ease-out);
 }
 .sobre__media:hover .sobre__frame img { transform: scale(1.06); }
 .sobre__badge {
@@ -815,23 +890,21 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 }
 .card {
   position: relative;
-  background: var(--glass);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  border: 1px solid var(--glass-border);
-  border-top-color: rgba(255, 255, 255, 0.8);
+  background: var(--surface);
+  color: var(--surface-fg);
+  border: 1.5px solid var(--surface-line);
   border-radius: var(--radius-md);
   padding: 32px 26px;
-  box-shadow: 0 18px 40px -28px rgba(20, 16, 11, 0.4);
+  box-shadow: var(--surface-shadow);
   transition:
     transform 0.5s var(--ease-bounce),
     border-radius 0.6s var(--ease-out),
-    background 0.4s var(--ease-out),
+    border-color 0.4s var(--ease-out),
     box-shadow 0.4s var(--ease-out);
 }
 .card:hover {
-  background: var(--glass-strong);
-  box-shadow: 0 30px 55px -28px rgba(20, 16, 11, 0.55);
+  box-shadow: var(--surface-shadow-hi);
+  border-color: var(--accent);
   border-radius: 42% 58% 54% 46% / 12% 12% 14% 14%;
   /* Endireita ao passar o mouse — o card "se ajeita" quando você chega nele */
   --tilt: 0deg;
@@ -848,8 +921,8 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 .card__icon {
   width: 56px; height: 56px; border-radius: 16px;
   display: flex; align-items: center; justify-content: center;
-  background: var(--ink);
-  color: var(--yellow);
+  background: var(--accent);
+  color: var(--accent-fg);
   margin-bottom: 20px;
   transition: transform 0.5s var(--ease-bounce), border-radius 0.6s var(--ease-out);
 }
@@ -859,9 +932,10 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 }
 .card h3 {
   font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 1.12rem;
-  margin-bottom: 10px; color: var(--ink);
+  margin-bottom: 10px; color: var(--surface-fg);
 }
-.card p { color: var(--ink-dim); font-size: 0.92rem; margin: 0; }
+.card p { color: var(--fg-dim); font-size: 0.92rem; margin: 0; }
+.section--ink .card p { color: rgba(255, 240, 184, 0.66); }
 
 /* Ícones entram com um pulinho quando o card aparece */
 .card.in-view .card__icon {
@@ -917,7 +991,7 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   aspect-ratio: 3 / 4;
   overflow: hidden;
   /* Moldura líquida, cada card com fase própria */
-  border-radius: 20% 26% 18% 24% / 14% 12% 18% 16%;
+  border-radius: var(--radius-lg);
   background: var(--ink);
   display: flex; align-items: center; justify-content: center;
   color: var(--yellow);
@@ -928,11 +1002,8 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
     box-shadow 0.5s var(--ease-out);
   box-shadow: 0 20px 44px -26px rgba(20, 16, 11, 0.6);
 }
-.team-card:nth-child(2n) .team-card__media { border-radius: 26% 20% 24% 18% / 12% 16% 14% 18%; }
-.team-card:nth-child(3n) .team-card__media { border-radius: 18% 24% 20% 26% / 16% 14% 18% 12%; }
 .team-card:hover .team-card__media {
   transform: translateY(-10px) scale(1.03);
-  border-radius: 24% 18% 26% 20% / 18% 14% 12% 16%;
   box-shadow: 0 34px 64px -24px rgba(20, 16, 11, 0.7);
 }
 .team-card__avatar { opacity: 0.5; transition: transform 0.6s var(--ease-bounce), opacity 0.4s var(--ease-out); }
@@ -982,12 +1053,17 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   background-size: cover; background-position: center;
   will-change: transform;
 }
-/* Overlay amarelo forte: a foto fica só como textura, o fundo continua amarelo */
+/* Seção preta: a foto vira textura escura, quase carvão, com um respiro
+   de amarelo vindo de baixo */
 .ambiente__scrim {
   position: absolute; inset: 0;
+  /* Topo e base 100% opacos para encostar sem emenda nas faixas líquidas;
+     o miolo abre um pouco e deixa a foto aparecer como textura */
   background:
-    linear-gradient(180deg, rgba(252, 201, 32, 0.93), rgba(224, 168, 0, 0.9)),
-    rgba(252, 201, 32, 0.5);
+    linear-gradient(180deg,
+      var(--ink) 0%, rgba(20, 16, 11, 0.88) 18%,
+      rgba(20, 16, 11, 0.84) 55%, var(--ink) 96%),
+    radial-gradient(ellipse 70% 50% at 50% 118%, rgba(252, 201, 32, 0.2), transparent 70%);
 }
 .ambiente__content { position: relative; z-index: 1; text-align: center; }
 .ambiente__content .section-kicker,
@@ -1001,25 +1077,25 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 .amenity {
   display: flex; flex-direction: column; align-items: center; gap: 12px;
   padding: 28px 16px;
-  background: var(--glass);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border: 1px solid var(--glass-border);
-  border-top-color: rgba(255, 255, 255, 0.8);
+  background: var(--surface);
+  border: 1.5px solid var(--surface-line);
   border-radius: var(--radius-md);
+  box-shadow: var(--surface-shadow);
   transition:
     transform 0.5s var(--ease-bounce),
     border-radius 0.6s var(--ease-out),
-    background 0.35s var(--ease-out);
+    border-color 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
 }
 .amenity:hover {
   transform: translateY(-8px) scale(1.03);
-  background: var(--glass-strong);
+  border-color: var(--accent);
+  box-shadow: var(--surface-shadow-hi);
   border-radius: 46% 54% 50% 50% / 16% 14% 18% 16%;
 }
 .amenity:hover svg { transform: rotate(-10deg) scale(1.12); }
-.amenity svg { color: var(--ink); transition: transform 0.5s var(--ease-bounce); }
-.amenity span { font-size: 0.85rem; font-weight: 700; text-align: center; color: var(--ink); }
+.amenity svg { color: var(--accent); transition: transform 0.5s var(--ease-bounce); }
+.amenity span { font-size: 0.85rem; font-weight: 700; text-align: center; color: var(--surface-fg); }
 /* Fichas em zigue-zague em vez de linha reta */
 .amenities .amenity:nth-child(odd) { margin-top: 16px; }
 .amenities .amenity:nth-child(even) { margin-bottom: 16px; }
@@ -1038,14 +1114,14 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   margin: 0; position: relative; overflow: hidden;
   grid-column: span 1; grid-row: span 1;
   background: var(--ink);
-  border: 3px solid var(--ink);
-  /* Cantos orgânicos, cada item com fase própria — suaves o suficiente
-     para não distorcer a foto */
-  border-radius: 16% 24% 18% 22% / 24% 18% 26% 20%;
-  transition: transform 0.55s var(--ease-bounce), border-radius 0.8s var(--ease-out);
+  border: 2px solid var(--ink);
+  /* Cantos limpos: a foto não é mais deformada */
+  border-radius: var(--radius-lg);
+  box-shadow: var(--surface-shadow);
+  transition:
+    transform 0.55s var(--ease-bounce),
+    box-shadow 0.45s var(--ease-out);
 }
-.gallery-item:nth-child(2n) { border-radius: 24% 16% 22% 18% / 18% 26% 20% 24%; }
-.gallery-item:nth-child(3n) { border-radius: 20% 22% 16% 24% / 26% 20% 24% 18%; }
 /* Desalinho bem discreto: são itens de grid, ângulo maior faz vizinho sobrepor */
 .gallery-grid .gallery-item:nth-child(1) { --tilt: -0.7deg; --shift: 6px; }
 .gallery-grid .gallery-item:nth-child(2) { --tilt: 0.8deg;  --shift: -5px; }
@@ -1058,7 +1134,7 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.7s var(--ease-out);
 }
-.gallery-item:hover { border-radius: 24% 18% 24% 16% / 20% 26% 18% 26%; }
+.gallery-item:hover { box-shadow: var(--surface-shadow-hi); }
 .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.08); }
 
 .gallery-item__play {
@@ -1112,13 +1188,13 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   position: relative;
   aspect-ratio: 4/3;
   overflow: hidden;
-  border: 3px solid var(--ink);
-  border-radius: 44% 56% 50% 50% / 14% 14% 16% 16%;
-  box-shadow: 0 30px 60px -30px rgba(20, 16, 11, 0.55);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--surface-shadow);
   background: var(--ink);
-  transition: border-radius 0.9s var(--ease-out);
+  transition: box-shadow 0.5s var(--ease-out);
 }
-.map-embed:hover { border-radius: 54% 46% 44% 56% / 18% 14% 14% 18%; }
+.map-embed:hover { box-shadow: var(--surface-shadow-hi); }
 .map-embed iframe { display: block; }
 .map-embed__link {
   display: inline-flex; align-items: center; gap: 8px;
@@ -1138,11 +1214,13 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
    CTA final
    ============================================================ */
 .cta-final { text-align: center; padding: 130px 0; overflow: hidden; }
+/* Halo discreto de luz amarela. Era um clarão creme pensado para fundo
+   amarelo; sobre o preto ele apagava o título. */
 .cta-final__glow {
   position: absolute; top: 50%; left: 50%; z-index: 0;
-  width: 520px; height: 520px; margin: -260px 0 0 -260px;
+  width: 620px; height: 620px; margin: -310px 0 0 -310px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 240, 184, 0.85), transparent 70%);
+  background: radial-gradient(circle, rgba(252, 201, 32, 0.16), transparent 68%);
   animation: ctaGlowPulse 5s ease-in-out infinite;
 }
 @keyframes ctaGlowPulse {
@@ -1154,16 +1232,21 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 .cta-final__content { position: relative; z-index: 1; }
 .cta-final h2 {
   font-size: clamp(2.4rem, 6.2vw, 4.4rem); line-height: 0.98;
-  margin-bottom: 20px; color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 20px; color: var(--fg);
 }
-.cta-final p { color: var(--ink-dim); max-width: 460px; margin: 0 auto 36px; }
+.cta-final p { color: var(--fg-dim); max-width: 460px; margin: 0 auto 36px; }
 
 /* ============================================================
    Footer
    ============================================================ */
+/* Preto, dando sequência ao CTA final sem emenda */
 .footer {
+  --fg: var(--yellow-3);
+  --fg-dim: rgba(255, 240, 184, 0.66);
   position: relative;
-  background: var(--yellow-deep);
+  background: var(--ink);
+  color: var(--fg);
   padding-top: 48px;
 }
 .footer__grid {
@@ -1172,24 +1255,24 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 }
 .footer__brand {
   display: flex; align-items: center; gap: 10px;
-  font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; color: var(--ink);
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; color: var(--fg);
 }
 .footer__brand img {
-  border-radius: 50%; border: 2px solid var(--ink);
+  border-radius: 50%; border: 2px solid var(--yellow);
   transition: transform 0.5s var(--ease-bounce);
 }
 .footer__brand:hover img { transform: rotate(-12deg) scale(1.08); }
-.footer__brand em { color: var(--ink-3); font-style: normal; }
+.footer__brand em { color: var(--yellow); font-style: normal; }
 .footer__links {
   display: flex; gap: 22px; flex-wrap: wrap;
-  font-size: 0.9rem; font-weight: 600; color: var(--ink-dim);
+  font-size: 0.9rem; font-weight: 600; color: var(--fg-dim);
 }
-.footer__links a:hover { color: var(--ink); }
+.footer__links a:hover { color: var(--yellow); }
 .footer__social { display: flex; gap: 12px; }
 .footer__social a {
   width: 40px; height: 40px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  background: var(--ink); color: var(--yellow);
+  background: var(--yellow); color: var(--ink);
   transition: transform 0.4s var(--ease-bounce), border-radius 0.5s var(--ease-out);
 }
 .footer__social a:hover {
@@ -1197,9 +1280,9 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   border-radius: 46% 54% 50% 50% / 54% 50% 50% 46%;
 }
 .footer__bottom {
-  border-top: 2px solid rgba(20, 16, 11, 0.15);
+  border-top: 1.5px solid rgba(255, 240, 184, 0.16);
   padding: 18px 0; text-align: center;
-  color: var(--ink-dim); font-size: 0.82rem;
+  color: var(--fg-dim); font-size: 0.82rem;
 }
 
 /* ============================================================
@@ -1214,8 +1297,10 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   display: flex; align-items: center; gap: 8px;
   background: var(--ink);
   color: var(--yellow);
-  border: none; border-radius: 999px;
-  padding: 16px 22px; font-weight: 700; font-size: 0.9rem;
+  /* Borda amarela: o FAB é fixo e passa por cima de seções amarelas e
+     pretas, então sem ela desaparece no preto */
+  border: 2px solid var(--yellow); border-radius: 999px;
+  padding: 15px 21px; font-weight: 700; font-size: 0.9rem;
   cursor: pointer;
   box-shadow: 0 16px 36px -12px rgba(20, 16, 11, 0.7);
   animation: fabPulse 2.6s var(--ease-in-out) infinite;
@@ -1277,11 +1362,10 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   transition: opacity 0.35s var(--ease-out), visibility 0.35s var(--ease-out);
 }
 .modal.is-open { visibility: visible; opacity: 1; }
+/* Escurecimento sólido, sem blur — era o último resquício de vidro */
 .modal__backdrop {
   position: absolute; inset: 0;
-  background: rgba(20, 16, 11, 0.55);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(12, 9, 6, 0.82);
 }
 .modal__card {
   position: relative; z-index: 1;
@@ -1357,7 +1441,9 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 }
 
 .modal__foot {
-  margin: 20px 0 0; font-size: 0.78rem; color: var(--ink-dimmer);
+  /* --ink-dimmer dava 3,03:1 sobre o amarelo do cartão, abaixo do mínimo
+     de 4,5:1 para texto pequeno */
+  margin: 20px 0 0; font-size: 0.78rem; color: var(--ink-dim);
   position: relative; z-index: 1;
 }
 
@@ -1435,26 +1521,88 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   .sobre__badge { position: static; margin: 16px auto 0; max-width: none; }
 }
 
+/* Nota: o bloco de prefers-reduced-transparency foi removido junto com o
+   glassmorphism. Não existe mais nenhum backdrop-filter nem superfície
+   translúcida no site, então não havia mais nada para essa media query
+   deixar sólido. */
+
 /* ============================================================
-   Transparência reduzida — precisa ficar no FIM do arquivo para
-   vencer as regras de vidro dos componentes (mesma especificidade,
-   quem vem depois ganha).
+   Camada de animação premium
+   Só transform / opacity / clip-path — as três que o compositor
+   resolve sem repintar layout.
    ============================================================ */
-@media (prefers-reduced-transparency: reduce) {
-  .glass,
-  .btn--ghost,
-  .card,
-  .amenity,
-  .nav.is-scrolled .nav__inner {
-    background: var(--yellow-3);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    border-color: var(--ink-line);
-  }
-  .card:hover, .amenity:hover, .btn--ghost:hover { background: #fff7d6; }
-  .modal__backdrop {
-    background: rgba(20, 16, 11, 0.92);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
+
+/* 1. Título que sobe palavra por palavra, cada uma atrás de uma máscara.
+      O JS quebra o texto em .word > span. */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  /* Espaço entre palavras é preservado pelo espaço em branco do HTML */
+}
+.word > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 0.9s var(--ease-out);
+  transition-delay: calc(var(--wi, 0) * 0.055s);
+}
+.in-view .word > span,
+.word.in-view > span { transform: translateY(0); }
+
+/* 2. Foto revelada por cortina (clip-path) em vez de simples fade.
+   O clip fica no FILHO, nunca no elemento observado: um elemento com
+   clip-path colapsado tem área visível zero, então o IntersectionObserver
+   nunca o considera visível e a revelação travava para sempre. O
+   [data-wipe] (pai, sem clip) é quem o observador acompanha. */
+[data-wipe] .photo-frame {
+  clip-path: inset(0 0 100% 0 round var(--radius-lg));
+  transition: clip-path 1.05s var(--ease-out);
+}
+[data-wipe].in-view .photo-frame { clip-path: inset(0 0 0 0 round var(--radius-lg)); }
+
+/* 3. Ícone desenhado com o traço (stroke-dashoffset) */
+.card.in-view .card__icon svg [stroke] {
+  animation: iconDraw 1.1s var(--ease-out) both;
+  animation-delay: calc(var(--d, 0) * 0.09s + 0.35s);
+}
+@keyframes iconDraw {
+  from { stroke-dasharray: 90; stroke-dashoffset: 90; }
+  to   { stroke-dasharray: 90; stroke-dashoffset: 0; }
+}
+
+/* 4. Sublinhado que corre da esquerda nos links de contato */
+.contact-list a, .map-embed__link {
+  position: relative;
+  border-bottom-color: transparent !important;
+}
+.contact-list a::after, .map-embed__link::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: -2px;
+  height: 2px; background: currentColor;
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.5s var(--ease-out);
+}
+.contact-list a:hover::after, .map-embed__link:hover::after { transform: scaleX(1); }
+
+/* 5. Brilho que atravessa a seção preta bem devagar — dá vida sem distrair */
+.section--ink::after {
+  content: '';
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse 40% 60% at 50% 50%, rgba(252, 201, 32, 0.09), transparent 70%);
+  animation: inkSheen 14s var(--ease-in-out) infinite;
+}
+@keyframes inkSheen {
+  0%, 100% { transform: translateX(-30%); opacity: 0.5; }
+  50%      { transform: translateX(30%); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word > span { transform: none; transition: none; }
+  [data-wipe] .photo-frame,
+  [data-wipe].in-view .photo-frame { clip-path: none; transition: none; }
+  .card.in-view .card__icon svg [stroke] { animation: none; }
+  .contact-list a::after, .map-embed__link::after { transition: none; }
+  .section--ink::after { animation: none; }
 }

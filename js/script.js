@@ -42,8 +42,48 @@
     });
   });
 
+  /* ---------- Título palavra por palavra ----------
+     Quebra os .section-title em <span class="word"><span>palavra</span></span>
+     para cada palavra poder subir de trás de uma máscara. Só mexe em nós de
+     texto: os <span class="text-ink"> internos continuam intactos. */
+  const splitWords = (root) => {
+    const walk = (node) => {
+      [...node.childNodes].forEach((child) => {
+        if (child.nodeType === Node.TEXT_NODE) {
+          const parts = child.textContent.split(/(\s+)/);
+          if (!parts.some((p) => p.trim())) return;
+          const frag = document.createDocumentFragment();
+          parts.forEach((part) => {
+            if (!part.trim()) {
+              frag.appendChild(document.createTextNode(part));
+              return;
+            }
+            const outer = document.createElement('span');
+            outer.className = 'word';
+            const inner = document.createElement('span');
+            inner.textContent = part;
+            outer.appendChild(inner);
+            frag.appendChild(outer);
+          });
+          child.replaceWith(frag);
+        } else if (child.nodeType === Node.ELEMENT_NODE) {
+          walk(child);
+        }
+      });
+    };
+    walk(root);
+    // índice sequencial para o atraso em cascata
+    root.querySelectorAll('.word > span').forEach((s, i) => {
+      s.style.setProperty('--wi', i);
+    });
+  };
+
+  if (!reduceMotion) {
+    document.querySelectorAll('.section-title, .cta-final h2').forEach(splitWords);
+  }
+
   /* ---------- Scroll reveal ---------- */
-  const revealEls = document.querySelectorAll('[data-reveal]');
+  const revealEls = document.querySelectorAll('[data-reveal], [data-wipe], .section-title, .cta-final h2');
   if ('IntersectionObserver' in window && !reduceMotion) {
     const io = new IntersectionObserver(
       (entries) => {

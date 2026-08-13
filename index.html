@@ -46,6 +46,15 @@
       C2040,130 1920,130 1800,95 C1680,60 1560,60 1440,95
       C1320,130 1200,130 1080,95 C960,60 840,60 720,95
       C600,130 480,130 360,95 C240,60 120,60 0,95 Z"/>
+
+    <!-- Mesma onda, mas preenchida até o fim: o preto "escorre" e encosta na
+         seção preta. Virada com scaleY(-1) serve para o caminho contrário. -->
+    <path id="liquidPour" d="M0,50
+      C120,15 240,15 360,50 C480,85 600,85 720,50
+      C840,15 960,15 1080,50 C1200,85 1320,85 1440,50
+      C1560,15 1680,15 1800,50 C1920,85 2040,85 2160,50
+      C2280,15 2400,15 2520,50 C2640,85 2760,85 2880,50
+      L2880,150 L0,150 Z"/>
   </defs>
 </svg>
 
@@ -137,9 +146,12 @@
       </div>
 
       <div class="hero__visual reveal-up" style="--d:3">
-        <div class="hero__frame liquid-frame">
-          <div class="hero__slide hero__slide--a" style="background-image:url('assets/img/interior-wide.jpg')"></div>
-          <div class="hero__slide hero__slide--b" style="background-image:url('assets/img/ferramentas.jpg')"></div>
+        <div class="hero__frame photo-stack" data-wipe>
+          <div class="photo-frame">
+            <div class="hero__slide hero__slide--a" style="background-image:url('assets/img/interior-wide.jpg')"></div>
+            <div class="hero__slide hero__slide--b" style="background-image:url('assets/img/ferramentas.jpg')"></div>
+            <span class="photo-frame__mat" aria-hidden="true"></span>
+          </div>
         </div>
         <div class="barberpole" aria-hidden="true">
           <span class="barberpole__cap barberpole__cap--top"></span>
@@ -177,8 +189,11 @@
 
     <div class="container sobre__grid">
       <div class="sobre__media" data-reveal>
-        <div class="sobre__frame liquid-frame liquid-frame--soft">
-          <img src="assets/img/ambiente.jpg" alt="Cadeiras de barbeiro no ambiente da Barbearia Carvalho" loading="lazy">
+        <div class="sobre__frame photo-stack" data-wipe>
+          <div class="photo-frame">
+            <img src="assets/img/ambiente.jpg" alt="Cadeiras de barbeiro no ambiente da Barbearia Carvalho" loading="lazy">
+            <span class="photo-frame__mat" aria-hidden="true"></span>
+          </div>
         </div>
         <div class="sobre__badge">
           <svg class="sobre__badge-icon" viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 2l2.9 6.3L22 9l-5 5.1L18.2 22 12 18.3 5.8 22 7 14.1 2 9l7.1-.7L12 2z"/></svg>
@@ -205,16 +220,16 @@
     </div>
   </section>
 
-  <!-- ===== FAIXA LÍQUIDA ===== -->
-  <div class="liquid-divider" aria-hidden="true">
+  <!-- ===== LÍQUIDO ESCORRENDO PARA A SEÇÃO PRETA ===== -->
+  <div class="liquid-divider liquid-divider--pour" aria-hidden="true">
     <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
-      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidBand"/>
-      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidBand"/>
+      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidPour"/>
+      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidPour"/>
     </svg>
   </div>
 
-  <!-- ===== SERVIÇOS ===== -->
-  <section class="servicos" id="servicos">
+  <!-- ===== SERVIÇOS (preto) ===== -->
+  <section class="servicos section--ink" id="servicos">
     <span class="blob" style="bottom:-6%; left:-14%; width:40vw; height:40vw;" aria-hidden="true"></span>
 
     <div class="stickers" aria-hidden="true">
@@ -283,6 +298,14 @@
       </div>
     </div>
   </section>
+
+  <!-- ===== LÍQUIDO SUBINDO DE VOLTA PARA O AMARELO ===== -->
+  <div class="liquid-divider liquid-divider--rise" aria-hidden="true">
+    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
+      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidPour"/>
+      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidPour"/>
+    </svg>
+  </div>
 
   <!-- ===== EQUIPE ===== -->
   <section class="equipe" id="equipe">
@@ -389,11 +412,11 @@
     </div>
   </section>
 
-  <!-- ===== FAIXA LÍQUIDA COM TESOURA ===== -->
-  <div class="liquid-divider" aria-hidden="true">
+  <!-- ===== LÍQUIDO ESCORRENDO PARA O AMBIENTE (preto), COM TESOURA ===== -->
+  <div class="liquid-divider liquid-divider--pour" aria-hidden="true">
     <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
-      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidBand"/>
-      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidBand"/>
+      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidPour"/>
+      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidPour"/>
     </svg>
     <div class="snip-divider">
       <svg viewBox="0 0 24 24" width="30" height="30" fill="none">
@@ -405,8 +428,8 @@
     </div>
   </div>
 
-  <!-- ===== AMBIENTE ===== -->
-  <section class="ambiente" id="ambiente">
+  <!-- ===== AMBIENTE (preto) ===== -->
+  <section class="ambiente section--ink" id="ambiente">
     <div class="ambiente__bg" style="background-image:url('assets/img/cervejas.jpg')"></div>
     <div class="ambiente__scrim"></div>
     <div class="container ambiente__content">
@@ -434,11 +457,11 @@
     </div>
   </section>
 
-  <!-- ===== FAIXA LÍQUIDA ===== -->
-  <div class="liquid-divider" aria-hidden="true">
+  <!-- ===== LÍQUIDO SUBINDO DE VOLTA PARA O AMARELO ===== -->
+  <div class="liquid-divider liquid-divider--rise" aria-hidden="true">
     <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
-      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidBand"/>
-      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidBand"/>
+      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidPour"/>
+      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidPour"/>
     </svg>
   </div>
 
@@ -532,8 +555,16 @@
     </div>
   </section>
 
-  <!-- ===== CTA FINAL ===== -->
-  <section class="cta-final">
+  <!-- ===== LÍQUIDO ESCORRENDO PARA O FECHAMENTO PRETO ===== -->
+  <div class="liquid-divider liquid-divider--pour" aria-hidden="true">
+    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
+      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidPour"/>
+      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidPour"/>
+    </svg>
+  </div>
+
+  <!-- ===== CTA FINAL (preto) ===== -->
+  <section class="cta-final section--ink">
     <div class="cta-final__glow" aria-hidden="true"></div>
     <div class="stickers" aria-hidden="true">
       <span class="sticker sticker--dots" style="top:14%; left:4%; width:92px; height:48px;"></span>
@@ -556,14 +587,6 @@
       </button>
     </div>
   </section>
-
-  <!-- ===== FAIXA LÍQUIDA ===== -->
-  <div class="liquid-divider" aria-hidden="true">
-    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
-      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidBand"/>
-      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidBand"/>
-    </svg>
-  </div>
 
 </main>
 
