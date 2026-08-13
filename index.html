@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Barbearia Carvalho — Estilo, Tradição e Atitude</title>
 <meta name="description" content="Barbearia Carvalho: cortes, barba e experiência premium. Agende seu horário pelo app Barber e viva o melhor da barbearia moderna.">
-<meta name="theme-color" content="#0b0a08">
+<meta name="theme-color" content="#fcc920">
 
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -15,8 +15,39 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/style.css">
+
+<!-- Marca que o JS está ativo antes da primeira pintura. O estado inicial
+     escondido do reveal-on-scroll é preso a esta classe, então sem JS o
+     conteúdo aparece normalmente em vez de ficar invisível para sempre. -->
+<script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
+
+<!-- ===== SVG DEFS: filtro goo + onda líquida reutilizável ===== -->
+<svg class="svg-defs" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- Funde formas próximas como líquido de verdade -->
+    <filter id="goo">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -11" result="goo"/>
+      <feBlend in="SourceGraphic" in2="goo"/>
+    </filter>
+
+    <!-- Faixa de líquido: 4 períodos de 720px, ondulada em cima e embaixo.
+         Deslizar exatamente 720px fecha o loop sem emenda. -->
+    <path id="liquidBand" d="M0,50
+      C120,15 240,15 360,50 C480,85 600,85 720,50
+      C840,15 960,15 1080,50 C1200,85 1320,85 1440,50
+      C1560,15 1680,15 1800,50 C1920,85 2040,85 2160,50
+      C2280,15 2400,15 2520,50 C2640,85 2760,85 2880,50
+      L2880,95
+      C2760,130 2640,130 2520,95 C2400,60 2280,60 2160,95
+      C2040,130 1920,130 1800,95 C1680,60 1560,60 1440,95
+      C1320,130 1200,130 1080,95 C960,60 840,60 720,95
+      C600,130 480,130 360,95 C240,60 120,60 0,95 Z"/>
+  </defs>
+</svg>
 
 <!-- ===== PRELOADER ===== -->
 <div class="preloader" id="preloader" aria-hidden="true">
@@ -29,8 +60,11 @@
 <!-- ===== SCROLL PROGRESS ===== -->
 <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
-<!-- ===== CURSOR GLOW ===== -->
-<div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+<!-- ===== CURSOR LÍQUIDO ===== -->
+<div class="liquid-cursor" id="liquidCursor" aria-hidden="true">
+  <span class="liquid-cursor__trail"></span>
+  <span class="liquid-cursor__dot"></span>
+</div>
 
 <!-- ===== NAV ===== -->
 <header class="nav" id="nav">
@@ -49,7 +83,7 @@
       <a href="#localizacao">Localização</a>
     </nav>
 
-    <button class="btn btn--gold nav__cta" data-open-modal>Agendar</button>
+    <button class="btn btn--ink nav__cta" data-open-modal>Agendar</button>
 
     <button class="nav__burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
       <span></span><span></span><span></span>
@@ -61,43 +95,48 @@
 
   <!-- ===== HERO ===== -->
   <section class="hero" id="hero">
-    <div class="hero__bg">
-      <div class="hero__slide hero__slide--a" style="background-image:url('assets/img/interior-wide.jpg')"></div>
-      <div class="hero__slide hero__slide--b" style="background-image:url('assets/img/ferramentas.jpg')"></div>
-      <div class="hero__scrim"></div>
-      <div class="hero__grain"></div>
+    <div class="hero__blobs" aria-hidden="true">
+      <span class="blob" style="top:-8%; left:-10%; width:44vw; height:44vw;"></span>
+      <span class="blob blob--brown" style="bottom:-14%; right:-6%; width:34vw; height:34vw; animation-delay:-6s;"></span>
     </div>
 
     <div class="hero__floaters" aria-hidden="true">
-      <svg class="hero__floater" style="top:16%; left:74%; width:56px; height:56px; animation-duration:9s;" viewBox="0 0 24 24" fill="none"><path d="M6 6a3 3 0 100 6 3 3 0 000-6zM6 15a3 3 0 100 6 3 3 0 000-6zM20 4L8.5 15.5M14.5 14.5L20 20M8.5 8.5L12 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <svg class="hero__floater" style="top:52%; left:88%; width:42px; height:42px; animation-duration:11s; animation-delay:-3s;" viewBox="0 0 24 24" fill="none"><path d="M4 20c3-2 4-6 4-9 0-4 3-7 7-7 3.5 0 6 2 6 5 0 2-1 3-3 4 1 1 1 3-1 4-1.5 1.1-1 3-3 3-2 0-2-2-4-2-2 0-3.5 1.5-6 2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
-      <svg class="hero__floater" style="top:74%; left:70%; width:32px; height:32px; animation-duration:8s; animation-delay:-5s;" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.3"/><path d="M9 12h6M12 9v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-      <svg class="hero__floater" style="top:28%; left:92%; width:26px; height:26px; animation-duration:7.5s; animation-delay:-2s;" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      <svg class="hero__floater" style="top:14%; left:52%; width:44px; height:44px; animation-duration:9s;" viewBox="0 0 24 24" fill="none"><path d="M6 6a3 3 0 100 6 3 3 0 000-6zM6 15a3 3 0 100 6 3 3 0 000-6zM20 4L8.5 15.5M14.5 14.5L20 20M8.5 8.5L12 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="hero__floater" style="top:74%; left:44%; width:30px; height:30px; animation-duration:11s; animation-delay:-3s;" viewBox="0 0 24 24" fill="none"><path d="M4 20c3-2 4-6 4-9 0-4 3-7 7-7 3.5 0 6 2 6 5 0 2-1 3-3 4 1 1 1 3-1 4-1.5 1.1-1 3-3 3-2 0-2-2-4-2-2 0-3.5 1.5-6 2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
+      <svg class="hero__floater" style="top:34%; left:4%; width:26px; height:26px; animation-duration:8s; animation-delay:-5s;" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
     </div>
 
-    <div class="barberpole" aria-hidden="true">
-      <span class="barberpole__cap barberpole__cap--top"></span>
-      <span class="barberpole__shaft"></span>
-      <span class="barberpole__shine"></span>
-      <span class="barberpole__cap barberpole__cap--bottom"></span>
-    </div>
+    <div class="hero__inner container">
+      <div class="hero__content">
+        <p class="hero__kicker reveal-up">Barbearia Premium</p>
+        <h1 class="hero__title">
+          <span class="reveal-up" style="--d:1">Estilo é</span>
+          <span class="reveal-up text-ink" style="--d:2">atitude.</span>
+        </h1>
+        <p class="hero__subtitle reveal-up" style="--d:3">
+          Cortes de precisão, barba na navalha e um ambiente que respeita sua história.
+          Bem-vindo à <strong>Barbearia Carvalho</strong>.
+        </p>
+        <div class="hero__actions reveal-up" style="--d:4">
+          <button class="btn btn--ink btn--lg" data-open-modal>
+            <span>Agendar horário</span>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <a href="#ambiente" class="btn btn--ghost btn--lg">Conheça o espaço</a>
+        </div>
+      </div>
 
-    <div class="hero__content container">
-      <p class="hero__kicker reveal-up">BARBEARIA PREMIUM</p>
-      <h1 class="hero__title">
-        <span class="reveal-up" style="--d:1">Estilo é</span>
-        <span class="reveal-up hero__title--gold" style="--d:2">atitude.</span>
-      </h1>
-      <p class="hero__subtitle reveal-up" style="--d:3">
-        Cortes de precisão, barba na navalha e um ambiente que respeita sua história.
-        Bem-vindo à <strong>Barbearia Carvalho</strong>.
-      </p>
-      <div class="hero__actions reveal-up" style="--d:4">
-        <button class="btn btn--gold btn--lg" data-open-modal>
-          <span>Agendar horário</span>
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <a href="#ambiente" class="btn btn--ghost btn--lg">Conheça o espaço</a>
+      <div class="hero__visual reveal-up" style="--d:3">
+        <div class="hero__frame liquid-frame">
+          <div class="hero__slide hero__slide--a" style="background-image:url('assets/img/interior-wide.jpg')"></div>
+          <div class="hero__slide hero__slide--b" style="background-image:url('assets/img/ferramentas.jpg')"></div>
+        </div>
+        <div class="barberpole" aria-hidden="true">
+          <span class="barberpole__cap barberpole__cap--top"></span>
+          <span class="barberpole__shaft"></span>
+          <span class="barberpole__shine"></span>
+          <span class="barberpole__cap barberpole__cap--bottom"></span>
+        </div>
       </div>
     </div>
 
@@ -116,9 +155,11 @@
 
   <!-- ===== SOBRE ===== -->
   <section class="sobre" id="sobre">
+    <span class="blob blob--sharp" style="top:10%; right:-12%; width:38vw; height:38vw;" aria-hidden="true"></span>
+
     <div class="container sobre__grid">
       <div class="sobre__media" data-reveal>
-        <div class="sobre__frame">
+        <div class="sobre__frame liquid-frame liquid-frame--soft">
           <img src="assets/img/ambiente.jpg" alt="Cadeiras de barbeiro no ambiente da Barbearia Carvalho" loading="lazy">
         </div>
         <div class="sobre__badge">
@@ -129,7 +170,7 @@
 
       <div class="sobre__text" data-reveal>
         <p class="section-kicker">Sobre a casa</p>
-        <h2 class="section-title">O estilo é de casa, <span class="text-gold">o cuidado é de família.</span></h2>
+        <h2 class="section-title">O estilo é de casa, <span class="text-ink">o cuidado é de família.</span></h2>
         <p>
           Nosso espaço é climatizado, confortável e feito pra você se sentir à vontade —
           seja no papo com os amigos, no corte com o filho ou só dando aquele trato no
@@ -146,12 +187,22 @@
     </div>
   </section>
 
+  <!-- ===== FAIXA LÍQUIDA ===== -->
+  <div class="liquid-divider" aria-hidden="true">
+    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
+      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidBand"/>
+      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidBand"/>
+    </svg>
+  </div>
+
   <!-- ===== SERVIÇOS ===== -->
   <section class="servicos" id="servicos">
+    <span class="blob" style="bottom:-6%; left:-14%; width:40vw; height:40vw;" aria-hidden="true"></span>
+
     <div class="container">
       <div class="section-head" data-reveal>
         <p class="section-kicker">O que fazemos</p>
-        <h2 class="section-title">Serviços feitos <span class="text-gold">sob medida.</span></h2>
+        <h2 class="section-title">Serviços feitos <span class="text-ink">sob medida.</span></h2>
       </div>
 
       <div class="cards-grid">
@@ -211,7 +262,7 @@
     <div class="container">
       <div class="section-head" data-reveal>
         <p class="section-kicker">Quem cuida do seu estilo</p>
-        <h2 class="section-title">Conheça a <span class="text-gold">equipe.</span></h2>
+        <h2 class="section-title">Conheça a <span class="text-ink">equipe.</span></h2>
       </div>
     </div>
 
@@ -266,7 +317,7 @@
           </div>
         </article>
 
-        <!-- Set B (duplicate, hidden from a11y tree) — makes the -50% loop seamless -->
+        <!-- Set B (duplicata, fora da árvore de acessibilidade) — fecha o loop de -50% -->
         <div class="team-carousel__dup" aria-hidden="true">
           <article class="team-card">
             <div class="team-card__media">
@@ -303,25 +354,29 @@
     </div>
   </section>
 
-  <!-- ===== SNIP DIVIDER ===== -->
-  <div class="snip-divider" aria-hidden="true">
-    <span class="snip-divider__line"></span>
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="none">
-      <path class="snip-divider__blade snip-divider__blade--a" d="M12 12L20 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <path class="snip-divider__blade snip-divider__blade--b" d="M12 12L20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
-      <path d="M12 12L2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <!-- ===== FAIXA LÍQUIDA COM TESOURA ===== -->
+  <div class="liquid-divider" aria-hidden="true">
+    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
+      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidBand"/>
+      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidBand"/>
     </svg>
-    <span class="snip-divider__line"></span>
+    <div class="snip-divider">
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="none">
+        <path class="snip-divider__blade" d="M12 12L20 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path class="snip-divider__blade snip-divider__blade--b" d="M12 12L20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
+        <path d="M12 12L2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
   </div>
 
-  <!-- ===== AMBIENTE / PARALLAX BANNER ===== -->
+  <!-- ===== AMBIENTE ===== -->
   <section class="ambiente" id="ambiente">
     <div class="ambiente__bg" style="background-image:url('assets/img/cervejas.jpg')"></div>
     <div class="ambiente__scrim"></div>
     <div class="container ambiente__content">
-      <p class="section-kicker section-kicker--light" data-reveal>Muito mais que um corte</p>
-      <h2 class="section-title section-title--light" data-reveal>Relaxe. A casa é <span class="text-gold">sua.</span></h2>
+      <p class="section-kicker" data-reveal>Muito mais que um corte</p>
+      <h2 class="section-title" data-reveal>Relaxe. A casa é <span class="text-ink">sua.</span></h2>
 
       <div class="amenities">
         <div class="amenity" data-reveal style="--d:0">
@@ -344,12 +399,22 @@
     </div>
   </section>
 
+  <!-- ===== FAIXA LÍQUIDA ===== -->
+  <div class="liquid-divider" aria-hidden="true">
+    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
+      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidBand"/>
+      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidBand"/>
+    </svg>
+  </div>
+
   <!-- ===== GALERIA ===== -->
   <section class="galeria" id="galeria">
+    <span class="blob blob--sharp" style="top:24%; left:-10%; width:32vw; height:32vw;" aria-hidden="true"></span>
+
     <div class="container">
       <div class="section-head" data-reveal>
         <p class="section-kicker">Registros da casa</p>
-        <h2 class="section-title">Fotos e vídeos <span class="text-gold">direto da barbearia.</span></h2>
+        <h2 class="section-title">Fotos e vídeos <span class="text-ink">direto da barbearia.</span></h2>
       </div>
 
       <div class="gallery-grid">
@@ -383,7 +448,7 @@
     <div class="container localizacao__grid">
       <div data-reveal>
         <p class="section-kicker">Venha nos visitar</p>
-        <h2 class="section-title">Onde a <span class="text-gold">Carvalho</span> te espera.</h2>
+        <h2 class="section-title">Onde a <span class="text-ink">Carvalho</span> te espera.</h2>
         <ul class="contact-list">
           <li data-reveal style="--d:0">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="1.7"/></svg>
@@ -398,7 +463,7 @@
             <span>Atendimento das 9h às 18h</span>
           </li>
         </ul>
-        <button class="btn btn--gold" data-open-modal>Agendar agora</button>
+        <button class="btn btn--ink" data-open-modal>Agendar agora</button>
       </div>
 
       <div class="localizacao__map" data-reveal>
@@ -420,7 +485,6 @@
 
   <!-- ===== CTA FINAL ===== -->
   <section class="cta-final">
-    <div class="cta-final__bg"></div>
     <div class="cta-final__glow" aria-hidden="true"></div>
     <div class="cta-final__floaters" aria-hidden="true">
       <svg class="hero__floater" style="top:20%; left:12%; width:36px; height:36px; animation-duration:8s;" viewBox="0 0 24 24" fill="none"><path d="M6 6a3 3 0 100 6 3 3 0 000-6zM6 15a3 3 0 100 6 3 3 0 000-6zM20 4L8.5 15.5M14.5 14.5L20 20M8.5 8.5L12 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -429,14 +493,22 @@
       <svg class="hero__floater" style="top:70%; left:90%; width:22px; height:22px; animation-duration:10s; animation-delay:-6s;" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.3"/><path d="M9 12h6M12 9v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
     </div>
     <div class="container cta-final__content" data-reveal>
-      <h2>Pronto pra elevar<br><span class="text-gold">seu estilo?</span></h2>
+      <h2>Pronto pra elevar<br><span class="text-ink">seu estilo?</span></h2>
       <p>Agende em segundos direto pelo app Barber e garanta seu horário.</p>
-      <button class="btn btn--gold btn--lg" data-open-modal>
+      <button class="btn btn--ink btn--lg" data-open-modal>
         <span>Agendar pelo App</span>
         <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </button>
     </div>
   </section>
+
+  <!-- ===== FAIXA LÍQUIDA ===== -->
+  <div class="liquid-divider" aria-hidden="true">
+    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
+      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidBand"/>
+      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidBand"/>
+    </svg>
+  </div>
 
 </main>
 
@@ -489,7 +561,7 @@
 
     <img src="assets/img/logo-512.png" alt="" class="modal__logo" width="64" height="64">
     <p class="modal__kicker">Agendamento oficial</p>
-    <h3 id="modalTitle">Agende pelo <span class="text-gold">app Barber</span></h3>
+    <h3 id="modalTitle">Agende pelo app Barber</h3>
     <p class="modal__text">
       Baixe o aplicativo, escolha o profissional, o serviço e o horário —
       tudo em poucos toques.

@@ -150,7 +150,7 @@
   }
 
   /* ---------- Confetti burst ---------- */
-  const confettiColors = ['#f3c135', '#ffdd6b', '#f7f3e9', '#c9932a'];
+  const confettiColors = ['#14100b', '#42271c', '#ffffff', '#2a1d14'];
   const burstConfetti = (x, y) => {
     if (reduceMotion) return;
     const count = 26;
@@ -235,46 +235,70 @@
     });
   }
 
-  /* ---------- Magnetic buttons ---------- */
+  /* ---------- Magnetic buttons ----------
+     Escreve em --mx/--my em vez de `transform`, para o CSS poder compor o
+     ímã com o gel do :hover/:active em vez de um sobrescrever o outro. */
   if (!reduceMotion) {
-    document.querySelectorAll('.btn--gold, .btn--ghost, .btn--outline, .fab').forEach((el) => {
+    document.querySelectorAll('.btn, .fab').forEach((el) => {
       el.addEventListener('mousemove', (e) => {
         const rect = el.getBoundingClientRect();
         const x = e.clientX - rect.left - rect.width / 2;
         const y = e.clientY - rect.top - rect.height / 2;
-        el.style.transition = 'transform 0.12s linear';
-        el.style.transform = `translate(${(x * 0.22).toFixed(1)}px, ${(y * 0.35).toFixed(1)}px)`;
+        el.style.setProperty('--mx', (x * 0.22).toFixed(1) + 'px');
+        el.style.setProperty('--my', (y * 0.35).toFixed(1) + 'px');
       });
       el.addEventListener('mouseleave', () => {
-        el.style.transition = 'transform 0.5s var(--ease-bounce)';
-        el.style.transform = '';
+        el.style.setProperty('--mx', '0px');
+        el.style.setProperty('--my', '0px');
       });
     });
   }
 
-  /* ---------- Cursor glow (desktop, fine-pointer only) ---------- */
-  const cursorGlow = document.getElementById('cursorGlow');
-  if (cursorGlow && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
-    let cgX = window.innerWidth / 2;
-    let cgY = window.innerHeight / 2;
-    let targetX = cgX;
-    let targetY = cgY;
-    let cgActive = false;
+  /* ---------- Cursor líquido (desktop, ponteiro fino) ----------
+     Gota + rastro com lerps diferentes: quando o mouse corre, os dois se
+     afastam e o filtro goo os estica como líquido; parados, se fundem numa
+     gota só. A deformação vem da velocidade real entre frames. */
+  const liquidCursor = document.getElementById('liquidCursor');
+  if (liquidCursor && !reduceMotion && window.matchMedia('(pointer: fine)').matches) {
+    const dot = liquidCursor.querySelector('.liquid-cursor__dot');
+    const trail = liquidCursor.querySelector('.liquid-cursor__trail');
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let dotX = targetX, dotY = targetY;
+    let trailX = targetX, trailY = targetY;
+    let active = false;
 
     document.addEventListener('mousemove', (e) => {
       targetX = e.clientX;
       targetY = e.clientY;
-      if (!cgActive) { cgActive = true; cursorGlow.classList.add('is-active'); }
+      if (!active) { active = true; liquidCursor.classList.add('is-active'); }
     });
     document.addEventListener('mouseleave', () => {
-      cgActive = false;
-      cursorGlow.classList.remove('is-active');
+      active = false;
+      liquidCursor.classList.remove('is-active');
     });
 
     const tick = () => {
-      cgX += (targetX - cgX) * 0.12;
-      cgY += (targetY - cgY) * 0.12;
-      cursorGlow.style.transform = `translate(${cgX}px, ${cgY}px) translate(-50%, -50%)`;
+      const prevX = dotX, prevY = dotY;
+
+      dotX += (targetX - dotX) * 0.35;
+      dotY += (targetY - dotY) * 0.35;
+      trailX += (dotX - trailX) * 0.14;
+      trailY += (dotY - trailY) * 0.14;
+
+      const vx = dotX - prevX;
+      const vy = dotY - prevY;
+      const speed = Math.min(Math.hypot(vx, vy), 60);
+      const angle = (Math.atan2(vy, vx) * 180) / Math.PI;
+
+      dot.style.transform =
+        `translate(${dotX.toFixed(1)}px, ${dotY.toFixed(1)}px) rotate(${angle.toFixed(1)}deg)` +
+        ` scale(${(1 + speed / 55).toFixed(3)}, ${(1 - speed / 130).toFixed(3)})`;
+      trail.style.transform =
+        `translate(${trailX.toFixed(1)}px, ${trailY.toFixed(1)}px) rotate(${angle.toFixed(1)}deg)` +
+        ` scale(${(1 + speed / 90).toFixed(3)}, ${(1 - speed / 160).toFixed(3)})`;
+
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
