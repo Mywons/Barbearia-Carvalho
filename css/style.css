@@ -92,20 +92,10 @@ h1, h2, h3 {
   margin: 0;
 }
 
-/* Texto de destaque: contorno vazado — leve e divertido sobre o amarelo.
-   Fallback em marrom sólido caso o navegador não suporte text-stroke,
-   senão o texto ficaria invisível. */
-.text-ink { color: var(--fg-dim); }
-@supports ((-webkit-text-stroke: 2px #000)) {
-  .text-ink {
-    color: transparent;
-    /* --fg garante que o contorno acompanha o tema: preto na seção amarela,
-       creme na seção preta */
-    -webkit-text-stroke: 2px var(--fg);
-  }
-}
-/* Na seção preta o contorno fica amarelo, que é o acento ali */
-.section--ink .text-ink { -webkit-text-stroke-color: var(--yellow); }
+/* Texto de destaque: preenchido e sólido. Marrom do logo sobre o amarelo,
+   amarelo sobre o preto — diferencia do resto do título sem vazar a letra. */
+.text-ink { color: var(--ink-3); }
+.section--ink .text-ink { color: var(--yellow); }
 
 a { color: inherit; text-decoration: none; }
 
@@ -380,38 +370,24 @@ a { color: inherit; text-decoration: none; }
   .sticker { animation: none; }
 }
 
-/* 3. Molduras das fotos — limpas e premium, sem deformação líquida.
-   O volume vem de moldura sólida deslocada + sombra profunda. */
+/* 3. Molduras das fotos — limpas, sem deformação líquida e sem placa preta
+   deslocada atrás. A foto se sustenta sozinha: canto arredondado, fio fino
+   de contorno e uma sombra discreta só para descolar do fundo. */
 .photo-frame {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  box-shadow: 0 34px 70px -34px rgba(20, 16, 11, 0.72);
+  box-shadow: 0 12px 30px -22px rgba(20, 16, 11, 0.35);
 }
-/* Moldura preta deslocada atrás da foto: dá profundidade sem vidro */
+/* Fio de contorno fino, no tom do tema — não é moldura pesada */
 .photo-frame__mat {
   position: absolute; inset: 0;
-  border: 2px solid var(--ink);
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   pointer-events: none;
   z-index: 2;
 }
-/* A placa sólida atrás, deslocada — detalhe gráfico, não líquido */
 .photo-stack { position: relative; }
-.photo-stack::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: var(--radius-lg);
-  background: var(--ink);
-  transform: translate(18px, 18px);
-  z-index: 0;
-  transition: transform 0.7s var(--ease-out);
-}
-.photo-stack:hover::before { transform: translate(24px, 24px); }
-@media (prefers-reduced-motion: reduce) {
-  .photo-stack::before, .photo-stack:hover::before { transform: translate(14px, 14px); }
-}
 
 /* 4. Cursor líquido: gota + rastro que se fundem pelo filtro goo */
 .liquid-cursor {
@@ -1000,11 +976,11 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
     transform 0.6s var(--ease-bounce),
     border-radius 0.8s var(--ease-out),
     box-shadow 0.5s var(--ease-out);
-  box-shadow: 0 20px 44px -26px rgba(20, 16, 11, 0.6);
+  box-shadow: 0 14px 32px -24px rgba(20, 16, 11, 0.4);
 }
 .team-card:hover .team-card__media {
   transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 34px 64px -24px rgba(20, 16, 11, 0.7);
+  box-shadow: 0 24px 48px -26px rgba(20, 16, 11, 0.5);
 }
 .team-card__avatar { opacity: 0.5; transition: transform 0.6s var(--ease-bounce), opacity 0.4s var(--ease-out); }
 .team-card:hover .team-card__avatar { transform: scale(1.12) rotate(-4deg); opacity: 0.75; }
@@ -1114,10 +1090,10 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   margin: 0; position: relative; overflow: hidden;
   grid-column: span 1; grid-row: span 1;
   background: var(--ink);
-  border: 2px solid var(--ink);
+  border: 1px solid var(--line);
   /* Cantos limpos: a foto não é mais deformada */
   border-radius: var(--radius-lg);
-  box-shadow: var(--surface-shadow);
+  box-shadow: 0 12px 30px -22px rgba(20, 16, 11, 0.32);
   transition:
     transform 0.55s var(--ease-bounce),
     box-shadow 0.45s var(--ease-out);
@@ -1134,7 +1110,7 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.7s var(--ease-out);
 }
-.gallery-item:hover { box-shadow: var(--surface-shadow-hi); }
+.gallery-item:hover { box-shadow: 0 22px 46px -26px rgba(20, 16, 11, 0.45); }
 .gallery-item:hover img, .gallery-item:hover video { transform: scale(1.08); }
 
 .gallery-item__play {
@@ -1188,13 +1164,13 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   position: relative;
   aspect-ratio: 4/3;
   overflow: hidden;
-  border: 2px solid var(--ink);
+  border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  box-shadow: var(--surface-shadow);
+  box-shadow: 0 12px 30px -22px rgba(20, 16, 11, 0.32);
   background: var(--ink);
   transition: box-shadow 0.5s var(--ease-out);
 }
-.map-embed:hover { box-shadow: var(--surface-shadow-hi); }
+.map-embed:hover { box-shadow: 0 22px 46px -26px rgba(20, 16, 11, 0.45); }
 .map-embed iframe { display: block; }
 .map-embed__link {
   display: inline-flex; align-items: center; gap: 8px;
