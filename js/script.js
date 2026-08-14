@@ -190,7 +190,8 @@
   }
 
   /* ---------- Confetti burst ---------- */
-  const confettiColors = ['#14100b', '#42271c', '#ffffff', '#2a1d14'];
+  /* Marrom do logo, não mais preto */
+  const confettiColors = ['#43291c', '#2a1810', '#fff0b8', '#563a28'];
   const burstConfetti = (x, y) => {
     if (reduceMotion) return;
     const count = 26;
