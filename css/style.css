@@ -161,10 +161,10 @@ a { color: inherit; text-decoration: none; }
 .btn:hover svg { transform: translateX(3px); }
 
 /* Gel: o botão amolece no hover, levanta, e achata no clique */
-.btn:hover { border-radius: 46% 54% 52% 48% / 56% 48% 52% 44%; --lift: -3px; }
+.btn:hover { --lift: -3px; }
+/* Achata no clique (resposta na pressão), sem deformar o contorno */
 .btn:active {
-  transform: translate(var(--mx), var(--my)) scale(1.05, 0.9);
-  border-radius: 999px;
+  transform: translate(var(--mx), var(--my)) scale(1.03, 0.94);
   transition-duration: 0.1s;
 }
 
@@ -223,7 +223,7 @@ a { color: inherit; text-decoration: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .btn__ripple { display: none; }
-  .btn, .btn:hover, .btn:active { border-radius: 999px; transform: none; --lift: 0px; }
+  .btn, .btn:hover, .btn:active { transform: none; --lift: 0px; }
   .btn--ink::before { display: none; }
 }
 
@@ -560,13 +560,6 @@ a { color: inherit; text-decoration: none; }
 }
 .hero__blobs { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
 
-.hero__kicker {
-  display: inline-flex; align-items: center; gap: 8px;
-  background: var(--ink); color: var(--yellow);
-  font-weight: 700; letter-spacing: 0.18em; font-size: 0.72rem;
-  text-transform: uppercase; margin: 0 0 20px;
-  padding: 8px 16px; border-radius: 999px;
-}
 .hero__title {
   font-size: clamp(3rem, 9vw, 6.6rem);
   line-height: 0.94;
@@ -1004,7 +997,7 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   background: var(--yellow); color: var(--ink);
   transition: transform 0.35s var(--ease-bounce), border-radius 0.5s var(--ease-out);
 }
-.team-card__social:hover { transform: scale(1.15); border-radius: 45% 55% 50% 50% / 55% 50% 50% 45%; }
+.team-card__social:hover { transform: scale(1.15); }
 .team-card__scrim {
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(to top, rgba(10, 8, 5, 0.95) 0%, rgba(10, 8, 5, 0.55) 42%, transparent 70%);
@@ -1124,7 +1117,6 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 }
 .gallery-item__play:hover:not(:disabled) {
   transform: translate(-50%, -50%) scale(1.12);
-  border-radius: 46% 54% 52% 48% / 54% 48% 52% 46%;
 }
 .gallery-item__play:disabled { opacity: 0.55; cursor: not-allowed; }
 .gallery-item__tag {
@@ -1251,10 +1243,7 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   background: var(--yellow); color: var(--ink);
   transition: transform 0.4s var(--ease-bounce), border-radius 0.5s var(--ease-out);
 }
-.footer__social a:hover {
-  transform: translateY(-4px) scale(1.06);
-  border-radius: 46% 54% 50% 50% / 54% 50% 50% 46%;
-}
+.footer__social a:hover { transform: translateY(-4px) scale(1.06); }
 .footer__bottom {
   border-top: 1.5px solid rgba(255, 240, 184, 0.16);
   padding: 18px 0; text-align: center;
@@ -1285,11 +1274,7 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   opacity: 0; pointer-events: none;
 }
 .fab.is-visible { opacity: 1; pointer-events: auto; }
-.fab:hover {
-  --lift: -4px;
-  --pop: 1.05;
-  border-radius: 46% 54% 52% 48% / 54% 48% 52% 46%;
-}
+.fab:hover { --lift: -4px; --pop: 1.05; }
 .fab:active { --pop: 0.94; }
 @keyframes fabPulse {
   0%, 100% { box-shadow: 0 16px 36px -12px rgba(20, 16, 11, 0.7); }
@@ -1297,7 +1282,6 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 }
 @media (prefers-reduced-motion: reduce) {
   .fab { animation: none; transform: none; }
-  .fab:hover { border-radius: 999px; }
 }
 
 /* ============================================================
@@ -1408,12 +1392,9 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
 .store-btn svg { flex-shrink: 0; }
 .store-btn span { display: flex; flex-direction: column; text-align: left; font-weight: 700; font-size: 0.95rem; }
 .store-btn small { color: rgba(255, 240, 184, 0.65); font-weight: 400; font-size: 0.72rem; }
-.store-btn:hover {
-  transform: translateY(-3px);
-  border-radius: 30% 70% 60% 40% / 40% 40% 60% 60%;
-}
+.store-btn:hover { transform: translateY(-3px); }
 @media (prefers-reduced-motion: reduce) {
-  .store-btn:hover { border-radius: var(--radius-sm); transform: none; }
+  .store-btn:hover { transform: none; }
 }
 
 .modal__foot {
