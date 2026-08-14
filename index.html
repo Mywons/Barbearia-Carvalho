@@ -152,11 +152,21 @@
             <span class="photo-frame__mat" aria-hidden="true"></span>
           </div>
         </div>
-        <div class="barberpole" aria-hidden="true">
-          <span class="barberpole__cap barberpole__cap--top"></span>
-          <span class="barberpole__shaft"></span>
-          <span class="barberpole__shine"></span>
-          <span class="barberpole__cap barberpole__cap--bottom"></span>
+        <!-- Selo circular: o texto acompanha a borda e o disco gira devagar.
+             Volta completa de 360°, então o loop nunca tem emenda. -->
+        <div class="seal" aria-hidden="true">
+          <svg class="seal__ring" viewBox="0 0 200 200">
+            <defs>
+              <path id="sealPath" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/>
+            </defs>
+            <!-- textLength travado no perímetro (2·pi·72 = 452) para o texto
+                 fechar a volta exata. O conteúdo fica numa linha só: quebra de
+                 linha aqui virava espaço extra no ponto de emenda. -->
+            <text><textPath href="#sealPath" textLength="452" lengthAdjust="spacing">BARBEARIA CARVALHO · CORTE &amp; BARBA ·</textPath></text>
+          </svg>
+          <svg class="seal__mark" viewBox="0 0 24 24" width="26" height="26" fill="none">
+            <path d="M6 6a3 3 0 100 6 3 3 0 000-6zM6 15a3 3 0 100 6 3 3 0 000-6zM20 4L8.5 15.5M14.5 14.5L20 20M8.5 8.5L12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </div>
       </div>
     </div>

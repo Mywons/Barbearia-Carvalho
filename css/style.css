@@ -645,54 +645,45 @@ a { color: inherit; text-decoration: none; }
 }
 @media (prefers-reduced-motion: reduce) { .hero__floater { animation: none; } }
 
-/* Poste de barbeiro — listras preto/amarelo, loop sem emenda */
-.barberpole {
-  /* Fica inteiro do lado de fora da moldura (que agora é retangular),
-     encostado nela — meio escondido atrás da foto ficava estranho */
-  position: absolute; top: 22%; left: -42px;
-  pointer-events: none;
-  width: 26px; height: 128px;
-  border-radius: 13px;
-  overflow: hidden;
-  box-shadow: 0 18px 40px -18px rgba(20, 16, 11, 0.55);
-  z-index: 3;
+/* Selo circular giratório — substituiu o poste de barbeiro.
+   Fica montado na quina de baixo da foto, metade sobre ela, metade sobre o
+   amarelo. Disco amarelo com anel preto para se definir nos dois fundos. */
+.seal {
+  position: absolute;
+  bottom: -26px; left: -38px;
+  width: 118px; height: 118px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 2px solid var(--ink);
+  box-shadow: 0 14px 32px -18px rgba(20, 16, 11, 0.5);
   display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 3;
 }
-.barberpole__shaft {
+@media (min-width: 981px) { .seal { display: flex; } }
+
+.seal__ring {
   position: absolute; inset: 0;
-  /* Os stops somam 28px e o background-size casa exatamente com esse tile,
-     então deslocar 28px (um tile) volta ao frame inicial sem emenda. */
-  background-image: repeating-linear-gradient(
-    38deg,
-    var(--ink) 0 12px,
-    var(--yellow-3) 12px 14px,
-    var(--yellow) 14px 26px,
-    var(--yellow-3) 26px 28px
-  );
-  background-size: 28px 28px;
-  animation: poleSpin 1.3s linear infinite;
+  width: 100%; height: 100%;
+  /* Volta inteira de 360°: o fim do ciclo é idêntico ao começo, sem emenda */
+  animation: sealSpin 24s linear infinite;
 }
-.barberpole__shine {
-  position: absolute; inset: 0; z-index: 1;
-  background: linear-gradient(100deg,
-    rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.08) 18%,
-    transparent 42%, transparent 60%,
-    rgba(20, 16, 11, 0.3) 100%);
+.seal__ring text {
+  fill: var(--ink);
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
-@keyframes poleSpin {
-  from { background-position: 0 0; }
-  to   { background-position: 0 -28px; }
+@keyframes sealSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
-.barberpole__cap {
-  position: absolute; left: -3px; right: -3px; height: 12px; border-radius: 7px;
-  background: linear-gradient(100deg, var(--ink-2), var(--ink));
-  box-shadow: 0 2px 6px rgba(20, 16, 11, 0.4);
-  z-index: 2;
-}
-.barberpole__cap--top { top: -4px; }
-.barberpole__cap--bottom { bottom: -4px; }
-@media (min-width: 981px) { .barberpole { display: block; } }
-@media (prefers-reduced-motion: reduce) { .barberpole__shaft { animation: none; } }
+/* O ícone do meio fica parado — só o anel de texto gira */
+.seal__mark { position: relative; color: var(--ink); }
+@media (prefers-reduced-motion: reduce) { .seal__ring { animation: none; } }
 
 /* ============================================================
    Reveal ao rolar
