@@ -1156,7 +1156,15 @@ section { position: relative; padding: 100px 0; overflow-x: clip; }
   transition: box-shadow 0.5s var(--ease-out);
 }
 .map-embed:hover { box-shadow: 0 22px 46px -26px rgba(42, 24, 16, 0.45); }
-.map-embed iframe { display: block; }
+/* Mapa inerte: pointer-events none impede qualquer clique chegar ao iframe,
+   então os popups que o Google abre por interação nunca disparam. Conteúdo
+   dentro de um iframe de outro domínio não é acessível por CSS/JS, então
+   travar a interação é o único caminho — quem quiser navegar usa o link
+   "Abrir no Google Maps" abaixo. */
+.map-embed iframe {
+  display: block;
+  pointer-events: none;
+}
 .map-embed__link {
   display: inline-flex; align-items: center; gap: 8px;
   margin-top: 18px;
