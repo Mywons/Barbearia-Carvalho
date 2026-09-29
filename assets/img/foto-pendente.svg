@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <!-- Foto provisória. Substituir por retrato real e autorizado de cada profissional (quadrado, 600×600). -->
+  <rect width="400" height="400" fill="#f3d97e"/>
+  <path d="M200 92c-38 0-66 28-66 68 0 44 30 78 66 78s66-34 66-78c0-40-28-68-66-68z" fill="#85512a"/>
+  <path d="M134 150c0-40 30-66 66-66s66 26 66 66c-14-22-40-32-66-32s-52 10-66 32z" fill="#43291c"/>
+  <path d="M60 400c6-84 66-136 140-136s134 52 140 136z" fill="#6b3f1f"/>
+  <path d="M168 264l32 42 32-42" fill="none" stroke="#fcc920" stroke-width="8" stroke-linejoin="round"/>
+</svg>
