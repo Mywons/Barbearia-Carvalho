@@ -1,686 +1,133 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Barbearia Carvalho — Estilo, Tradição e Atitude</title>
-<meta name="description" content="Barbearia Carvalho: cortes, barba e experiência premium. Agende seu horário pelo app Barber e viva o melhor da barbearia moderna.">
-<meta name="theme-color" content="#fcc920">
-
-<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
-<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="css/style.css">
-
-<!-- Marca que o JS está ativo antes da primeira pintura. O estado inicial
-     escondido do reveal-on-scroll é preso a esta classe, então sem JS o
-     conteúdo aparece normalmente em vez de ficar invisível para sempre. -->
-<script>document.documentElement.classList.add('js');</script>
-</head>
-<body>
-
-<!-- ===== SVG DEFS: filtro goo + onda líquida reutilizável ===== -->
-<svg class="svg-defs" aria-hidden="true" focusable="false">
-  <defs>
-    <!-- Funde formas próximas como líquido de verdade -->
-    <filter id="goo">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="blur"/>
-      <feColorMatrix in="blur" mode="matrix"
-        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -11" result="goo"/>
-      <feBlend in="SourceGraphic" in2="goo"/>
-    </filter>
-
-    <!-- Faixa de líquido: 4 períodos de 720px, ondulada em cima e embaixo.
-         Deslizar exatamente 720px fecha o loop sem emenda. -->
-    <path id="liquidBand" d="M0,50
-      C120,15 240,15 360,50 C480,85 600,85 720,50
-      C840,15 960,15 1080,50 C1200,85 1320,85 1440,50
-      C1560,15 1680,15 1800,50 C1920,85 2040,85 2160,50
-      C2280,15 2400,15 2520,50 C2640,85 2760,85 2880,50
-      L2880,95
-      C2760,130 2640,130 2520,95 C2400,60 2280,60 2160,95
-      C2040,130 1920,130 1800,95 C1680,60 1560,60 1440,95
-      C1320,130 1200,130 1080,95 C960,60 840,60 720,95
-      C600,130 480,130 360,95 C240,60 120,60 0,95 Z"/>
-
-    <!-- Mesma onda, mas preenchida até o fim: o preto "escorre" e encosta na
-         seção preta. Virada com scaleY(-1) serve para o caminho contrário. -->
-    <path id="liquidPour" d="M0,50
-      C120,15 240,15 360,50 C480,85 600,85 720,50
-      C840,15 960,15 1080,50 C1200,85 1320,85 1440,50
-      C1560,15 1680,15 1800,50 C1920,85 2040,85 2160,50
-      C2280,15 2400,15 2520,50 C2640,85 2760,85 2880,50
-      L2880,150 L0,150 Z"/>
-  </defs>
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mais que um corte. Um momento só seu. — Barbearia Carvalho</title><meta name="description" content="Cortes, barba e cuidado de família em Salto, SP. Conheça a Barbearia Carvalho e agende seu momento pelo AppBarber."><meta name="theme-color" content="#fcc920">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png"><link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Poppins:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css"><script src="js/script.js" defer></script><script>(function(d){if(!matchMedia("(prefers-reduced-motion: reduce)").matches){d.classList.add("motion");setTimeout(function(){if(!window.BC_READY)d.classList.remove("motion")},3000)}})(document.documentElement)</script></head><body class="home">
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<header class="nav" id="nav"><div class="container nav__inner">
+<a class="brand" href="index.html" aria-label="Barbearia Carvalho — início"><img src="assets/img/logo-512.png" width="48" height="48" alt=""><span>Barbearia<strong>Carvalho</strong></span></a>
+<nav class="nav__links" id="navLinks" aria-label="Principal"><a href="#sobre">Sobre</a><a href="#servicos">Serviços</a><a href="#equipe">Equipe</a><a href="kids.html">Kids</a><a href="produtos.html">Produtos</a><a href="trabalhe-conosco.html">Trabalhe Conosco</a></nav>
+<a class="btn nav__cta" href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal>Agendar<span aria-hidden="true">↗</span></a>
+<button class="nav__burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks" hidden><span></span><span></span></button>
+</div></header><main id="conteudo" tabindex="-1">
+<section class="hero"><div class="container hero__grid"><div class="hero__copy"><p class="brand-note rise" style="--d:.05s">Sua barbearia em Salto, SP</p>
+<h1 class="hero__title"><span class="w"><span style="--i:0">Mais</span></span> <span class="w"><span style="--i:1">que</span></span> <span class="w"><span style="--i:2">um</span></span> <span class="w"><span style="--i:3">corte.</span></span><br><span class="accent"><span class="w"><span style="--i:4">Um</span></span> <span class="w"><span style="--i:5">momento</span></span> <span class="scribble"><span class="w"><span style="--i:6">só</span></span> <span class="w"><span style="--i:7">seu.</span></span><svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 14 C 50 4, 120 4, 197 10"/></svg></span></span></h1>
+<p class="lead rise" style="--d:.65s">Cortes de precisão, conversa boa e cuidado de verdade. Um lugar para chegar, relaxar e se sentir em casa.</p><div class="rise" style="--d:.8s"><a class="btn" href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal>Agendar horário<span aria-hidden="true">↗</span></a><a class="hero__more text-link" href="#sobre">Conheça a casa <span aria-hidden="true">↓</span></a></div></div>
+<figure class="hero__visual" data-tilt><div class="frame"><img src="assets/img/interior-wide.jpg" alt="Cadeiras, recepção e sofás da Barbearia Carvalho" width="1080" height="1340" loading="eager" fetchpriority="high"></div><figcaption>Entre. Fique à vontade.</figcaption><span class="photo-seal" aria-hidden="true"><svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><path id="ring-hero" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" fill="none"/><text textLength="286" lengthAdjust="spacing"><textPath href="#ring-hero">BARBEARIA CARVALHO ✦ SALTO SP ✦ </textPath></text></svg><b>BC</b></span></figure></div></section>
+<div class="marquee" aria-hidden="true"><div class="marquee__track"><span>Corte & barba</span><span>Do seu jeito</span><span>Carvalho</span><span>Da nossa casa pra você</span><span>Mais que um corte</span></div></div>
+<section class="section sobre" id="sobre"><div class="container about-grid"><div class="about-photos">
+<figure class="about-main frame parallax" data-reveal="clip"><img src="assets/img/interior-wide.jpg" alt="Vista da casa, com cadeiras de barbeiro e área de espera" width="1080" height="1340" loading="lazy"></figure>
+<figure class="about-detail" data-reveal style="--d:.25s"><div class="frame"><img src="assets/img/ferramentas.jpg" alt="Tesoura dourada, navalha, pente e máquinas organizados na bancada da barbearia" width="2000" height="1325" loading="lazy"></div><figcaption>Cada ferramenta no seu lugar.</figcaption></figure>
+<span class="about-stamp" aria-hidden="true"><svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><path id="ring-about" d="M60,60 m-46,0 a46,46 0 1,1 92,0 a46,46 0 1,1 -92,0" fill="none"/><text textLength="286" lengthAdjust="spacing"><textPath href="#ring-about">RELAXE ✦ A CASA É SUA ✦ </textPath></text></svg><svg class="scissor-mark" viewBox="0 0 56 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><g class="blade blade--a"><circle cx="8" cy="8" r="6"/><path d="M13 11 L52 22"/></g><g class="blade blade--b"><circle cx="8" cy="24" r="6"/><path d="M13 21 L52 10"/></g></svg></span></div>
+<div class="about-copy" data-stagger><h2 data-split>Sobre a casa</h2><p class="statement" data-reveal>O estilo é de casa.<br>O cuidado é de família.</p><p data-reveal>Nosso espaço é climatizado, confortável e feito pra você se sentir à vontade, seja no papo com os amigos, no corte com o filho ou só dando aquele trato no visual.</p><p data-reveal>Os barbeiros são fera, sempre ligados nas tendências e prontos pra deixar seu corte e sua barba no ponto.</p>
+<ul class="simple-list"><li data-reveal>Atendimento infantil com paciência e carinho</li><li data-reveal>Café, refrigerante ou cerveja pra esperar no clima</li><li data-reveal>Linha de produtos pra cabelo e barba</li></ul><div data-reveal><a class="btn btn--outline" href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal>Marcar meu horário<span aria-hidden="true">↗</span></a></div></div></div></section>
+<section class="section section--ink services" id="servicos"><div class="container"><div class="section-intro"><h2 data-split>Serviços feitos<br><span class="accent">sob medida.</span></h2><p data-reveal>Do corte de sempre à vontade de mudar. O cuidado é o mesmo em cada detalhe. Toque em um serviço para agendar.</p></div>
+<div class="cut-line" aria-hidden="true"><div class="cut-line__track"><svg viewBox="0 0 56 32" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><g class="blade blade--a"><circle cx="8" cy="8" r="6"/><path d="M13 11 L52 22"/></g><g class="blade blade--b"><circle cx="8" cy="24" r="6"/><path d="M13 21 L52 10"/></g></svg></div></div>
+<ol class="services-list" data-stagger>
+<li><a class="service" data-reveal href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal><span class="service__num">01</span><div><h3>Corte Masculino</h3><p>Do clássico ao degradê moderno, com acabamento na régua e na navalha.</p></div><span class="service__go" aria-hidden="true">↗</span></a></li>
+<li><a class="service" data-reveal href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal><span class="service__num">02</span><div><h3>Barba na Navalha</h3><p>Toalha quente, óleo e navalha afiada para um desenho impecável.</p></div><span class="service__go" aria-hidden="true">↗</span></a></li>
+<li><a class="service" data-reveal href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal><span class="service__num">03</span><div><h3>Combo Corte + Barba</h3><p>O pacote completo pra quem não abre mão de estar sempre no ponto.</p></div><span class="service__go" aria-hidden="true">↗</span></a></li>
+<li><a class="service" data-reveal href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal><span class="service__num">04</span><div><h3>Pigmentação</h3><p>Disfarce de falhas e realce da barba com técnica e naturalidade.</p></div><span class="service__go" aria-hidden="true">↗</span></a></li>
+<li><a class="service" data-reveal href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal><span class="service__num">05</span><div><h3>Design de Sobrancelha</h3><p>Acabamento fino que valoriza o olhar sem perder a naturalidade.</p></div><span class="service__go" aria-hidden="true">↗</span></a></li>
+<li><a class="service" data-reveal href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal><span class="service__num">06</span><div><h3>Day Use VIP</h3><p>Corte + barba + bebida gelada. A experiência completa Carvalho.</p></div><span class="service__go" aria-hidden="true">↗</span></a></li>
+</ol><div data-reveal><a class="btn" href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal>Escolher meu horário<span aria-hidden="true">↗</span></a></div></div></section>
+<section class="section team" id="equipe"><div class="container team-grid">
+<div class="team-copy" data-stagger><p class="brand-note" data-reveal>A equipe Carvalho</p><h2 data-split>Conheça quem<br><span class="accent">cuida de você.</span></h2><p class="statement" data-reveal>Mãos que cuidam.<br>Gente que acolhe.</p><p data-reveal>Por trás de cada corte tem técnica, atenção e uma boa conversa. Toque em uma foto para conhecer o profissional e agendar direto com ele pelo AppBarber.</p><p class="watch-hint" data-reveal aria-hidden="true"><span>✦</span> Arraste o mostrador e toque em uma foto</p><div data-reveal><a class="btn btn--outline" href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal>Agendar pelo AppBarber<span aria-hidden="true">↗</span></a></div></div>
+<div class="watch-wrap" data-reveal="pop"><div class="watch" id="teamWatch"><span class="watch__crown" aria-hidden="true"></span><div class="watch__face">
+<!-- Equipe: um <li> por profissional. Troque src pela foto real (quadrada, 600×600), e preencha data-name, data-role e os textos .pro__name e .pro__role. Os provisórios usam foto-pendente.svg. -->
+<ul class="watch__list" aria-label="Profissionais da Barbearia Carvalho">
+<li class="watch__item"><button class="pro" type="button" data-name="Barbeiro 1" data-role="Barbeiro" aria-controls="watchDetail" aria-expanded="false"><img src="assets/img/equipe/foto-pendente.svg" alt="" width="400" height="400" loading="lazy"><span class="pro__name">Barbeiro 1</span><span class="pro__role">Barbeiro</span></button></li>
+<li class="watch__item"><button class="pro" type="button" data-name="Barbeiro 2" data-role="Barbeiro" aria-controls="watchDetail" aria-expanded="false"><img src="assets/img/equipe/foto-pendente.svg" alt="" width="400" height="400" loading="lazy"><span class="pro__name">Barbeiro 2</span><span class="pro__role">Barbeiro</span></button></li>
+<li class="watch__item"><button class="pro" type="button" data-name="Barbeiro 3" data-role="Barbeiro" aria-controls="watchDetail" aria-expanded="false"><img src="assets/img/equipe/foto-pendente.svg" alt="" width="400" height="400" loading="lazy"><span class="pro__name">Barbeiro 3</span><span class="pro__role">Barbeiro</span></button></li>
+<li class="watch__item"><button class="pro" type="button" data-name="Barbeiro 4" data-role="Barbeiro" aria-controls="watchDetail" aria-expanded="false"><img src="assets/img/equipe/foto-pendente.svg" alt="" width="400" height="400" loading="lazy"><span class="pro__name">Barbeiro 4</span><span class="pro__role">Barbeiro</span></button></li>
+<li class="watch__item"><button class="pro" type="button" data-name="Barbeiro 5" data-role="Barbeiro" aria-controls="watchDetail" aria-expanded="false"><img src="assets/img/equipe/foto-pendente.svg" alt="" width="400" height="400" loading="lazy"><span class="pro__name">Barbeiro 5</span><span class="pro__role">Barbeiro</span></button></li>
+<li class="watch__item"><button class="pro" type="button" data-name="Barbeiro 6" data-role="Barbeiro" aria-controls="watchDetail" aria-expanded="false"><img src="assets/img/equipe/foto-pendente.svg" alt="" width="400" height="400" loading="lazy"><span class="pro__name">Barbeiro 6</span><span class="pro__role">Barbeiro</span></button></li>
+</ul>
+<img class="watch__logo" src="assets/img/logo-512.png" alt="" width="220" height="220" aria-hidden="true">
+<div class="watch__detail" id="watchDetail" role="group" aria-labelledby="watchName" hidden><img class="watch__photo" src="assets/img/equipe/foto-pendente.svg" alt="" width="400" height="400"><div class="watch__info"><h3 id="watchName"></h3><p id="watchRole"></p><a class="btn watch__cta" href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal><span class="watch__cta-label">Agendar</span><span aria-hidden="true">↗</span></a></div>
+<button class="watch__nav watch__nav--prev" type="button" aria-label="Profissional anterior">‹</button><button class="watch__nav watch__nav--next" type="button" aria-label="Próximo profissional">›</button><button class="watch__close" type="button" aria-label="Voltar para a equipe">×</button></div>
+</div></div></div></div></section>
+<section class="kids-teaser section--ink"><span class="doodle" style="left:6%;top:18%;--d:-1s" aria-hidden="true">✦</span><span class="doodle" style="left:46%;top:12%;--d:-3s;font-size:14px" aria-hidden="true">✦</span><span class="doodle" style="left:40%;bottom:14%;--d:-5s" aria-hidden="true">✦</span>
+<div class="container teaser-grid"><div><p class="brand-note" data-reveal>Carvalho Kids</p><h2 data-split>O primeiro corte.<br>E muitas boas histórias.</h2></div><div data-reveal><p>Um cuidado especial para os pequenos, com paciência e carinho em cada visita.</p><a class="btn" href="kids.html">Conheça o Kids <span aria-hidden="true">↗</span></a></div></div>
+<div class="teaser-lion"><svg class="lion" viewBox="40 40 320 370" aria-hidden="true" focusable="false">
+<ellipse cx="200" cy="396" rx="96" ry="10" fill="var(--ink)" opacity=".18"/>
+<g class="lion__head">
+<g class="lion__mane" stroke="var(--ink)" stroke-width="0"><circle cx="200.0" cy="100.0" r="46" fill="var(--mane)"/>
+<circle cx="244.4" cy="114.8" r="42" fill="var(--mane-2)"/>
+<circle cx="286.3" cy="135.7" r="46" fill="var(--mane)"/>
+<circle cx="307.2" cy="177.6" r="42" fill="var(--mane-2)"/>
+<circle cx="322.0" cy="222.0" r="46" fill="var(--mane)"/>
+<circle cx="307.2" cy="266.4" r="42" fill="var(--mane-2)"/>
+<circle cx="286.3" cy="308.3" r="46" fill="var(--mane)"/>
+<circle cx="244.4" cy="329.2" r="42" fill="var(--mane-2)"/>
+<circle cx="200.0" cy="344.0" r="46" fill="var(--mane)"/>
+<circle cx="155.6" cy="329.2" r="42" fill="var(--mane-2)"/>
+<circle cx="113.7" cy="308.3" r="46" fill="var(--mane)"/>
+<circle cx="92.8" cy="266.4" r="42" fill="var(--mane-2)"/>
+<circle cx="78.0" cy="222.0" r="46" fill="var(--mane)"/>
+<circle cx="92.8" cy="177.6" r="42" fill="var(--mane-2)"/>
+<circle cx="113.7" cy="135.7" r="46" fill="var(--mane)"/>
+<circle cx="155.6" cy="114.8" r="42" fill="var(--mane-2)"/></g>
+<circle cx="200" cy="222" r="112" fill="var(--mane)"/>
+<path class="lion__tuft" d="M150 112 C160 58 236 44 262 88 C244 74 214 72 198 98 C194 80 170 80 150 112 Z" fill="#4f2c14"/>
+<circle cx="120" cy="140" r="28" fill="var(--yellow)" stroke="var(--ink)" stroke-width="4"/>
+<circle cx="120" cy="140" r="13" fill="var(--blush)"/>
+<circle cx="280" cy="140" r="28" fill="var(--yellow)" stroke="var(--ink)" stroke-width="4"/>
+<circle cx="280" cy="140" r="13" fill="var(--blush)"/>
+<circle cx="200" cy="232" r="98" fill="var(--yellow)" stroke="var(--ink)" stroke-width="4"/>
+<path d="M150 190 q14 -12 30 -2 M220 188 q16 -10 30 2" fill="none" stroke="var(--ink)" stroke-width="5" stroke-linecap="round"/>
+<g class="lion__pupils">
+<g class="lion__eye"><ellipse cx="166" cy="220" rx="12" ry="15" fill="var(--ink)"/><circle cx="170" cy="214" r="4.5" fill="#fffaf0"/></g>
+<g class="lion__eye"><ellipse cx="234" cy="220" rx="12" ry="15" fill="var(--ink)"/><circle cx="238" cy="214" r="4.5" fill="#fffaf0"/></g>
+</g>
+<circle cx="140" cy="258" r="15" fill="var(--blush)" opacity=".55"/>
+<circle cx="260" cy="258" r="15" fill="var(--blush)" opacity=".55"/>
+<ellipse cx="200" cy="278" rx="56" ry="40" fill="var(--yellow-light)" stroke="var(--ink)" stroke-width="3"/>
+<path d="M184 256 Q200 248 216 256 Q210 272 200 274 Q190 272 184 256 Z" fill="var(--ink)"/>
+<path d="M176 286 Q200 314 224 286 Q200 296 176 286 Z" fill="var(--ink)"/>
+<path d="M192 300 Q200 308 208 300" fill="none" stroke="var(--blush)" stroke-width="5" stroke-linecap="round"/>
+<g fill="var(--ink)"><circle cx="172" cy="276" r="2.2"/><circle cx="164" cy="284" r="2.2"/><circle cx="228" cy="276" r="2.2"/><circle cx="236" cy="284" r="2.2"/></g>
+</g>
+</svg></div></section>
+<section class="section ambiente" id="ambiente"><div class="container environment-grid"><div data-stagger><h2 data-split>Uma pausa<br>que faz bem.</h2><p class="lead" data-reveal>O corte é só o começo. Aproveite o seu tempo na casa.</p><ul class="amenities">
+<li data-reveal data-draw><svg viewBox="0 0 32 32" aria-hidden="true"><path pathLength="1" d="M6 12h17v8a7 7 0 0 1-7 7h-3a7 7 0 0 1-7-7z"/><path pathLength="1" d="M23 14h2a3 3 0 0 1 0 6h-2"/><path pathLength="1" d="M11 4c-1 2 1 3 0 5M16 4c-1 2 1 3 0 5"/></svg>Café, refri ou cerveja</li>
+<li data-reveal data-draw><svg viewBox="0 0 32 32" aria-hidden="true"><path pathLength="1" d="M4 13a17 17 0 0 1 24 0"/><path pathLength="1" d="M8 17.5a11 11 0 0 1 16 0"/><path pathLength="1" d="M12 22a5 5 0 0 1 8 0"/><circle pathLength="1" cx="16" cy="26" r="1.2"/></svg>Wi-Fi grátis</li>
+<li data-reveal data-draw><svg viewBox="0 0 32 32" aria-hidden="true"><path pathLength="1" d="M16 3v26M4.7 9.5l22.6 13M4.7 22.5l22.6-13"/><path pathLength="1" d="M12 5l4 3 4-3M12 27l4-3 4 3"/></svg>Ambiente climatizado</li>
+<li data-reveal data-draw><svg viewBox="0 0 32 32" aria-hidden="true"><circle pathLength="1" cx="16" cy="17" r="11"/><path pathLength="1" d="M11.5 20a6 6 0 0 0 9 0"/><path pathLength="1" d="M12 14h.01M20 14h.01M13 6c2-2 5-2 6 0"/></svg>Atendimento infantil</li></ul></div>
+<figure data-reveal="clip"><div class="frame parallax"><img src="assets/img/cervejas.jpg" alt="Seleção de bebidas disponíveis na Barbearia Carvalho" width="1080" height="960" loading="lazy"></div><figcaption>Seu tempo. Seu ritmo.</figcaption></figure></div></section>
+<section class="section section--ink" id="galeria"><div class="container"><div class="section-intro"><h2 data-split>Direto da<br>barbearia.</h2><p data-reveal>Os detalhes, o espaço e o clima da nossa casa.</p></div><div class="gallery-grid" data-stagger>
+<figure class="gallery-wide parallax" data-reveal="clip"><img src="assets/img/interior-wide.jpg" alt="Interior da Barbearia Carvalho" width="1080" height="1340" loading="lazy"></figure><figure data-reveal="clip"><img src="assets/img/ferramentas.jpg" alt="Ferramentas e detalhes do trabalho na barbearia" width="2000" height="1325" loading="lazy"></figure><figure data-reveal="clip"><img src="assets/img/ambiente.jpg" alt="Cadeiras da Barbearia Carvalho" width="1080" height="948" loading="lazy"></figure><figure data-reveal="clip"><img src="assets/img/cervejas.jpg" alt="Bebidas da casa" width="1080" height="960" loading="lazy"></figure></div>
+<!-- Vídeo opcional: inserir video com controls, playsinline, preload="none" e source real apenas quando tour.mp4 estiver disponível. -->
+</div></section>
+<section class="section" id="localizacao"><div class="container location-grid"><div data-stagger><h2 data-split>Onde a Carvalho<br>te espera.</h2><address data-reveal><a class="text-link" href="https://share.google/nBp75bWHyrNL5aPoO" target="_blank" rel="noopener">R. Roque Lazzazera, 875<br>Jardim Santa Marta · Salto, SP<br>13323-410</a><a class="contact-phone" href="tel:+5511997621172">(11) 99762-1172</a><p>Atendimento das 9h às 18h</p></address><div data-reveal><a class="btn" href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal>Agendar agora<span aria-hidden="true">↗</span></a></div></div><div class="map-wrap" data-reveal="clip"><iframe height="100%" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Santa%20Marta%20-%20R.%20Roque%20Lazzazera%2C%20875%2C%20Jardim%20Santa%20Marta%2C%20Salto%20-%20SP%2C%2013323-410&amp;output=embed" style="border:0" tabindex="-1" title="Localização da Barbearia Carvalho no Google Maps" width="100%"></iframe><a class="text-link" href="https://share.google/nBp75bWHyrNL5aPoO" target="_blank" rel="noopener">Abrir no Google Maps <span aria-hidden="true">↗</span></a></div></div></section>
+<section class="section section--ink final-cta"><div class="final-cta__stamp" aria-hidden="true"><img src="assets/img/logo-512.png" alt="" width="512" height="512" loading="lazy"></div><div class="container"><h2 data-split>Relaxe.<br>A casa é sua.</h2><p data-reveal>Reserve um tempo para você. A gente cuida do resto.</p><div data-reveal><a class="btn" href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" data-open-modal>Agendar pelo App<span aria-hidden="true">↗</span></a></div></div></section></main><footer class="footer section--ink"><div class="container footer__grid">
+<a class="brand" href="index.html"><img src="assets/img/logo-512.png" width="48" height="48" alt=""><span>Barbearia<strong>Carvalho</strong></span></a>
+<nav class="footer__links" aria-label="Rodapé"><a href="index.html#ambiente">Ambiente</a><a href="index.html#galeria">Galeria</a><a href="index.html#localizacao">Localização</a><a href="kids.html">Kids</a><a href="produtos.html">Produtos</a><a href="trabalhe-conosco.html">Trabalhe Conosco</a></nav>
+<a class="text-link" href="tel:+5511997621172">(11) 99762-1172</a></div>
+<div class="container footer__bottom"><p>© <span id="year">2026</span> Barbearia Carvalho.</p><p>Santa Marta · Salto, SP</p></div>
+<noscript><div class="container nojs-booking"><p>Agende pelo AppBarber: <a href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber">Google Play</a> ou <a href="https://apps.apple.com/br/app/appbarber-cliente/id6450795073">App Store</a>.</p></div></noscript></footer><dialog class="modal" id="appModal" aria-labelledby="modalTitle"><div class="modal__card">
+<button class="modal__close" type="button" data-close-modal aria-label="Fechar agendamento" autofocus>×</button>
+<img class="modal__logo" src="assets/img/logo-512.png" width="72" height="72" alt="">
+<h2 id="modalTitle">Seu momento começa aqui.</h2><p>Baixe o AppBarber, escolha o profissional, o serviço e o horário.</p>
+<div class="modal__stores">
+<a class="store-btn" href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&amp;referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" rel="noopener" target="_blank">
+<svg height="24" viewbox="0 0 256 283" width="21" xmlns="http://www.w3.org/2000/svg">
+<path d="M119.553141,134.916362 L1.0599006,259.060547 C3.75619448,268.616998 10.7182836,276.3906 19.9208658,280.119977 C29.1234481,283.849353 39.5331235,283.115716 48.121672,278.132484 L181.448642,202.197919 L119.553141,134.916362 Z" fill="#EA4335"></path>
+<path d="M239.370822,113.813616 L181.71353,80.7909097 L116.815965,137.741834 L181.978418,202.021326 L239.19423,169.351804 C249.525723,163.942452 256,153.24465 256,141.58271 C256,129.92077 249.525723,119.222968 239.19423,113.813616 L239.370822,113.813616 Z" fill="#FBBC04"></path>
+<path d="M1.0599006,23.4868015 C0.343633396,26.134699 -0.0127538816,28.8670014 0,31.6100341 L0,250.937314 C0.00751268399,253.679042 0.363556675,256.408712 1.0599006,259.060547 L123.614758,138.095018 L1.0599006,23.4868015 Z" fill="#4285F4"></path>
+<path d="M120.436101,141.273674 L181.71353,80.7909097 L48.5631521,4.50316009 C43.5539929,1.56944036 37.8568091,0.0156629668 32.0517989,0 C17.6444261,-0.0284873284 4.97836875,9.53420553 1.0599006,23.3985055 L120.436101,141.273674 Z" fill="#34A853"></path>
 </svg>
-
-<!-- ===== PRELOADER ===== -->
-<div class="preloader" id="preloader" aria-hidden="true">
-  <div class="preloader__mark">
-    <span class="preloader__letter">B</span><span class="preloader__letter">C</span>
-  </div>
-  <div class="preloader__bar"><span></span></div>
-</div>
-
-<!-- ===== SCROLL PROGRESS ===== -->
-<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
-
-<!-- ===== CURSOR LÍQUIDO ===== -->
-<div class="liquid-cursor" id="liquidCursor" aria-hidden="true">
-  <span class="liquid-cursor__trail"></span>
-  <span class="liquid-cursor__dot"></span>
-</div>
-
-<!-- ===== NAV ===== -->
-<header class="nav" id="nav">
-  <div class="nav__inner container">
-    <a href="#top" class="nav__brand" aria-label="Barbearia Carvalho — início">
-      <img src="assets/img/logo-512.png" alt="" class="nav__logo" width="44" height="44">
-      <span class="nav__brand-text">Barbearia<em>Carvalho</em></span>
-    </a>
-
-    <nav class="nav__links" id="navLinks">
-      <a href="#sobre">Sobre</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#equipe">Equipe</a>
-      <a href="#ambiente">Ambiente</a>
-      <a href="#galeria">Galeria</a>
-      <a href="#localizacao">Localização</a>
-    </nav>
-
-    <button class="btn btn--ink nav__cta" data-open-modal>Agendar</button>
-
-    <button class="nav__burger" id="navBurger" aria-label="Abrir menu" aria-expanded="false" aria-controls="navLinks">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</header>
-
-<main id="top">
-
-  <!-- ===== HERO ===== -->
-  <section class="hero" id="hero">
-    <div class="hero__blobs" aria-hidden="true">
-      <span class="blob" style="top:-8%; left:-10%; width:44vw; height:44vw;"></span>
-      <span class="blob blob--brown" style="bottom:-14%; right:-6%; width:34vw; height:34vw; animation-delay:-6s;"></span>
-    </div>
-
-    <div class="stickers" aria-hidden="true">
-      <span class="sticker sticker--dots" style="top:16%; left:3%; width:92px; height:60px;"></span>
-      <span class="sticker sticker--ring" style="top:62%; left:2.5%; width:34px; height:34px; animation-delay:-4s;"></span>
-      <span class="sticker sticker--diamond" style="top:34%; left:46%; width:13px; height:13px; animation-delay:-7s;"></span>
-      <span class="sticker sticker--bars" style="top:80%; left:36%; width:58px; height:34px; animation-delay:-2s;"></span>
-      <span class="sticker" style="top:8%; left:88%; width:26px; height:26px; --deg:12deg; animation-delay:-9s;">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-      </span>
-    </div>
-
-    <div class="hero__floaters" aria-hidden="true">
-      <svg class="hero__floater" style="top:14%; left:52%; width:44px; height:44px; animation-duration:9s;" viewBox="0 0 24 24" fill="none"><path d="M6 6a3 3 0 100 6 3 3 0 000-6zM6 15a3 3 0 100 6 3 3 0 000-6zM20 4L8.5 15.5M14.5 14.5L20 20M8.5 8.5L12 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <svg class="hero__floater" style="top:74%; left:44%; width:30px; height:30px; animation-duration:11s; animation-delay:-3s;" viewBox="0 0 24 24" fill="none"><path d="M4 20c3-2 4-6 4-9 0-4 3-7 7-7 3.5 0 6 2 6 5 0 2-1 3-3 4 1 1 1 3-1 4-1.5 1.1-1 3-3 3-2 0-2-2-4-2-2 0-3.5 1.5-6 2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
-      <svg class="hero__floater" style="top:34%; left:4%; width:26px; height:26px; animation-duration:8s; animation-delay:-5s;" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
-    </div>
-
-    <div class="hero__inner container">
-      <div class="hero__content">
-        <h1 class="hero__title">
-          <span class="reveal-up" style="--d:0">Estilo é</span>
-          <span class="reveal-up text-ink" style="--d:1">atitude.</span>
-        </h1>
-        <p class="hero__subtitle reveal-up" style="--d:3">
-          Cortes de precisão, barba na navalha e um ambiente que respeita sua história.
-          Bem-vindo à <strong>Barbearia Carvalho</strong>.
-        </p>
-        <div class="hero__actions reveal-up" style="--d:4">
-          <button class="btn btn--ink btn--lg" data-open-modal>
-            <span>Agendar horário</span>
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <a href="#ambiente" class="btn btn--ghost btn--lg">Conheça o espaço</a>
-        </div>
-      </div>
-
-      <div class="hero__visual reveal-up" style="--d:3">
-        <div class="hero__frame photo-stack" data-wipe>
-          <div class="photo-frame">
-            <div class="hero__slide hero__slide--a" style="background-image:url('assets/img/interior-wide.jpg')"></div>
-            <div class="hero__slide hero__slide--b" style="background-image:url('assets/img/ferramentas.jpg')"></div>
-            <span class="photo-frame__mat" aria-hidden="true"></span>
-          </div>
-        </div>
-        <!-- Selo circular: o texto acompanha a borda e o disco gira devagar.
-             Volta completa de 360°, então o loop nunca tem emenda. -->
-        <div class="seal" aria-hidden="true">
-          <svg class="seal__ring" viewBox="0 0 200 200">
-            <defs>
-              <path id="sealPath" d="M100,100 m-72,0 a72,72 0 1,1 144,0 a72,72 0 1,1 -144,0"/>
-            </defs>
-            <!-- textLength travado no perímetro (2·pi·72 = 452) para o texto
-                 fechar a volta exata. O conteúdo fica numa linha só: quebra de
-                 linha aqui virava espaço extra no ponto de emenda. -->
-            <text><textPath href="#sealPath" textLength="452" lengthAdjust="spacing">BARBEARIA CARVALHO · CORTE &amp; BARBA ·</textPath></text>
-          </svg>
-          <svg class="seal__mark" viewBox="0 0 24 24" width="26" height="26" fill="none">
-            <path d="M6 6a3 3 0 100 6 3 3 0 000-6zM6 15a3 3 0 100 6 3 3 0 000-6zM20 4L8.5 15.5M14.5 14.5L20 20M8.5 8.5L12 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-
-    <a href="#marquee" class="hero__scroll" aria-label="Rolar para baixo">
-      <span></span>
-    </a>
-  </section>
-
-  <!-- ===== MARQUEE ===== -->
-  <div class="marquee" id="marquee">
-    <div class="marquee__track">
-      <span>CORTE&nbsp;·&nbsp;BARBA&nbsp;·&nbsp;ESTILO&nbsp;·&nbsp;NAVALHA&nbsp;·&nbsp;ATITUDE&nbsp;·&nbsp;BARBEARIA&nbsp;CARVALHO&nbsp;·&nbsp;</span>
-      <span>CORTE&nbsp;·&nbsp;BARBA&nbsp;·&nbsp;ESTILO&nbsp;·&nbsp;NAVALHA&nbsp;·&nbsp;ATITUDE&nbsp;·&nbsp;BARBEARIA&nbsp;CARVALHO&nbsp;·&nbsp;</span>
-    </div>
-  </div>
-
-  <!-- ===== SOBRE ===== -->
-  <section class="sobre" id="sobre">
-    <span class="blob blob--sharp" style="top:10%; right:-12%; width:38vw; height:38vw;" aria-hidden="true"></span>
-
-    <div class="stickers" aria-hidden="true">
-      <span class="sticker sticker--dots" style="top:8%; left:88%; width:104px; height:52px;"></span>
-      <span class="sticker" style="top:70%; left:92%; width:24px; height:24px; --deg:-10deg; animation-delay:-5s;">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-      </span>
-      <span class="sticker sticker--diamond" style="top:86%; left:64%; width:11px; height:11px; animation-delay:-8s;"></span>
-    </div>
-
-    <div class="container sobre__grid">
-      <div class="sobre__media" data-reveal>
-        <div class="sobre__frame photo-stack" data-wipe>
-          <div class="photo-frame">
-            <img src="assets/img/ambiente.jpg" alt="Cadeiras de barbeiro no ambiente da Barbearia Carvalho" loading="lazy">
-            <span class="photo-frame__mat" aria-hidden="true"></span>
-          </div>
-        </div>
-        <div class="sobre__badge">
-          <svg class="sobre__badge-icon" viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M12 2l2.9 6.3L22 9l-5 5.1L18.2 22 12 18.3 5.8 22 7 14.1 2 9l7.1-.7L12 2z"/></svg>
-          <span>Qualidade premium em cada corte</span>
-        </div>
-      </div>
-
-      <div class="sobre__text" data-reveal>
-        <p class="section-kicker">Sobre a casa</p>
-        <h2 class="section-title">O estilo é de casa, <span class="text-ink">o cuidado é de família.</span></h2>
-        <p>
-          Nosso espaço é climatizado, confortável e feito pra você se sentir à vontade —
-          seja no papo com os amigos, no corte com o filho ou só dando aquele trato no
-          visual. Os barbeiros são fera, sempre ligados nas tendências e prontos pra deixar
-          seu corte e sua barba no ponto.
-        </p>
-        <ul class="sobre__list">
-          <li><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 12l5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Atendimento infantil com paciência e carinho</li>
-          <li><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 12l5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Café, refrigerante ou cerveja pra esperar no clima</li>
-          <li><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 12l5 5L20 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Linha completa de produtos pra cabelo e barba</li>
-        </ul>
-        <button class="btn btn--outline" data-open-modal>Marcar meu horário</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== LÍQUIDO ESCORRENDO PARA A SEÇÃO PRETA ===== -->
-  <div class="liquid-divider liquid-divider--pour" aria-hidden="true">
-    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
-      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidPour"/>
-      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidPour"/>
-    </svg>
-  </div>
-
-  <!-- ===== SERVIÇOS (preto) ===== -->
-  <section class="servicos section--ink" id="servicos">
-    <span class="blob" style="bottom:-6%; left:-14%; width:40vw; height:40vw;" aria-hidden="true"></span>
-
-    <div class="stickers" aria-hidden="true">
-      <span class="sticker sticker--bars" style="top:6%; left:4%; width:62px; height:36px;"></span>
-      <span class="sticker" style="top:12%; left:92%; width:28px; height:28px; --deg:16deg; animation-delay:-3s;">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-      </span>
-      <span class="sticker sticker--dots" style="top:84%; left:86%; width:88px; height:44px; animation-delay:-6s;"></span>
-      <span class="sticker sticker--ring" style="top:88%; left:8%; width:30px; height:30px; animation-delay:-10s;"></span>
-    </div>
-
-    <div class="container">
-      <div class="section-head" data-reveal>
-        <p class="section-kicker">O que fazemos</p>
-        <h2 class="section-title">Serviços feitos <span class="text-ink">sob medida.</span></h2>
-      </div>
-
-      <div class="cards-grid">
-        <article class="card" data-reveal style="--d:0">
-          <div class="card__icon">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M6 6a3 3 0 100 6 3 3 0 000-6zM6 15a3 3 0 100 6 3 3 0 000-6zM20 4L8.5 15.5M14.5 14.5L20 20M8.5 8.5L12 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <h3>Corte Masculino</h3>
-          <p>Do clássico ao degradê moderno, com acabamento na régua e na navalha.</p>
-        </article>
-
-        <article class="card" data-reveal style="--d:1">
-          <div class="card__icon">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M4 20c3-2 4-6 4-9 0-4 3-7 7-7 3.5 0 6 2 6 5 0 2-1 3-3 4 1 1 1 3-1 4-1.5 1.1-1 3-3 3-2 0-2-2-4-2-2 0-3.5 1.5-6 2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-          </div>
-          <h3>Barba na Navalha</h3>
-          <p>Toalha quente, óleo e navalha afiada para um desenho impecável.</p>
-        </article>
-
-        <article class="card" data-reveal style="--d:2">
-          <div class="card__icon">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-          </div>
-          <h3>Combo Corte + Barba</h3>
-          <p>O pacote completo pra quem não abre mão de estar sempre no ponto.</p>
-        </article>
-
-        <article class="card" data-reveal style="--d:3">
-          <div class="card__icon">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"/><path d="M9 12h6M12 9v6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          </div>
-          <h3>Pigmentação</h3>
-          <p>Disfarce de falhas e realce da barba com técnica e naturalidade.</p>
-        </article>
-
-        <article class="card" data-reveal style="--d:4">
-          <div class="card__icon">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M3 15c1-4 3-7 6-7M21 15c-1-4-3-7-6-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          </div>
-          <h3>Design de Sobrancelha</h3>
-          <p>Acabamento fino que valoriza o olhar sem perder a naturalidade.</p>
-        </article>
-
-        <article class="card" data-reveal style="--d:5">
-          <div class="card__icon">
-            <svg viewBox="0 0 24 24" width="30" height="30" fill="none"><path d="M12 21s-7-4.5-9.5-9C1 8 3 4.5 6.5 4.5 9 4.5 11 6 12 8c1-2 3-3.5 5.5-3.5C21 4.5 23 8 21.5 12c-2.5 4.5-9.5 9-9.5 9z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-          </div>
-          <h3>Day Use VIP</h3>
-          <p>Corte + barba + bebida gelada. A experiência completa Carvalho.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== LÍQUIDO SUBINDO DE VOLTA PARA O AMARELO ===== -->
-  <div class="liquid-divider liquid-divider--rise" aria-hidden="true">
-    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
-      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidPour"/>
-      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidPour"/>
-    </svg>
-  </div>
-
-  <!-- ===== EQUIPE ===== -->
-  <section class="equipe" id="equipe">
-    <div class="stickers" aria-hidden="true">
-      <span class="sticker sticker--dots" style="top:10%; left:5%; width:84px; height:44px;"></span>
-      <span class="sticker sticker--diamond" style="top:16%; left:90%; width:13px; height:13px; animation-delay:-4s;"></span>
-      <span class="sticker" style="top:8%; left:78%; width:22px; height:22px; --deg:-14deg; animation-delay:-7s;">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-      </span>
-    </div>
-
-    <div class="container">
-      <div class="section-head" data-reveal>
-        <p class="section-kicker">Quem cuida do seu estilo</p>
-        <h2 class="section-title">Conheça a <span class="text-ink">equipe.</span></h2>
-      </div>
-    </div>
-
-    <div class="team-carousel" data-reveal>
-      <div class="team-carousel__track">
-        <!-- Set A -->
-        <article class="team-card">
-          <div class="team-card__media">
-            <span class="team-card__shine" aria-hidden="true"></span>
-            <svg class="team-card__avatar" viewBox="0 0 24 24" width="60" height="60" fill="none"><circle cx="12" cy="8.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M4 20c1.1-4.6 4-7 8-7s6.9 2.4 8 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            <span class="team-card__badge">Foto em breve</span>
-            <a class="team-card__social" href="#" aria-label="Instagram">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>
-            </a>
-            <div class="team-card__scrim"></div>
-            <div class="team-card__info">
-              <h3>Nome do barbeiro</h3>
-              <p>Cargo ou especialidade</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="team-card">
-          <div class="team-card__media">
-            <span class="team-card__shine" aria-hidden="true"></span>
-            <svg class="team-card__avatar" viewBox="0 0 24 24" width="60" height="60" fill="none"><circle cx="12" cy="8.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M4 20c1.1-4.6 4-7 8-7s6.9 2.4 8 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            <span class="team-card__badge">Foto em breve</span>
-            <a class="team-card__social" href="#" aria-label="Instagram">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>
-            </a>
-            <div class="team-card__scrim"></div>
-            <div class="team-card__info">
-              <h3>Nome do barbeiro</h3>
-              <p>Cargo ou especialidade</p>
-            </div>
-          </div>
-        </article>
-
-        <article class="team-card">
-          <div class="team-card__media">
-            <span class="team-card__shine" aria-hidden="true"></span>
-            <svg class="team-card__avatar" viewBox="0 0 24 24" width="60" height="60" fill="none"><circle cx="12" cy="8.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M4 20c1.1-4.6 4-7 8-7s6.9 2.4 8 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-            <span class="team-card__badge">Foto em breve</span>
-            <a class="team-card__social" href="#" aria-label="Instagram">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>
-            </a>
-            <div class="team-card__scrim"></div>
-            <div class="team-card__info">
-              <h3>Nome do barbeiro</h3>
-              <p>Cargo ou especialidade</p>
-            </div>
-          </div>
-        </article>
-
-        <!-- Set B (duplicata, fora da árvore de acessibilidade) — fecha o loop de -50% -->
-        <div class="team-carousel__dup" aria-hidden="true">
-          <article class="team-card">
-            <div class="team-card__media">
-              <span class="team-card__shine" aria-hidden="true"></span>
-              <svg class="team-card__avatar" viewBox="0 0 24 24" width="60" height="60" fill="none"><circle cx="12" cy="8.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M4 20c1.1-4.6 4-7 8-7s6.9 2.4 8 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <span class="team-card__badge">Foto em breve</span>
-              <span class="team-card__social"><svg viewBox="0 0 24 24" width="16" height="16" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></span>
-              <div class="team-card__scrim"></div>
-              <div class="team-card__info"><h3>Nome do barbeiro</h3><p>Cargo ou especialidade</p></div>
-            </div>
-          </article>
-          <article class="team-card">
-            <div class="team-card__media">
-              <span class="team-card__shine" aria-hidden="true"></span>
-              <svg class="team-card__avatar" viewBox="0 0 24 24" width="60" height="60" fill="none"><circle cx="12" cy="8.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M4 20c1.1-4.6 4-7 8-7s6.9 2.4 8 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <span class="team-card__badge">Foto em breve</span>
-              <span class="team-card__social"><svg viewBox="0 0 24 24" width="16" height="16" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></span>
-              <div class="team-card__scrim"></div>
-              <div class="team-card__info"><h3>Nome do barbeiro</h3><p>Cargo ou especialidade</p></div>
-            </div>
-          </article>
-          <article class="team-card">
-            <div class="team-card__media">
-              <span class="team-card__shine" aria-hidden="true"></span>
-              <svg class="team-card__avatar" viewBox="0 0 24 24" width="60" height="60" fill="none"><circle cx="12" cy="8.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M4 20c1.1-4.6 4-7 8-7s6.9 2.4 8 7" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
-              <span class="team-card__badge">Foto em breve</span>
-              <span class="team-card__social"><svg viewBox="0 0 24 24" width="16" height="16" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg></span>
-              <div class="team-card__scrim"></div>
-              <div class="team-card__info"><h3>Nome do barbeiro</h3><p>Cargo ou especialidade</p></div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== LÍQUIDO ESCORRENDO PARA O AMBIENTE (preto), COM TESOURA ===== -->
-  <div class="liquid-divider liquid-divider--pour" aria-hidden="true">
-    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
-      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidPour"/>
-      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidPour"/>
-    </svg>
-    <div class="snip-divider">
-      <svg viewBox="0 0 24 24" width="30" height="30" fill="none">
-        <path class="snip-divider__blade" d="M12 12L20 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path class="snip-divider__blade snip-divider__blade--b" d="M12 12L20 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="12" cy="12" r="1.6" fill="currentColor"/>
-        <path d="M12 12L2 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </div>
-  </div>
-
-  <!-- ===== AMBIENTE (preto) ===== -->
-  <section class="ambiente section--ink" id="ambiente">
-    <div class="ambiente__bg" style="background-image:url('assets/img/cervejas.jpg')"></div>
-    <div class="ambiente__scrim"></div>
-    <div class="container ambiente__content">
-      <p class="section-kicker" data-reveal>Muito mais que um corte</p>
-      <h2 class="section-title" data-reveal>Relaxe. A casa é <span class="text-ink">sua.</span></h2>
-
-      <div class="amenities">
-        <div class="amenity" data-reveal style="--d:0">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="none"><path d="M6 3h9v9a4.5 4.5 0 01-9 0V3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M15 6h2a3 3 0 010 6h-2M6 21h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          <span>Café, refri ou cerveja</span>
-        </div>
-        <div class="amenity" data-reveal style="--d:1">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="none"><path d="M2 8.5a15 15 0 0120 0M5 12a10.5 10.5 0 0114 0M8.5 15.5a6 6 0 017 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="19" r="1.2" fill="currentColor"/></svg>
-          <span>Wi-Fi grátis</span>
-        </div>
-        <div class="amenity" data-reveal style="--d:2">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="none"><path d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/></svg>
-          <span>Ambiente climatizado</span>
-        </div>
-        <div class="amenity" data-reveal style="--d:3">
-          <svg viewBox="0 0 24 24" width="28" height="28" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><circle cx="9" cy="10.5" r="1" fill="currentColor"/><circle cx="15" cy="10.5" r="1" fill="currentColor"/><path d="M8.5 14.5c1 1.2 2.2 1.8 3.5 1.8s2.5-.6 3.5-1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          <span>Atendimento infantil</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== LÍQUIDO SUBINDO DE VOLTA PARA O AMARELO ===== -->
-  <div class="liquid-divider liquid-divider--rise" aria-hidden="true">
-    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
-      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidPour"/>
-      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidPour"/>
-    </svg>
-  </div>
-
-  <!-- ===== GALERIA ===== -->
-  <section class="galeria" id="galeria">
-    <span class="blob blob--sharp" style="top:24%; left:-10%; width:32vw; height:32vw;" aria-hidden="true"></span>
-
-    <div class="stickers" aria-hidden="true">
-      <span class="sticker sticker--dots" style="top:7%; left:5%; width:96px; height:48px;"></span>
-      <span class="sticker sticker--ring" style="top:9%; left:90%; width:32px; height:32px; animation-delay:-5s;"></span>
-      <span class="sticker sticker--bars" style="top:90%; left:46%; width:54px; height:32px; animation-delay:-8s;"></span>
-    </div>
-
-    <div class="container">
-      <div class="section-head" data-reveal>
-        <p class="section-kicker">Registros da casa</p>
-        <h2 class="section-title">Fotos e vídeos <span class="text-ink">direto da barbearia.</span></h2>
-      </div>
-
-      <div class="gallery-grid">
-        <figure class="gallery-item gallery-item--wide" data-reveal style="--d:0">
-          <img src="assets/img/interior-wide.jpg" alt="Interior da Barbearia Carvalho" loading="lazy">
-        </figure>
-
-        <figure class="gallery-item gallery-item--video" data-reveal style="--d:1">
-          <video id="tourVideo" playsinline muted loop preload="none" poster="assets/img/ferramentas.jpg">
-            <source data-src="assets/video/tour.mp4" type="video/mp4">
-          </video>
-          <button class="gallery-item__play" id="tourPlayBtn" aria-label="Reproduzir vídeo da barbearia" disabled>
-            <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          </button>
-          <span class="gallery-item__tag" id="tourTag">Vídeo em breve</span>
-        </figure>
-
-        <figure class="gallery-item" data-reveal style="--d:2">
-          <img src="assets/img/ambiente.jpg" alt="Cadeiras da Barbearia Carvalho" loading="lazy">
-        </figure>
-
-        <figure class="gallery-item" data-reveal style="--d:3">
-          <img src="assets/img/cervejas.jpg" alt="Cervejas geladas da Barbearia Carvalho" loading="lazy">
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== LOCALIZAÇÃO ===== -->
-  <section class="localizacao" id="localizacao">
-    <div class="stickers" aria-hidden="true">
-      <span class="sticker sticker--dots" style="top:12%; left:90%; width:88px; height:46px;"></span>
-      <span class="sticker sticker--diamond" style="top:78%; left:6%; width:12px; height:12px; animation-delay:-6s;"></span>
-      <span class="sticker" style="top:64%; left:52%; width:24px; height:24px; --deg:18deg; animation-delay:-2s;">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>
-      </span>
-    </div>
-
-    <div class="container localizacao__grid">
-      <div data-reveal>
-        <p class="section-kicker">Venha nos visitar</p>
-        <h2 class="section-title">Onde a <span class="text-ink">Carvalho</span> te espera.</h2>
-        <ul class="contact-list">
-          <li data-reveal style="--d:0">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M12 21s7-6.2 7-12a7 7 0 10-14 0c0 5.8 7 12 7 12z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="12" cy="9" r="2.3" stroke="currentColor" stroke-width="1.7"/></svg>
-            <a href="https://share.google/nBp75bWHyrNL5aPoO" target="_blank" rel="noopener">Santa Marta — R. Roque Lazzazera, 875, Jardim Santa Marta, Salto - SP, 13323-410</a>
-          </li>
-          <li data-reveal style="--d:1">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M4 5c0 8 7 15 15 15l3-4-6-3-2 2c-2-1-4-3-5-5l2-2-3-6z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-            <a href="tel:+5511997621172">(11) 99762-1172</a>
-          </li>
-          <li data-reveal style="--d:2">
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M3 8h18M8 2v4M16 2v4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-            <span>Atendimento das 9h às 18h</span>
-          </li>
-        </ul>
-        <button class="btn btn--ink" data-open-modal>Agendar agora</button>
-      </div>
-
-      <div class="localizacao__map" data-reveal>
-        <div class="map-embed">
-          <iframe
-            src="https://www.google.com/maps?q=Santa%20Marta%20-%20R.%20Roque%20Lazzazera%2C%20875%2C%20Jardim%20Santa%20Marta%2C%20Salto%20-%20SP%2C%2013323-410&output=embed"
-            width="100%" height="100%" style="border:0"
-            loading="lazy"
-            tabindex="-1"
-            referrerpolicy="no-referrer-when-downgrade"
-            title="Localização da Barbearia Carvalho no Google Maps"></iframe>
-        </div>
-        <a class="map-embed__link" href="https://share.google/nBp75bWHyrNL5aPoO" target="_blank" rel="noopener">
-          Abrir no Google Maps
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== LÍQUIDO ESCORRENDO PARA O FECHAMENTO PRETO ===== -->
-  <div class="liquid-divider liquid-divider--pour" aria-hidden="true">
-    <svg class="liquid-divider__svg" viewBox="0 0 2880 150" preserveAspectRatio="none">
-      <use class="liquid-divider__band liquid-divider__band--back" href="#liquidPour"/>
-      <use class="liquid-divider__band liquid-divider__band--front" href="#liquidPour"/>
-    </svg>
-  </div>
-
-  <!-- ===== CTA FINAL (preto) ===== -->
-  <section class="cta-final section--ink">
-    <div class="cta-final__glow" aria-hidden="true"></div>
-    <div class="stickers" aria-hidden="true">
-      <span class="sticker sticker--dots" style="top:14%; left:4%; width:92px; height:48px;"></span>
-      <span class="sticker sticker--dots" style="top:76%; left:88%; width:92px; height:48px; animation-delay:-6s;"></span>
-      <span class="sticker sticker--ring" style="top:80%; left:14%; width:28px; height:28px; animation-delay:-3s;"></span>
-      <span class="sticker sticker--diamond" style="top:18%; left:82%; width:13px; height:13px; animation-delay:-9s;"></span>
-    </div>
-    <div class="cta-final__floaters" aria-hidden="true">
-      <svg class="hero__floater" style="top:20%; left:12%; width:36px; height:36px; animation-duration:8s;" viewBox="0 0 24 24" fill="none"><path d="M6 6a3 3 0 100 6 3 3 0 000-6zM6 15a3 3 0 100 6 3 3 0 000-6zM20 4L8.5 15.5M14.5 14.5L20 20M8.5 8.5L12 12" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <svg class="hero__floater" style="top:65%; left:8%; width:26px; height:26px; animation-duration:9.5s; animation-delay:-4s;" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5.5L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.5-.5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
-      <svg class="hero__floater" style="top:24%; left:88%; width:30px; height:30px; animation-duration:7.5s; animation-delay:-2s;" viewBox="0 0 24 24" fill="none"><path d="M4 20c3-2 4-6 4-9 0-4 3-7 7-7 3.5 0 6 2 6 5 0 2-1 3-3 4 1 1 1 3-1 4-1.5 1.1-1 3-3 3-2 0-2-2-4-2-2 0-3.5 1.5-6 2z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg>
-      <svg class="hero__floater" style="top:70%; left:90%; width:22px; height:22px; animation-duration:10s; animation-delay:-6s;" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.3"/><path d="M9 12h6M12 9v6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
-    </div>
-    <div class="container cta-final__content" data-reveal>
-      <h2>Pronto pra elevar<br><span class="text-ink">seu estilo?</span></h2>
-      <p>Agende em segundos direto pelo app Barber e garanta seu horário.</p>
-      <button class="btn btn--ink btn--lg" data-open-modal>
-        <span>Agendar pelo App</span>
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-  </section>
-
-</main>
-
-<!-- ===== FOOTER ===== -->
-<footer class="footer">
-  <div class="container footer__grid" data-reveal>
-    <a href="#top" class="footer__brand">
-      <img src="assets/img/logo-512.png" alt="" width="40" height="40">
-      <span>Barbearia<em>Carvalho</em></span>
-    </a>
-
-    <nav class="footer__links">
-      <a href="#sobre">Sobre</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#equipe">Equipe</a>
-      <a href="#ambiente">Ambiente</a>
-      <a href="#galeria">Galeria</a>
-      <a href="#localizacao">Localização</a>
-    </nav>
-
-    <div class="footer__social">
-      <a href="#" aria-label="Instagram da Barbearia Carvalho">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></svg>
-      </a>
-      <a href="#" aria-label="WhatsApp da Barbearia Carvalho">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M4 20l1.4-4.2A8 8 0 1112 20a8 8 0 01-4.6-1.4L4 20z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
-      </a>
-    </div>
-  </div>
-  <div class="container footer__bottom">
-    <p>© <span id="year"></span> Barbearia Carvalho. Todos os direitos reservados.</p>
-  </div>
-</footer>
-
-<!-- ===== FLOATING CTA ===== -->
-<button class="fab" id="fabBtn" data-open-modal aria-label="Agendar horário">
-  <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><rect x="3" y="5" width="18" height="16" rx="3" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M3 9.5h18M8 3v3.5M16 3v3.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="15.3" cy="14.5" r="2.1" fill="currentColor"/></svg>
-  <span>Agendar</span>
-</button>
-
-<!-- ===== APP BOOKING MODAL ===== -->
-<div class="modal" id="appModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
-  <div class="modal__backdrop" data-close-modal></div>
-  <div class="modal__card">
-    <button class="modal__close" data-close-modal aria-label="Fechar">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-    </button>
-
-    <div class="modal__glow"></div>
-
-    <img src="assets/img/logo-512.png" alt="" class="modal__logo" width="64" height="64">
-    <p class="modal__kicker">Agendamento oficial</p>
-    <h3 id="modalTitle">Agende pelo app Barber</h3>
-    <p class="modal__text">
-      Baixe o aplicativo, escolha o profissional, o serviço e o horário —
-      tudo em poucos toques.
-    </p>
-
-    <div class="modal__stores">
-      <a class="store-btn" href="https://play.google.com/store/apps/details?id=br.com.starapp.appbarbercli&referrer=utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_term%3Dapp%2Bbarber" target="_blank" rel="noopener">
-        <svg width="21" height="24" viewBox="0 0 256 283" xmlns="http://www.w3.org/2000/svg">
-          <path d="M119.553141,134.916362 L1.0599006,259.060547 C3.75619448,268.616998 10.7182836,276.3906 19.9208658,280.119977 C29.1234481,283.849353 39.5331235,283.115716 48.121672,278.132484 L181.448642,202.197919 L119.553141,134.916362 Z" fill="#EA4335"/>
-          <path d="M239.370822,113.813616 L181.71353,80.7909097 L116.815965,137.741834 L181.978418,202.021326 L239.19423,169.351804 C249.525723,163.942452 256,153.24465 256,141.58271 C256,129.92077 249.525723,119.222968 239.19423,113.813616 L239.370822,113.813616 Z" fill="#FBBC04"/>
-          <path d="M1.0599006,23.4868015 C0.343633396,26.134699 -0.0127538816,28.8670014 0,31.6100341 L0,250.937314 C0.00751268399,253.679042 0.363556675,256.408712 1.0599006,259.060547 L123.614758,138.095018 L1.0599006,23.4868015 Z" fill="#4285F4"/>
-          <path d="M120.436101,141.273674 L181.71353,80.7909097 L48.5631521,4.50316009 C43.5539929,1.56944036 37.8568091,0.0156629668 32.0517989,0 C17.6444261,-0.0284873284 4.97836875,9.53420553 1.0599006,23.3985055 L120.436101,141.273674 Z" fill="#34A853"/>
-        </svg>
-        <span>
-          <small>Disponível no</small>
+<span>
+<small>Disponível no</small>
           Google Play
         </span>
-      </a>
-      <a class="store-btn" href="https://apps.apple.com/br/app/appbarber-cliente/id6450795073" target="_blank" rel="noopener">
-        <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M16.7 12.4c0-2 1.6-3 1.7-3.1-.9-1.4-2.4-1.5-2.9-1.6-1.2-.1-2.4.7-3 .7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2.1-1.5 2.5-.4 6.4 1 8.5.7 1 1.5 2.1 2.6 2 1-.1 1.4-.7 2.6-.7s1.6.7 2.7.7c1.1 0 1.9-1 2.6-2 .5-.7.9-1.5 1.2-2.3-1.4-.6-2.4-1.9-2.4-3.6z"/><path d="M14.4 5.8c.5-.6.9-1.5.8-2.4-.8.1-1.7.5-2.3 1.2-.5.6-.9 1.5-.8 2.3.9 0 1.8-.5 2.3-1.1z"/></svg>
-        <span>
-          <small>Baixe na</small>
+</a>
+<a class="store-btn" href="https://apps.apple.com/br/app/appbarber-cliente/id6450795073" rel="noopener" target="_blank">
+<svg fill="currentColor" height="24" viewbox="0 0 24 24" width="24"><path d="M16.7 12.4c0-2 1.6-3 1.7-3.1-.9-1.4-2.4-1.5-2.9-1.6-1.2-.1-2.4.7-3 .7-.6 0-1.6-.7-2.7-.7-1.4 0-2.7.8-3.4 2.1-1.5 2.5-.4 6.4 1 8.5.7 1 1.5 2.1 2.6 2 1-.1 1.4-.7 2.6-.7s1.6.7 2.7.7c1.1 0 1.9-1 2.6-2 .5-.7.9-1.5 1.2-2.3-1.4-.6-2.4-1.9-2.4-3.6z"></path><path d="M14.4 5.8c.5-.6.9-1.5.8-2.4-.8.1-1.7.5-2.3 1.2-.5.6-.9 1.5-.8 2.3.9 0 1.8-.5 2.3-1.1z"></path></svg>
+<span>
+<small>Baixe na</small>
           App Store
         </span>
-      </a>
-    </div>
-
-    <p class="modal__foot">Novo por aqui? O app também permite criar sua conta em segundos.</p>
-  </div>
-</div>
-
-<script src="js/script.js" defer></script>
-</body>
-</html>
+</a>
+</div><p class="modal__foot">Novo por aqui? Você também pode criar sua conta no app.</p></div></dialog></body></html>
