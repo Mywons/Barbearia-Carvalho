@@ -23,7 +23,16 @@ As fotos e vídeos novos mostram uma casa com personalidade própria: **tijolo a
 - WA0000 (porta do banheiro) não foi usado: pouco valor para a vitrine.
 - Corrigido: `foto-pendente.svg` estava em `assets/img/` mas era referenciado em `assets/img/equipe/`.
 
-## Fase 2 — Linguagem visual tirada do espaço
+## Fase 2 — Linguagem visual tirada do espaço ✅ (feito)
+
+- `.led`: moldura deslocada que se traça lado a lado e "acende" com uma piscada (hero, Ambiente, hero de Produtos/Trabalhe Conosco, cantinho Kids). Amarela em seções escuras, marrom nas claras.
+- `.bulbs` (`--n` = nº de lâmpadas): fileira que acende uma a uma, acima do título de abertura e do "Relaxe. A casa é sua.".
+- `.section--brick`: Serviços e encerramento com o tijolo do salão (`textura-tijolo.jpg`, já escurecido no arquivo; contraste do texto ≥ 6,5:1 no ponto mais claro).
+- `--wine: #7a2232`: selo BC do hero, seta dos serviços no hover e botão de pausa dos vídeos.
+- Com movimento reduzido, molduras e lâmpadas aparecem prontas, sem animação.
+
+Proposta original:
+
 
 1. **Linha de LED como assinatura gráfica.** Contornos retangulares finos em amarelo (`--yellow`), inspirados no teto, para emoldurar fotos em destaque, marcar a seção ativa e animar a entrada de seções (traço desenhado com `stroke-dashoffset`, já usado em `data-draw`). Substitui parte dos selos circulares.
 2. **Letreiro de lâmpadas.** Pontos dourados nos títulos principais (H1 e "Relaxe. A casa é sua.") acendendo em sequência, uma vez, como o BARBER do salão. Desligado com movimento reduzido.
