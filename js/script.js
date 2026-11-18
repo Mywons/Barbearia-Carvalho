@@ -467,4 +467,40 @@
       }
     });
   }
+
+  // Vídeos curtos: tocam sem som quando visíveis; botão de pausa por vídeo.
+  // Sem JS ou com movimento reduzido, ficam parados com os controles nativos.
+  const clips = document.querySelectorAll('.tour__item video');
+  if (clips.length && 'IntersectionObserver' in window && !motion.matches) {
+    const paused = new WeakSet();
+    const clipObserver = new IntersectionObserver((entries) => {
+      entries.forEach(({ target, isIntersecting }) => {
+        if (isIntersecting && !paused.has(target) && !document.hidden) target.play().catch(() => {});
+        else target.pause();
+      });
+    }, { threshold: 0.5 });
+    clips.forEach((video) => {
+      video.controls = false;
+      video.preload = 'metadata';
+      const toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'tour__toggle';
+      const sync = () => {
+        const off = paused.has(video);
+        toggle.setAttribute('aria-label', off ? 'Reproduzir vídeo' : 'Pausar vídeo');
+        toggle.textContent = off ? '▶' : '❚❚';
+      };
+      toggle.addEventListener('click', () => {
+        if (paused.has(video)) { paused.delete(video); video.play().catch(() => {}); }
+        else { paused.add(video); video.pause(); }
+        sync();
+      });
+      sync();
+      video.after(toggle);
+      clipObserver.observe(video);
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clips.forEach((v) => v.pause());
+    });
+  }
 })();
