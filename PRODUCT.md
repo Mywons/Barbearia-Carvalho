@@ -10,7 +10,7 @@ Clientes da Barbearia Carvalho em Salto/SP, pais e responsáveis por crianças, 
 
 ## Product Purpose
 
-Apresentar a experiência da casa e facilitar o agendamento pelo AppBarber. Oferecer páginas próprias para Kids, Produtos e Trabalhe Conosco, com navegação simples e contatos reais.
+Apresentar a experiência da casa e facilitar o agendamento pela agenda online do AppBarber. Oferecer páginas próprias para Kids, Produtos e Trabalhe Conosco, com navegação simples e contatos reais.
 
 ## Brand Personality
 

@@ -44,7 +44,7 @@
   }
 
   // Native modal provides focus containment and makes the background inert.
-  // Links keep their real AppBarber destinations if dialog is unsupported.
+  // Links keep the real online booking URL if dialog is unsupported.
   const modal = document.getElementById('appModal');
   if (modal && typeof modal.showModal === 'function') {
     let opener = null;

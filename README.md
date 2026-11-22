@@ -1,6 +1,6 @@
 # Barbearia Carvalho
 
-Site estático de quatro páginas, sem framework, backend ou build. Identidade original em amarelo e marrom, fontes Bebas Neue e Poppins, fotos reais e agendamento pelo AppBarber.
+Site estático de quatro páginas, sem framework, backend ou build. Identidade original em amarelo e marrom, fontes Bebas Neue e Poppins, fotos reais e agendamento pela agenda online do AppBarber (sites.appbarber.com.br).
 
 ## Rodar localmente
 
@@ -66,7 +66,7 @@ Camada de movimento ampliada após a ATA. Sem cursor personalizado, magnetismo, 
 
 Com `prefers-reduced-motion: reduce`, nada anima e todo o conteúdo aparece de imediato.
 
-O agendamento usa `<dialog>` nativo, que contém o foco e torna o fundo inerte. Escape, botão de fechar ou clique no backdrop fecham o modal e devolvem o foco. Sem JavaScript, os botões continuam sendo links reais para o AppBarber; Google Play e App Store também aparecem no rodapé via `noscript`.
+O agendamento usa `<dialog>` nativo, que contém o foco e torna o fundo inerte. Escape, botão de fechar ou clique no backdrop fecham o modal e devolvem o foco. O popup traz só o botão "Abrir agenda", que leva à agenda online (`sites.appbarber.com.br/barbeariacarvalhosalto`) em nova aba; não há mais botões de download do app. Sem JavaScript, os botões de agendar já são links diretos para a agenda, que também aparece no rodapé via `noscript`.
 
 ## Verificação
 

@@ -342,12 +342,7 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
 .modal__logo { border-radius: 50%; margin: 8px auto 20px; }
 .modal h2 { font-size: 2.35rem; margin-bottom: 18px; }
 .modal p { font-size: .88rem; }
-.modal__stores { display: grid; gap: 12px; }
-.store-btn { display: flex; align-items: center; gap: 16px; background: var(--ink); color: var(--yellow-light); padding: 14px 20px; border-radius: 10px; transition: transform .3s var(--ease-out),background-color .3s; }
-.store-btn:hover { transform: translateY(-2px); background: var(--ink-deep); }
-.store-btn svg { flex-shrink: 0; }
-.store-btn span { display: flex; flex-direction: column; align-items: start; font-weight: 600; }
-.store-btn small { font-size: .75rem; font-weight: 400; }
+.modal__book { width: 100%; margin-top: 6px; }
 .modal .modal__foot { font-size: .75rem; margin: 20px 0 0; }
 
 /* ================================================================
@@ -478,8 +473,7 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
   }
   .modal[open] { animation: modal-in .5s var(--ease-out); }
   .modal[open]::backdrop { animation: fade-in .35s ease-out; }
-  .modal[open] .store-btn { animation: rise-in .6s var(--ease-out) both; }
-  .modal[open] .store-btn + .store-btn { animation-delay: .08s; }
+  .modal[open] .modal__book { animation: rise-in .6s var(--ease-out) .08s both; }
   @keyframes modal-in { from { opacity: 0; transform: translateY(30px) scale(.94); } }
   @keyframes fade-in { from { opacity: 0; } }
 }
