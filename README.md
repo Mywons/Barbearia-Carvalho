@@ -26,7 +26,13 @@ Cabeçalho, rodapé e modal são HTML estático em cada página. Ao alterar link
 
 ### Ilustração Kids
 
-A arte prevista é um leão cartoon original, sorridente, com juba marrom penteada, em amarelo e marrom. A geração pela ferramenta embutida foi recusada pelo filtro automático em duas tentativas; nenhum arquivo de ilustração foi produzido. Nesta versão o leão foi desenhado à mão em SVG, embutido em `.kids-stage` (kids.html) e `.teaser-lion` (index.html). Se uma arte final for entregue, troque o SVG mantendo as classes `.lion__head`, `.lion__eye` e `.lion__pupils` para preservar as animações.
+O leão da Carvalho Kids tem 11 expressões em `assets/img/leao/` (WebP transparente, recortado da folha gerada à parte): `oi`, `feliz`, `piscadinha`, `gargalhada`, `surpreso`, `orgulhoso`, `pensando`, `timido`, `sono`, `comemorando` e `espiando`. Os bustos têm o mesmo enquadramento (410×332), então podem ser trocados sem o leão "pular".
+
+- `kids.html`: o leão principal acena (`oi`); a cada toque troca de expressão com uma frase no balão e volta depois de 2,6 s. Fora do horário (antes das 9h ou depois das 18h, no relógio de quem visita) ele aparece com `sono`. No computador ele inclina na direção do ponteiro.
+- Passos da visita: `timido`, `pensando` e `orgulhoso`. Popup de agendamento do Kids: `comemorando`.
+- Chamada Kids da página inicial: `espiando`.
+
+Para uma versão mais nítida, troque os arquivos por PNGs individuais maiores com os mesmos nomes.
 
 ### Produtos
 
@@ -55,7 +61,7 @@ Camada de movimento ampliada após a ATA. Sem cursor personalizado, magnetismo, 
 - Faixa de frases contínua que acelera e muda de direção com a rolagem; nav que se recolhe ao descer e volta ao subir, com barra de progresso; link da seção atual destacado.
 - Paralaxe, tesoura que percorre a linha tracejada de Serviços e o "Relaxe. A casa é sua." usam `animation-timeline` nativo; sem suporte, ficam estáticos.
 - Serviços são links para o agendamento, com preenchimento no hover.
-- Kids: leão cartoon em SVG que pisca, segue o ponteiro com os olhos e responde ao toque com um balão (`aria-live`). Ele também espia na chamada Kids da página inicial.
+- Kids: leão com 11 expressões que troca de cara ao toque, com balão (`aria-live`), cochila fora do horário e espia na chamada Kids da página inicial.
 - Transição entre páginas com View Transitions (Chromium e Safari recentes).
 
 Com `prefers-reduced-motion: reduce`, nada anima e todo o conteúdo aparece de imediato.

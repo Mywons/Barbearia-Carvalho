@@ -226,33 +226,61 @@
   tilt(document.querySelector('.hero'), document.querySelector('[data-tilt]'), 'p');
 
 
-  // Kids: the lion follows the pointer with its eyes and answers a tap.
+  // Kids: o leão troca de expressão ao toque, inclina na direção do ponteiro
+  // e cochila fora do horário de atendimento (9h às 18h).
   const lionBtn = document.getElementById('lionBtn');
+  const lionImg = document.getElementById('lionImg');
   const bubble = document.getElementById('lionBubble');
-  if (lionBtn) {
-    const pupils = lionBtn.querySelector('.lion__pupils');
-    const lines = ['Oi! Bora cortar?', 'Juba no capricho!', 'Hoje tem corte novo!', 'Pode sentar, a casa é sua!'];
+  if (lionBtn && lionImg) {
+    const path = (name) => `assets/img/leao/${name}.webp`;
+    const alts = {
+      oi: 'Leãozinho da Carvalho, de capa e gravatinha, acenando',
+      sono: 'Leãozinho da Carvalho bocejando de sono',
+      feliz: 'Leãozinho da Carvalho sorrindo de olhos fechados',
+      piscadinha: 'Leãozinho da Carvalho piscando e fazendo joinha',
+      gargalhada: 'Leãozinho da Carvalho dando risada',
+      surpreso: 'Leãozinho da Carvalho surpreso',
+      orgulhoso: 'Leãozinho da Carvalho se olhando no espelho',
+    };
+    const hour = new Date().getHours();
+    const resting = hour < 9 || hour >= 18 ? 'sono' : 'oi';
+    const reactions = resting === 'sono'
+      ? [['surpreso', 'Opa! Acordei!'], ['feliz', 'A gente abre às 9h!'], ['piscadinha', 'Agenda já pra amanhã!']]
+      : [['feliz', 'Oi! Bora cortar?'], ['piscadinha', 'Juba no capricho!'], ['gargalhada', 'Hoje tem corte novo!'], ['orgulhoso', 'Olha esse topete!']];
+    Object.keys(alts).forEach((name) => { const img = new Image(); img.src = path(name); });
     let turn = 0;
-    let bubbleTimer = 0;
+    let resetTimer = 0;
+    const show = (name) => {
+      if (lionImg.getAttribute('src') === path(name)) return;
+      lionImg.classList.add('is-swapping');
+      setTimeout(() => {
+        lionImg.src = path(name);
+        lionImg.alt = alts[name];
+        lionImg.classList.remove('is-swapping');
+      }, motion.matches ? 0 : 150);
+    };
+    show(resting);
     window.addEventListener('pointermove', (event) => {
-      if (!pupils || motion.matches) return;
+      if (motion.matches || !finePointer.matches) return;
       const rect = lionBtn.getBoundingClientRect();
-      const dx = event.clientX - (rect.left + rect.width / 2);
-      const dy = event.clientY - (rect.top + rect.height * 0.55);
-      const distance = Math.hypot(dx, dy) || 1;
-      const reach = Math.min(distance / 40, 7);
-      pupils.style.transform = `translate(${(dx / distance) * reach}px, ${(dy / distance) * reach}px)`;
+      const dx = (event.clientX - (rect.left + rect.width / 2)) / window.innerWidth;
+      lionImg.style.setProperty('--lean', `${Math.max(-1, Math.min(1, dx * 2)) * 6}deg`);
     }, { passive: true });
     lionBtn.addEventListener('click', () => {
+      const [face, line] = reactions[turn++ % reactions.length];
+      show(face);
       lionBtn.classList.remove('is-happy');
       void lionBtn.offsetWidth;
       lionBtn.classList.add('is-happy');
       if (bubble) {
-        bubble.textContent = lines[turn++ % lines.length];
+        bubble.textContent = line;
         bubble.classList.add('is-on');
-        clearTimeout(bubbleTimer);
-        bubbleTimer = setTimeout(() => bubble.classList.remove('is-on'), 2600);
       }
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
+        bubble?.classList.remove('is-on');
+        show(resting);
+      }, 2600);
     });
   }
 

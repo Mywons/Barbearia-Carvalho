@@ -172,7 +172,8 @@ main:focus { outline: none; }
 .kids-teaser { --bg: var(--yellow-light); --fg: var(--ink); background: var(--bg); color: var(--fg); border-block: 1px solid var(--line); }
 .teaser-grid .brand-note { margin-bottom: 16px; color: var(--mane); }
 .kids-teaser .doodle { color: var(--mane-2); }
-.teaser-lion { position: absolute; right: clamp(-10px,4vw,80px); bottom: -46px; width: clamp(130px,15vw,190px); z-index: 0; opacity: .95; }
+.teaser-lion { position: absolute; right: clamp(-10px,4vw,80px); bottom: -4px; width: clamp(170px,19vw,250px); z-index: 0; }
+.teaser-lion img { display: block; width: 100%; height: auto; }
 .teaser-grid > div:last-child { padding-right: clamp(0px,10vw,170px); }
 .doodle { position: absolute; color: var(--yellow); pointer-events: none; font-size: 22px; line-height: 1; }
 
@@ -268,11 +269,8 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
 .kids-stage::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px dashed var(--ink); opacity: .45; }
 .lion-btn { position: relative; z-index: 1; width: 78%; padding: 0; border: 0; background: none; border-radius: 50%; -webkit-tap-highlight-color: transparent; }
 .lion-btn:focus-visible { outline-offset: -6px; }
-.lion { width: 100%; height: auto; display: block; overflow: visible; }
-.lion__head { transform-box: fill-box; transform-origin: 50% 85%; }
-.lion__eye { transform-box: fill-box; transform-origin: center; }
-.lion__pupils { transition: transform .35s var(--ease-quart); }
-.lion__tuft { transform-box: fill-box; transform-origin: 30% 100%; }
+.lion-img { display: block; width: 100%; height: auto; transform-origin: 50% 100%; transform: rotate(var(--lean,0deg)); transition: transform .5s var(--ease-quart),opacity .18s; filter: drop-shadow(0 14px 18px rgb(67 41 28 / .25)); }
+.lion-img.is-swapping { opacity: .2; }
 .bubble { position: absolute; z-index: 2; top: 4%; left: -2%; padding: 12px 18px; border-radius: 18px 18px 18px 4px; background: var(--ink); color: var(--yellow-light); font: 400 1.5rem/1 'Bebas Neue',sans-serif; opacity: 0; transform: translateY(10px) scale(.9); transform-origin: bottom left; transition: opacity .3s var(--ease-out),transform .45s var(--ease-out); pointer-events: none; }
 .bubble.is-on { opacity: 1; transform: none; }
 .float { position: absolute; z-index: 2; color: var(--ink); pointer-events: none; }
@@ -286,6 +284,8 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
 .step { position: relative; padding-top: 28px; border-top: 2px dashed var(--line); }
 .step__icon { width: 84px; height: 84px; border-radius: 50%; background: var(--ink); color: var(--yellow); display: grid; place-items: center; margin-bottom: 22px; transition: transform .6s var(--ease-out); }
 .step:hover .step__icon { transform: rotate(-8deg) scale(1.06); }
+.step__icon--lion { width: 120px; height: 120px; background: var(--yellow-light); border: 2px solid var(--ink); overflow: hidden; align-items: end; }
+.step__icon--lion img { width: 112%; max-width: none; margin-bottom: -6px; }
 .step__icon svg { width: 46px; height: 46px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .step__num { position: absolute; top: 24px; right: 0; font: 400 3.4rem/1 'Bebas Neue',sans-serif; opacity: .25; }
 .step p { margin-top: 12px; color: var(--muted); font-size: .95rem; }
@@ -298,6 +298,7 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
 .modal__close { position: absolute; right: 12px; top: 12px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: var(--ink); color: var(--yellow); font-size: 30px; line-height: 1; transition: transform .4s var(--ease-out); }
 .modal__close:hover { transform: rotate(90deg); }
 .modal__logo { border-radius: 50%; margin: 8px auto 20px; }
+.modal__lion { display: block; width: 190px; height: auto; margin: 0 auto 10px; }
 .modal h2 { font-size: 2.35rem; margin-bottom: 18px; }
 .modal p { font-size: .88rem; }
 .modal__book { width: 100%; margin-top: 6px; }
@@ -381,7 +382,7 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
   .blade--b { animation: snip-b .7s ease-in-out infinite alternate; }
   @keyframes snip-a { to { transform: rotate(-11deg); } }
   @keyframes snip-b { to { transform: rotate(11deg); } }
-  .teaser-lion { animation: peek 5s ease-in-out infinite; }
+  .teaser-lion { animation: peek 5s ease-in-out infinite; transform-origin: 50% 100%; }
   @keyframes peek { 0%,100% { transform: translateY(18px) rotate(-3deg); } 50% { transform: translateY(0) rotate(3deg); } }
   .doodle { animation: drift 7s ease-in-out infinite; animation-delay: var(--d,0s); }
   @keyframes drift { 50% { transform: translate(8px,-14px) rotate(25deg); opacity: .5; } }
@@ -391,13 +392,9 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
 
 
   /* Kids */
-  .lion__eye { animation: blink 5s infinite; }
-  @keyframes blink { 0%,93%,100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
-  .lion__head { animation: bob 4s ease-in-out infinite; }
+  .lion-btn { animation: bob 4s ease-in-out infinite; }
   @keyframes bob { 50% { transform: translateY(-6px) rotate(-1.5deg); } }
-  .lion__tuft { animation: tuft 4s ease-in-out infinite; }
-  @keyframes tuft { 50% { transform: rotate(-6deg); } }
-  .lion-btn.is-happy .lion__head { animation: wiggle .9s var(--ease-out); }
+  .lion-btn.is-happy .lion-img { animation: wiggle .9s var(--ease-out); }
   @keyframes wiggle { 20% { transform: rotate(-7deg) scale(1.04); } 45% { transform: rotate(6deg) scale(1.04); } 70% { transform: rotate(-3deg); } }
   .kids-stage::after { animation: spin 40s linear infinite; }
   .float { animation: float 6s ease-in-out infinite; animation-delay: var(--d,0s); }
@@ -499,7 +496,7 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
   .teaser-grid { gap: 24px; }
   .teaser-grid > div:last-child { padding-right: 0; }
   .teaser-grid .btn { margin-top: 4px; }
-  .teaser-lion { width: 140px; right: 20px; bottom: -34px; }
+  .teaser-lion { width: 170px; right: 16px; bottom: -4px; }
   .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 260px 150px 150px; gap: 12px; }
   .led::after,.hero__visual.led::after { inset: 12px -10px -10px 12px; }
   .kids-corner__grid { grid-template-columns: 1fr; }
