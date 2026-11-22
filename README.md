@@ -44,7 +44,7 @@ Nenhum e-mail foi presumido. Em `trabalhe-conosco.html`, copie o link de `<templ
 
 ### Vídeo e redes sociais
 
-Os vídeos ficam em `assets/video/` (verticais 540×960, sem áudio, com pôster `.jpg` de mesmo nome) e aparecem em "Um giro pela casa" (`.tour` em `index.html`) e no cantinho de `kids.html`. O script toca cada vídeo mudo e em loop só quando está visível e adiciona um botão de pausa; sem JS ou com movimento reduzido ficam os controles nativos. Para incluir outro, copie um `<li class="tour__item">`. Instagram e WhatsApp não têm URLs confirmadas; não exibimos atalhos vazios. O telefone real continua disponível.
+Os vídeos ficam em `assets/video/`, sem áudio e com pôster `.jpg` de mesmo nome. `tour-casa.mp4` (720×1280, ~26 s) junta quatro trechos do salão com transições e ocupa o cartão da abertura (`.hero__video`); `kids.mp4` fica no cantinho de `kids.html`. O script toca cada vídeo mudo e em loop só quando está visível e adiciona um botão de pausa; sem JS ou com movimento reduzido ficam os controles nativos. Instagram e WhatsApp não têm URLs confirmadas; não exibimos atalhos vazios. O telefone real continua disponível.
 
 O plano do rework visual está em `REWORK.md`.
 

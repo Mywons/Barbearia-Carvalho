@@ -470,7 +470,7 @@
 
   // Vídeos curtos: tocam sem som quando visíveis; botão de pausa por vídeo.
   // Sem JS ou com movimento reduzido, ficam parados com os controles nativos.
-  const clips = document.querySelectorAll('.tour__item video');
+  const clips = document.querySelectorAll('.tour__item video,.hero__video');
   if (clips.length && 'IntersectionObserver' in window && !motion.matches) {
     const paused = new WeakSet();
     const clipObserver = new IntersectionObserver((entries) => {

@@ -11,10 +11,7 @@ As fotos e vídeos novos mostram uma casa com personalidade própria: **tijolo a
 | `assets/img/prateleira-produtos.jpg` | Estante de tijolo com produtos | Galeria + hero de Produtos |
 | `assets/img/bar-chopeira.jpg` | Chopeira BC, banqueta e geladeira | Galeria |
 | `assets/img/espaco-kids.jpg` | Cantinho Kids | Galeria + nova seção em Kids |
-| `assets/video/bancadas.mp4` | WA0005 | "Um giro pela casa" (início) |
-| `assets/video/cafe-bar.mp4` | WA0004 | "Um giro pela casa" |
-| `assets/video/produtos.mp4` | WA0003 | "Um giro pela casa" |
-| `assets/video/espera.mp4` | WA0002 | "Um giro pela casa" |
+| `assets/video/tour-casa.mp4` | WA0003 + WA0004 + WA0002 + WA0005, ~7 s cada, com transições | Cartão da abertura da página inicial (substituiu a foto; a foto BARBER foi para a galeria) |
 | `assets/video/kids.mp4` | WA0001 | Seção "O cantinho deles" em Kids |
 
 - Fotos redimensionadas (1080 px de largura; café 1600 px), JPEG progressivo, **EXIF/GPS removidos**.
@@ -41,11 +38,11 @@ Proposta original:
 
 ## Fase 3 — Estrutura das páginas
 
-- **Início:** hero com opção de vídeo de fundo curto (`bancadas.mp4`) só em desktop e com `prefers-reduced-motion`/`save-data` respeitados; a foto continua como pôster e no mobile.
+- **Início:** ✅ o cartão da abertura já é o vídeo único `tour-casa.mp4`. Falta avaliar `save-data` (não tocar automaticamente em conexões econômicas).
 - **Ambiente → "Por dentro da Carvalho":** tour por zonas (Recepção · Bancadas · Café & chopp · Kids · Produtos), cada uma com foto ou vídeo e uma frase. Une as seções Ambiente e Galeria, hoje redundantes.
 - **Produtos:** grade com fotos reais da estante quando a casa confirmar nomes e marcas (o template `#product-item` já existe). Não listar marcas só porque aparecem na foto.
 - **Kids:** manter o leão; usar o cantinho real como prova de que o espaço existe.
-- **Trabalhe Conosco:** trocar a foto do hero por um quadro do vídeo das bancadas (o "posto de trabalho").
+- **Trabalhe Conosco:** trocar a foto do hero por um quadro do vídeo do salão (o "posto de trabalho").
 
 ## Fase 4 — Performance e acabamento
 
