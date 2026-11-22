@@ -54,5 +54,6 @@ Proposta original:
 
 - **Autorização de imagem:** o vídeo `kids.mp4` mostra uma criança (de costas). Confirmar autorização dos responsáveis antes de publicar; se não houver, trocar por um trecho sem a criança.
 - No cantinho Kids aparece um relógio com marca de whisky — avaliar trocar o objeto ou recortar em fotos futuras.
-- Fotos da equipe (600×600), nomes e funções; catálogo real de produtos; e-mail de recrutamento.
+- Seção da equipe removida (o AppBarber não oferece como puxar a lista automaticamente). Pode voltar como carrossel quando houver nomes e fotos.
+- Catálogo real de produtos; e-mail de recrutamento.
 - Instagram `@barbeariacarvalhosalto` aparece na chopeira — confirmar se pode virar link no rodapé.

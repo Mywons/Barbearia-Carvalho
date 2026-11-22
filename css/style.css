@@ -154,66 +154,24 @@ main:focus { outline: none; }
 .service:hover .service__go,.service:focus-visible .service__go { background: var(--wine); color: var(--yellow); border-color: var(--wine); transform: rotate(45deg); }
 .service:focus-visible { outline-color: var(--yellow); outline-offset: 8px; border-radius: 14px; }
 
-/* Equipe e esfera */
-.team-grid { display: grid; grid-template-columns: 1.1fr 1fr; align-items: center; gap: 64px; }
-.team-grid > div > p:not(.statement) { max-width: 46ch; font-size: .95rem; }
 .product-catalog { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,240px),1fr)); gap: 24px; }
 .product-catalog:empty { display: none; }
 .product-item { margin-top: 28px; }
 .product-item img { width: 100%; object-fit: cover; border-radius: 12px; margin-bottom: 18px; }
 .product-item img { aspect-ratio: 1; }
 
-/* Equipe: mostrador estilo smartwatch */
-.team-grid > .team-copy > p:not(.statement,.brand-note) { max-width: 46ch; font-size: .95rem; }
-.team-copy h2 .accent { color: var(--ink-deep); }
-.watch-hint { display: flex; align-items: center; gap: 10px; font-size: .8rem; font-weight: 600; }
-.watch-wrap { display: grid; justify-items: center; }
-.watch { --face: min(100%,440px); position: relative; width: var(--face); aspect-ratio: 1; padding: 14px; border-radius: 50%; background: repeating-conic-gradient(from 0deg,var(--ink) 0 .6deg,transparent .6deg 6deg),var(--yellow-light); border: 2px solid var(--ink); box-shadow: 0 40px 60px -34px rgb(42 24 16 / .7); }
-.watch__crown { position: absolute; right: -14px; top: 38%; width: 18px; height: 54px; border-radius: 6px; background: var(--ink); box-shadow: inset 0 0 0 2px var(--yellow),inset 0 6px 0 -3px var(--mane-2); }
-.watch__crown::after { content: ''; position: absolute; right: 1px; top: 70px; width: 12px; height: 34px; border-radius: 4px; background: var(--ink); }
-.watch__face { position: relative; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; background: radial-gradient(circle at 50% 40%,#3a2418,var(--ink-deep) 70%); touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: grab; }
-.watch__face.is-dragging { cursor: grabbing; }
-.watch__list { list-style: none; margin: 0; padding: 20% 15% 0; display: grid; grid-template-columns: repeat(3,1fr); gap: 10px 8px; }
-.watch:not(.is-live) .pro img { width: 72%; }
 .pro { display: grid; justify-items: center; gap: 4px; width: 100%; padding: 0; border: 0; background: none; color: var(--yellow-light); text-align: center; }
 .pro img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 50%; border: 3px solid var(--yellow); pointer-events: none; -webkit-user-drag: none; }
 .pro__name { font: 400 1rem/1.1 'Bebas Neue',sans-serif; }
 .pro__role { font-size: .7rem; color: #e9cfa0; }
-.watch__logo { display: none; }
-.watch.is-live .watch__list { padding: 0; display: block; }
-.watch.is-live .watch__item,.watch.is-live .watch__logo { position: absolute; left: 50%; top: 50%; width: var(--bubble,120px); height: var(--bubble,120px); margin: calc(var(--bubble,120px) / -2) 0 0 calc(var(--bubble,120px) / -2); will-change: transform; }
-.watch.is-live .watch__logo { display: block; border-radius: 50%; pointer-events: none; }
-.watch.is-live .pro { height: 100%; display: block; border-radius: 50%; }
-.watch.is-live .pro img { height: 100%; box-shadow: 0 10px 24px -10px rgb(0 0 0 / .7); transition: border-color .3s,box-shadow .3s; }
-.watch.is-live .pro:hover img,.watch.is-live .pro:focus-visible img { border-color: var(--yellow-light); box-shadow: 0 0 0 4px var(--yellow),0 14px 30px -10px rgb(0 0 0 / .8); }
-.watch.is-live .pro:focus-visible { outline: none; }
-.watch.is-live .pro__name,.watch.is-live .pro__role { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.watch__list,.watch__logo { transition: opacity .4s var(--ease-out),filter .4s; }
-.watch.is-open .watch__list,.watch.is-open .watch__logo { opacity: .25; filter: blur(3px); }
-.watch__detail { position: absolute; inset: 0; z-index: 2; border-radius: 50%; overflow: hidden; background: var(--ink-deep); color: var(--yellow-light); }
-.watch__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.watch__detail::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top,rgb(29 16 10 / .95) 12%,rgb(29 16 10 / .55) 42%,transparent 66%); pointer-events: none; }
-.watch__info { position: absolute; z-index: 1; left: 14%; right: 14%; bottom: 11%; text-align: center; display: grid; justify-items: center; }
-.watch__info h3 { font-size: clamp(2rem,4vw,2.8rem); }
-.watch__info p { margin: 2px 0 12px; font-size: .82rem; color: #e9cfa0; }
-.watch__cta { min-height: 44px; padding: 10px 18px; gap: 12px; font-size: .8rem; --fg: var(--yellow); --bg: var(--ink); }
-.watch__cta::before { background: var(--yellow-light); }
-.watch__close,.watch__nav { position: absolute; z-index: 1; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgb(255 240 184 / .5); background: rgb(29 16 10 / .55); color: var(--yellow-light); font-size: 1.6rem; line-height: 1; display: grid; place-items: center; transition: background-color .3s,transform .4s var(--ease-out); }
-.watch__close { top: 7%; left: 50%; margin-left: -22px; }
-.watch__close:hover { transform: rotate(90deg); background: var(--ink); }
-.watch__nav { top: 50%; margin-top: -22px; }
-.watch__nav--prev { left: 5%; }
-.watch__nav--next { right: 5%; }
-.watch__nav:hover { background: var(--ink); }
-.watch__nav--prev:hover { transform: translateX(-3px); }
-.watch__nav--next:hover { transform: translateX(3px); }
-.watch__close:focus-visible,.watch__nav:focus-visible,.watch__cta:focus-visible { outline-color: var(--yellow); outline-offset: 3px; }
 
 /* Chamada Kids */
 .kids-teaser { position: relative; overflow: hidden; padding-block: 64px; }
 .teaser-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 64px; align-items: center; position: relative; z-index: 1; }
 .teaser-grid h2 { font-size: clamp(2.5rem,3.9vw,4rem); }
-.teaser-grid .brand-note { margin-bottom: 16px; color: var(--yellow); }
+.kids-teaser { --bg: var(--yellow-light); --fg: var(--ink); background: var(--bg); color: var(--fg); border-block: 1px solid var(--line); }
+.teaser-grid .brand-note { margin-bottom: 16px; color: var(--mane); }
+.kids-teaser .doodle { color: var(--mane-2); }
 .teaser-lion { position: absolute; right: clamp(-10px,4vw,80px); bottom: -46px; width: clamp(130px,15vw,190px); z-index: 0; opacity: .95; }
 .teaser-grid > div:last-child { padding-right: clamp(0px,10vw,170px); }
 .doodle { position: absolute; color: var(--yellow); pointer-events: none; font-size: 22px; line-height: 1; }
@@ -431,13 +389,6 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
   .pin { animation: pin 2.4s ease-in-out infinite; }
   @keyframes pin { 50% { transform: translateY(-4px); } }
 
-  .watch.is-live .pro { transform: scale(0); transition: transform .9s var(--ease-out) var(--d,0s); }
-  .watch.is-live.is-in .pro { transform: scale(1); }
-  .watch.is-live.is-in .pro:hover,.watch.is-live.is-in .pro:focus-visible { transform: scale(1.07); transition-delay: 0s; transition-duration: .4s; }
-  .watch.is-live.is-in .pro:active { transform: scale(.94); transition-duration: .12s; }
-  .watch.is-live .watch__logo { animation: seal-in 1s var(--ease-out) both paused; }
-  .watch.is-live.is-in .watch__logo { animation-play-state: running; }
-  .watch-hint span { display: inline-block; animation: spin 6s linear infinite; }
 
   /* Kids */
   .lion__eye { animation: blink 5s infinite; }
@@ -482,7 +433,6 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
   .nav__inner { gap: 16px; }
   .nav__links { gap: 14px; font-size: .74rem; }
   .nav .brand span { display: none; }
-  .team-grid { gap: 40px; }
 }
 @media (max-width: 900px) {
   .container { width: calc(100% - 48px); }
@@ -508,8 +458,6 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
   .services-list { gap: 0 32px; }
   .service { grid-template-columns: 40px 1fr; }
   .service__go { display: none; }
-  .team-grid { grid-template-columns: 1fr 1fr; }
-  .watch { padding: 10px; }
   .teaser-grid,.kids-care,.careers-grid { gap: 36px; }
   .gallery-grid { grid-template-rows: 180px 180px; }
   .footer__grid { flex-wrap: wrap; }
@@ -525,7 +473,7 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
   .nav__cta { padding: 10px 14px; gap: 10px; font-size: .8rem; }
   .nav__cta span[aria-hidden] { display: none; }
   .hero { padding: 38px 0 48px; }
-  .hero__grid,.inner-grid,.about-grid,.team-grid,.environment-grid,.location-grid,.kids-care,.careers-grid,.teaser-grid { grid-template-columns: 1fr; }
+  .hero__grid,.inner-grid,.about-grid,.environment-grid,.location-grid,.kids-care,.careers-grid,.teaser-grid { grid-template-columns: 1fr; }
   .hero__title,.inner-grid h1 { font-size: clamp(3.1rem,12vw,4.7rem); max-width: none; }
   .hero__copy .lead { margin-top: 24px; }
   .hero__visual { margin-top: 14px; transform: none; }
@@ -547,13 +495,6 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
   .section-intro p { max-width: 42ch; }
   .services-list,.product-categories { grid-template-columns: 1fr; gap: 0; }
   .service::before { inset: 0 -10px; }
-  .team-grid,.environment-grid,.location-grid { gap: 40px; }
-  .watch { --face: min(100%,340px); }
-  .watch__crown { right: -10px; width: 14px; height: 44px; }
-  .watch__crown::after { display: none; }
-  .watch__info { bottom: 9%; left: 12%; right: 12%; }
-  .watch__nav--prev { left: 3%; }
-  .watch__nav--next { right: 3%; }
   .kids-teaser { padding-bottom: 150px; }
   .teaser-grid { gap: 24px; }
   .teaser-grid > div:last-child { padding-right: 0; }
