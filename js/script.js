@@ -275,6 +275,25 @@
     });
   }
 
+  // Tesoura de Serviços: sem animation-timeline nativo (ex.: Firefox),
+  // a linha é cortada pelo script conforme a rolagem.
+  const cutLines = [...document.querySelectorAll('.cut-line')];
+  if (cutLines.length && !(window.CSS && CSS.supports('animation-timeline: view()'))) {
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      if (motion.matches) return;
+      cutLines.forEach((line) => {
+        const track = line.querySelector('.cut-line__track');
+        const rect = line.getBoundingClientRect();
+        const p = Math.min(1, Math.max(0, (innerHeight * 0.9 - rect.top) / (innerHeight * 0.55)));
+        track.style.width = `calc(60px + (100% - 120px) * ${p.toFixed(3)})`;
+      });
+    };
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  }
+
   // Vídeos curtos: tocam sem som quando visíveis; botão de pausa por vídeo.
   // Sem JS ou com movimento reduzido, ficam parados com os controles nativos.
   const clips = document.querySelectorAll('.tour__item video,.hero__video');
