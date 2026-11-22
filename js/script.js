@@ -226,7 +226,7 @@
   tilt(document.querySelector('.hero'), document.querySelector('[data-tilt]'), 'p');
 
 
-  // Kids: o leão troca de expressão ao toque, inclina na direção do ponteiro
+  // Kids: o leão (estático) troca de expressão ao toque
   // e cochila fora do horário de atendimento (9h às 18h).
   const lionBtn = document.getElementById('lionBtn');
   const lionImg = document.getElementById('lionImg');
@@ -260,18 +260,9 @@
       }, motion.matches ? 0 : 150);
     };
     show(resting);
-    window.addEventListener('pointermove', (event) => {
-      if (motion.matches || !finePointer.matches) return;
-      const rect = lionBtn.getBoundingClientRect();
-      const dx = (event.clientX - (rect.left + rect.width / 2)) / window.innerWidth;
-      lionImg.style.setProperty('--lean', `${Math.max(-1, Math.min(1, dx * 2)) * 6}deg`);
-    }, { passive: true });
     lionBtn.addEventListener('click', () => {
       const [face, line] = reactions[turn++ % reactions.length];
       show(face);
-      lionBtn.classList.remove('is-happy');
-      void lionBtn.offsetWidth;
-      lionBtn.classList.add('is-happy');
       if (bubble) {
         bubble.textContent = line;
         bubble.classList.add('is-on');

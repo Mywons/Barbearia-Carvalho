@@ -269,7 +269,7 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
 .kids-stage::after { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px dashed var(--ink); opacity: .45; }
 .lion-btn { position: relative; z-index: 1; width: 78%; padding: 0; border: 0; background: none; border-radius: 50%; -webkit-tap-highlight-color: transparent; }
 .lion-btn:focus-visible { outline-offset: -6px; }
-.lion-img { display: block; width: 100%; height: auto; transform-origin: 50% 100%; transform: rotate(var(--lean,0deg)); transition: transform .5s var(--ease-quart),opacity .18s; filter: drop-shadow(0 14px 18px rgb(67 41 28 / .25)); }
+.lion-img { display: block; width: 100%; height: auto; transition: opacity .18s; filter: drop-shadow(0 14px 18px rgb(67 41 28 / .25)); }
 .lion-img.is-swapping { opacity: .2; }
 .bubble { position: absolute; z-index: 2; top: 4%; left: -2%; padding: 12px 18px; border-radius: 18px 18px 18px 4px; background: var(--ink); color: var(--yellow-light); font: 400 1.5rem/1 'Bebas Neue',sans-serif; opacity: 0; transform: translateY(10px) scale(.9); transform-origin: bottom left; transition: opacity .3s var(--ease-out),transform .45s var(--ease-out); pointer-events: none; }
 .bubble.is-on { opacity: 1; transform: none; }
@@ -382,8 +382,6 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
   .blade--b { animation: snip-b .7s ease-in-out infinite alternate; }
   @keyframes snip-a { to { transform: rotate(-11deg); } }
   @keyframes snip-b { to { transform: rotate(11deg); } }
-  .teaser-lion { animation: peek 5s ease-in-out infinite; transform-origin: 50% 100%; }
-  @keyframes peek { 0%,100% { transform: translateY(18px) rotate(-3deg); } 50% { transform: translateY(0) rotate(3deg); } }
   .doodle { animation: drift 7s ease-in-out infinite; animation-delay: var(--d,0s); }
   @keyframes drift { 50% { transform: translate(8px,-14px) rotate(25deg); opacity: .5; } }
   .final-cta__stamp { animation: spin 90s linear infinite; }
@@ -392,10 +390,6 @@ address { font-style: normal; margin-top: 28px; font-size: .91rem; }
 
 
   /* Kids */
-  .lion-btn { animation: bob 4s ease-in-out infinite; }
-  @keyframes bob { 50% { transform: translateY(-6px) rotate(-1.5deg); } }
-  .lion-btn.is-happy .lion-img { animation: wiggle .9s var(--ease-out); }
-  @keyframes wiggle { 20% { transform: rotate(-7deg) scale(1.04); } 45% { transform: rotate(6deg) scale(1.04); } 70% { transform: rotate(-3deg); } }
   .kids-stage::after { animation: spin 40s linear infinite; }
   .float { animation: float 6s ease-in-out infinite; animation-delay: var(--d,0s); }
   @keyframes float { 50% { transform: translateY(-16px) rotate(var(--r,10deg)); } }

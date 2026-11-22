@@ -28,7 +28,7 @@ Cabeçalho, rodapé e modal são HTML estático em cada página. Ao alterar link
 
 O leão da Carvalho Kids tem 11 expressões em `assets/img/leao/` (WebP transparente, recortado da folha gerada à parte): `oi`, `feliz`, `piscadinha`, `gargalhada`, `surpreso`, `orgulhoso`, `pensando`, `timido`, `sono`, `comemorando` e `espiando`. Os bustos têm o mesmo enquadramento (410×332), então podem ser trocados sem o leão "pular".
 
-- `kids.html`: o leão principal acena (`oi`); a cada toque troca de expressão com uma frase no balão e volta depois de 2,6 s. Fora do horário (antes das 9h ou depois das 18h, no relógio de quem visita) ele aparece com `sono`. No computador ele inclina na direção do ponteiro.
+- `kids.html`: o leão principal acena (`oi`); a cada toque troca de expressão com uma frase no balão e volta depois de 2,6 s. Fora do horário (antes das 9h ou depois das 18h, no relógio de quem visita) ele aparece com `sono`. Ele fica parado: só a expressão muda.
 - Passos da visita: `timido`, `pensando` e `orgulhoso`. Popup de agendamento do Kids: `comemorando`.
 - Chamada Kids da página inicial: `espiando`.
 
